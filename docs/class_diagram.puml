@@ -1,0 +1,180 @@
+@startuml diagram
+
+interface ObstaclePrototype {
+    clone() : Obstacle
+}
+
+abstract class HitBox {
+    - points : List<Point>
+
+    + HitBox(position : Point, size : Dimension)
+    + isHit(hitBox : HitBox) : boolean
+}
+
+interface Drawable {
+    draw() : void
+}
+
+interface Movable {
+    move(): void
+}
+
+class Dinosaur implements Drawable {
+    - idleSprite : Sprite
+    - runSprite : Sprite
+    - bendDownSprite : Sprite
+    - deathSprite? : Sprite
+    - currentSprite : Sprite
+    - position : Point
+    - size : Dimension
+    - hitBox : HitBox
+
+    + jump(): void
+    + run(): void
+    + idle(): void
+    + die(): void
+}
+
+class Point {
+    - x : number
+    - y : number
+}
+
+class Dimension {
+    - width : number
+    - height : number
+}
+
+class GameData {
+    - gameAcceleration : number
+    - airObstacleXSpeed : number
+    - airObstacleYSpeed : number
+    - groundObstacleXSpeed : number
+    - groundObstacleYSpeed : number
+    - gravity : number
+    - {static} instance : GameData
+    - highestScore : number
+    - currentScore : number
+    - timePassed : number
+
+    - GameData()
+    + {static} getInstance() : GameData
+    - getLocalStorageScore() : number
+}
+
+interface ComponentFactory {
+    + createGroundObstacle() : GroundObstacle
+    + createAirObstacle() : AirObstacle
+    + createBackground() : Background
+}
+
+class DesertComponentFactory implements ComponentFactory {
+
+}
+
+class ForestComponentFactory implements ComponentFactory {
+
+}
+
+class HellComponentFactory implements ComponentFactory {
+
+}
+
+abstract class Obstacle implements Drawable, ObstaclePrototype {
+    - sprite : Sprite
+    - point : Point
+    - size : Dimension
+    - behaviour : BehaviourStrategy
+    - hitBox : HitBox
+
+    + setBehaviour(behaviour: BehaviourStrategy) : void
+}
+
+abstract class Background implements Drawable {
+
+}
+
+abstract class GroundObstacle extends Obstacle {
+}
+
+interface BehaviourStrategy implements Movable {
+
+}
+
+class TraditionalStrategy implements BehaviourStrategy {
+}
+
+class DynamicStrategy implements BehaviourStrategy {
+}
+
+abstract class AirObstacle extends Obstacle {
+}
+
+class DesertGroundObstacle extends GroundObstacle {
+}
+
+
+class DesertAirObstacle extends AirObstacle {
+}
+
+class DesertBackground extends Background {
+}
+
+class ForestGroundObstacle extends GroundObstacle {
+}
+
+class ForestAirObstacle extends AirObstacle {
+}
+
+class ForestBackground extends Background {
+}
+
+class HellGroundObstacle extends GroundObstacle {
+}
+
+class HellAirObstacle extends AirObstacle {
+}
+
+class HellBackground extends Background {
+}
+
+class Game {
+    - canvas : Canvas
+    - componentsFactory : ComponentFactory
+    - originalAirObstacle : AirObstacle
+    - originalGroundObstacle : GroundObstacle
+    - background : Background
+    - obstacleList : List<Obstacle>
+    - dinosaur : Dinosaur
+
+    + startGame() : void
+    + animate(time : timeStamp) : void
+    + requestAnimationFrame(animate : Function) : void
+    + createAirObstacle() : AirObstacle
+    + createGroundObstacle() : GroundObstacle
+    + createBackground() : Background
+    + jumpUserInput() : void
+    + bendDownUserInput(): void
+    + isObstacleOutOfBounds(obstacle : Obstacle) : boolean
+    + addScore() : void
+    + gameOver() : void
+    + putObstacle() : void
+    + drawAll(): void
+    + nextFrameAll(deltaTime: number): void
+    + clearCanvas() : void
+}
+
+class Sprite {
+    - images : List<HTMLImageElement>
+    - currentImage : HTMLImageElement
+    - frameDuration : number
+    - timeSinceLastFrame : number
+
+    - nextImage() : HTMLImageElement
+    + getImageSize() : Dimension
+    + nextFrame(deltaTime: number): void
+}
+
+Obstacle o--> BehaviourStrategy
+
+@enduml
