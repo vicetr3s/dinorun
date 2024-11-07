@@ -1,25 +1,27 @@
 export class GameData {
-    private _gameAcceleration: number;
-    private _airObstacleXSpeed: number;
-    private _airObstacleYSpeed: number;
-    private _groundObstacleXSpeed: number;
-    private _groundObstacleYSpeed: number;
-    private _gravity: number;
-    private _highestScore: number;
-    private _currentScore: number;
-    private _timePassed: number;
-    private static _instance: GameData;
+    #gameAcceleration: number;
+    #airObstacleXSpeed: number;
+    #airObstacleYSpeed: number;
+    #groundObstacleXSpeed: number;
+    #groundObstacleYSpeed: number;
+    #gravity: number;
+    #highestScore: number;
+    #currentScore: number;
+    #timePassed: number;
+    #deltaTime: number;
+    static #instance: GameData;
 
     private constructor() {
-        this._gameAcceleration = 5;
-        this._airObstacleXSpeed = 5;
-        this._airObstacleYSpeed = 8;
-        this._groundObstacleXSpeed = 5;
-        this._groundObstacleYSpeed = 8;
-        this._gravity = 10;
-        this._highestScore = this.getLocalStorageScore();
-        this._currentScore = 0;
-        this._timePassed = 0;
+        this.#gameAcceleration = 5;
+        this.#airObstacleXSpeed = 5;
+        this.#airObstacleYSpeed = 8;
+        this.#groundObstacleXSpeed = 5;
+        this.#groundObstacleYSpeed = 8;
+        this.#gravity = 10;
+        this.#highestScore = this.getLocalStorageScore();
+        this.#currentScore = 0;
+        this.#timePassed = 0;
+        this.#deltaTime = 0;
     }
 
     private getLocalStorageScore(): number {
@@ -31,87 +33,91 @@ export class GameData {
     }
 
     get gameAcceleration(): number {
-        return this._gameAcceleration;
+        return this.#gameAcceleration;
     }
 
     set gameAcceleration(value: number) {
-        this._gameAcceleration = value;
+        this.#gameAcceleration = value;
     }
 
     get airObstacleXSpeed(): number {
-        return this._airObstacleXSpeed;
+        return this.#airObstacleXSpeed;
     }
 
     set airObstacleXSpeed(value: number) {
         if (value < 5) return;
-        this._airObstacleXSpeed = value;
+        this.#airObstacleXSpeed = value;
     }
 
     get airObstacleYSpeed(): number {
-        return this._airObstacleYSpeed;
+        return this.#airObstacleYSpeed;
     }
 
     set airObstacleYSpeed(value: number) {
-        this._airObstacleYSpeed = value;
+        this.#airObstacleYSpeed = value;
     }
 
     get groundObstacleXSpeed(): number {
-        return this._groundObstacleXSpeed;
+        return this.#groundObstacleXSpeed;
     }
 
     set groundObstacleXSpeed(value: number) {
-        this._groundObstacleXSpeed = value;
+        this.#groundObstacleXSpeed = value;
     }
 
     get groundObstacleYSpeed(): number {
-        return this._groundObstacleYSpeed;
+        return this.#groundObstacleYSpeed;
     }
 
     set groundObstacleYSpeed(value: number) {
-        this._groundObstacleYSpeed = value;
+        this.#groundObstacleYSpeed = value;
     }
 
     get gravity(): number {
-        return this._gravity;
+        return this.#gravity;
     }
 
     set gravity(value: number) {
-        this._gravity = value;
+        this.#gravity = value;
     }
 
     get highestScore(): number {
-        return this._highestScore;
+        return this.#highestScore;
     }
 
     set highestScore(value: number) {
-        this._highestScore = value;
+        this.#highestScore = value;
     }
 
     get currentScore(): number {
-        return this._currentScore;
+        return this.#currentScore;
     }
 
     set currentScore(value: number) {
-        this._currentScore = value;
+        this.#currentScore = value;
     }
 
     get timePassed(): number {
-        return this._timePassed;
+        return this.#timePassed;
     }
 
     set timePassed(value: number) {
-        this._timePassed = value;
+        this.#timePassed = value;
     }
 
     static get instance(): GameData {
-        if (!GameData._instance) {
-            GameData._instance = new GameData();
+        if (!GameData.#instance) {
+            GameData.#instance = new GameData();
         }
 
-        return GameData._instance;
+        return GameData.#instance;
     }
 
-    static set instance(value: GameData) {
-        this._instance = value;
+    get deltaTime(): number {
+        return this.#deltaTime;
+    }
+
+    set deltaTime(value: number) {
+        this.#deltaTime = value;
     }
 }

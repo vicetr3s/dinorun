@@ -1,25 +1,25 @@
 export class Dimension {
-    private _width: number;
-    private _height: number;
+    #width: number;
+    #height: number;
 
     constructor(width: number, height: number) {
-        this._width = width;
-        this._height = height;
+        this.#width = width;
+        this.#height = height;
     }
 
     get width(): number {
-        return this._width;
+        return this.#width;
     }
 
     set width(value: number) {
-        this._width = value;
+        this.#width = value;
     }
 
     get height(): number {
-        return this._height;
+        return this.#height;
     }
 
     set height(value: number) {
-        this._height = value;
+        this.#height = value;
     }
 }

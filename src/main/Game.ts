@@ -7,18 +7,38 @@ import { Obstacle } from '../components/Obstacle.ts';
 import { Dinosaur } from '../components/Dinosaur.ts';
 
 export class Game {
-    private canvas: HTMLCanvasElement | null;
-    private canvasContext: CanvasRenderingContext2D | null;
-    private componentsFactory: ComponentFactory;
-    private originalAirObstacle: AirObstacle;
-    private originalGroundObstacle: GroundObstacle;
-    private background: Background;
-    private obstacleList: Obstacle[];
-    private dinosaur: Dinosaur;
+    #canvas: HTMLCanvasElement;
+    #canvasContext: CanvasRenderingContext2D;
+    #componentsFactory: ComponentFactory;
+    #originalAirObstacle: AirObstacle;
+    #originalGroundObstacle: GroundObstacle;
+    #background: Background;
+    #obstacleList: Obstacle[];
+    #dinosaur: Dinosaur;
 
-    constructor() {
-        this.canvas = <HTMLCanvasElement>document.getElementById('canvas');
-        this.canvasContext = this.canvas.getContext('2d');
+    public constructor() {
+        this.#canvas = <HTMLCanvasElement>document.getElementById('canvas');
+        this.#canvasContext = <CanvasRenderingContext2D>this.#canvas.getContext('2d');
+    }
+
+    public startGame() {
+        requestAnimationFrame(this.animate);
+    }
+
+    private animate = (timeStamp: DOMHighResTimeStamp) => {
+        GameData.instance.deltaTime = Math.floor(timeStamp - GameData.instance.timePassed);
+        GameData.instance.timePassed = timeStamp;
+
+        this.clearCanvas();
+        this.drawAll();
+
+        requestAnimationFrame(this.animate);
+    };
+
+    private drawAll(): void {
+    }
+
+    private clearCanvas(): void {
+        this.#canvasContext.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
     }
 }
-
