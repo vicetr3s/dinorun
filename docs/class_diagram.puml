@@ -81,11 +81,11 @@ class HellComponentFactory implements ComponentFactory {
 }
 
 abstract class Obstacle implements Drawable, ObstaclePrototype {
-    - sprite : Sprite
-    - point : Point
-    - size : Dimension
-    - behaviour : BehaviourStrategy
-    - hitBox : HitBox
+    # sprite : Sprite
+    # point : Point
+    # size : Dimension
+    # behaviour : BehaviourStrategy
+    # hitBox : HitBox
 
     + setBehaviour(behaviour: BehaviourStrategy) : void
 }
