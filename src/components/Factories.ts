@@ -10,6 +10,7 @@ import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 
 export interface ComponentFactory {
     createDinosaur(point: Point, size: Dimension): Dinosaur;
+
     createGroundObstacle(): GroundObstacle;
 
     createAirObstacle(): AirObstacle;
@@ -18,21 +19,15 @@ export interface ComponentFactory {
 }
 
 export class DesertComponentFactory implements ComponentFactory {
-    public constructor() {
-
-    }
+    public constructor() {}
 
     createDinosaur(point: Point, size: Dimension): Dinosaur {
         return new DesertDinosaur(point, size);
     }
 
-    createGroundObstacle(): GroundObstacle {
+    createGroundObstacle(): GroundObstacle {}
 
-    }
-
-    createAirObstacle(): AirObstacle {
-
-    }
+    createAirObstacle(): AirObstacle {}
 
     createBackground(): Background {
         return new DesertBackground();
@@ -44,13 +39,9 @@ export class ForestComponentFactory implements ComponentFactory {
         return new ForestDinosaur(point, size);
     }
 
-    createGroundObstacle(): GroundObstacle {
+    createGroundObstacle(): GroundObstacle {}
 
-    }
-
-    createAirObstacle(): AirObstacle {
-
-    }
+    createAirObstacle(): AirObstacle {}
 
     createBackground(): Background {
         return new ForestBackground();
@@ -62,13 +53,9 @@ export class HellComponentFactory implements ComponentFactory {
         return new HellDinosaur(point, size);
     }
 
-    createGroundObstacle(): GroundObstacle {
-        ;
-    }
+    createGroundObstacle(): GroundObstacle {}
 
-    createAirObstacle(): AirObstacle {
-
-    }
+    createAirObstacle(): AirObstacle {}
 
     createBackground(): Background {
         return new HellBackground();

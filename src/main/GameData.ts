@@ -7,6 +7,7 @@ export class GameData {
     #groundObstacleXSpeed: number;
     #groundObstacleYSpeed: number;
     #gravity: number;
+    #scoreMultiplier: number;
     #highestScore: number;
     #currentScore: number;
     #timePassed: number;
@@ -24,6 +25,7 @@ export class GameData {
         this.#currentScore = 0;
         this.#timePassed = 0;
         this.#deltaTime = 0;
+        this.#scoreMultiplier = 0.058;
         this.#canvas = <HTMLCanvasElement>document.getElementById('canvas');
         this.#canvasContext = <CanvasRenderingContext2D>this.#canvas.getContext('2d');
     }
@@ -98,7 +100,7 @@ export class GameData {
     }
 
     set currentScore(value: number) {
-        this.#currentScore = value;
+        this.#currentScore = Math.floor(value);
     }
 
     get timePassed(): number {
@@ -139,5 +141,13 @@ export class GameData {
 
     set canvasContext(value: CanvasRenderingContext2D) {
         this.#canvasContext = value;
+    }
+
+    get scoreMultiplier(): number {
+        return this.#scoreMultiplier;
+    }
+
+    set scoreMultiplier(value: number) {
+        this.#scoreMultiplier = value;
     }
 }

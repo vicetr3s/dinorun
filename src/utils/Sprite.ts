@@ -7,16 +7,31 @@ export class Sprite {
     #timeSinceLastFrame: number;
     #size: Dimension;
 
-    constructor(imagePaths: string[], size: Dimension) {
+    constructor(imagePaths: string[], size: Dimension, frameDuration: number) {
         this.#images = [];
         this.#size = size;
+        this.#frameDuration = frameDuration;
+        this.#timeSinceLastFrame = 0;
 
         this.setImagesFromPaths(imagePaths);
     }
 
-    private nextImage(): HTMLImageElement {}
+    private nextImage(): void {
+        const currentIndex = this.#images.indexOf(this.#currentImage);
 
-    public nextFrame(deltaTime: number): void {}
+        const newIndex = (currentIndex + 1) % this.#images.length;
+
+        this.#currentImage = this.#images[newIndex];
+    }
+
+    public nextFrame(deltaTime: number): void {
+        this.#timeSinceLastFrame += deltaTime;
+
+        if (this.#timeSinceLastFrame < this.#frameDuration) return;
+
+        this.nextImage();
+        this.#timeSinceLastFrame = 0;
+    }
 
     private setImagesFromPaths(imagePaths: string[]): void {
         for (const path of imagePaths) {
@@ -50,5 +65,9 @@ export class Sprite {
 
     get size(): Dimension {
         return this.#size;
+    }
+
+    set currentImage(value: HTMLImageElement) {
+        this.#currentImage = value;
     }
 }

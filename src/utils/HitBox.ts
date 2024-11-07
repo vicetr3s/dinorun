@@ -9,9 +9,7 @@ export class HitBox {
 
         this.#points.push(new Point(position.x, position.y));
         this.#points.push(new Point(position.x + size.width, position.y));
-        this.#points.push(
-            new Point(position.x + size.width, position.y + size.height),
-        );
+        this.#points.push(new Point(position.x + size.width, position.y + size.height));
         this.#points.push(new Point(position.x, position.y + size.height));
     }
 
@@ -26,11 +24,6 @@ export class HitBox {
         const topB = hitBox.#points[0].y;
         const bottomB = hitBox.#points[3].y;
 
-        return !(
-            leftA >= rightB ||
-            rightA <= leftB ||
-            topA >= bottomB ||
-            bottomA <= topB
-        );
+        return !(leftA >= rightB || rightA <= leftB || topA >= bottomB || bottomA <= topB);
     }
 }

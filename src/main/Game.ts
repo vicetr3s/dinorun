@@ -21,10 +21,7 @@ export class Game {
     public constructor(dinosaurPosition: Point, factory: ComponentFactory) {
         this.#canvas = GameData.instance.canvas;
         this.#canvasContext = GameData.instance.canvasContext;
-        this.#dinosaur = factory.createDinosaur(
-            dinosaurPosition,
-            new Dimension(50, 100),
-        );
+        this.#dinosaur = factory.createDinosaur(dinosaurPosition, new Dimension(50, 100));
         this.#background = factory.createBackground();
 
         this.jumpUserInput();
@@ -36,13 +33,14 @@ export class Game {
     }
 
     private animate = (timeStamp: DOMHighResTimeStamp) => {
-        GameData.instance.deltaTime = Math.floor(
-            timeStamp - GameData.instance.timePassed,
-        );
+        if (GameData.instance.timePassed === 0) GameData.instance.timePassed = timeStamp;
+
+        GameData.instance.deltaTime = timeStamp - GameData.instance.timePassed;
         GameData.instance.timePassed = timeStamp;
 
         this.clearCanvas();
         this.drawAll();
+        this.addScore();
 
         requestAnimationFrame(this.animate);
     };
@@ -53,22 +51,12 @@ export class Game {
     }
 
     private clearCanvas(): void {
-        this.#canvasContext.clearRect(
-            0,
-            0,
-            this.#canvas.width,
-            this.#canvas.height,
-        );
+        this.#canvasContext.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
     }
 
     private jumpUserInput(): void {
         document.addEventListener('keydown', (e: KeyboardEvent) => {
-            if (
-                e.key === ' ' ||
-                e.key === 'Spacebar' ||
-                e.key === 'ArrowUp' ||
-                e.key === 'Up'
-            ) {
+            if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'ArrowUp' || e.key === 'Up') {
                 this.#dinosaur.jump();
             }
         });
@@ -84,5 +72,9 @@ export class Game {
 
     private isObstacleOutOfBounds(obstacle: Obstacle): boolean {
         return obstacle.position.x < 0;
+    }
+
+    private addScore(): void {
+        GameData.instance.currentScore += GameData.instance.deltaTime * GameData.instance.scoreMultiplier;
     }
 }

@@ -114,12 +114,7 @@ export class DesertDinosaur extends Dinosaur {
     public draw(): void {
         if (GameData.instance.canvasContext == null) return;
         GameData.instance.canvasContext.fillStyle = 'black';
-        GameData.instance.canvasContext.fillRect(
-            this.position.x,
-            this.position.y,
-            this.size.width,
-            this.size.height,
-        );
+        GameData.instance.canvasContext.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
     }
 }
 
@@ -127,12 +122,7 @@ export class ForestDinosaur extends Dinosaur {
     public draw(): void {
         if (GameData.instance.canvasContext == null) return;
         GameData.instance.canvasContext.fillStyle = 'black';
-        GameData.instance.canvasContext.fillRect(
-            this.position.x,
-            this.position.y,
-            this.size.width,
-            this.size.height,
-        );
+        GameData.instance.canvasContext.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
     }
 }
 
@@ -140,11 +130,6 @@ export class HellDinosaur extends Dinosaur {
     public draw(): void {
         if (GameData.instance.canvasContext == null) return;
         GameData.instance.canvasContext.fillStyle = 'black';
-        GameData.instance.canvasContext.fillRect(
-            this.position.x,
-            this.position.y,
-            this.size.width,
-            this.size.height,
-        );
+        GameData.instance.canvasContext.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
     }
 }
