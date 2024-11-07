@@ -5,7 +5,6 @@ import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 import { Background } from '../components/Background.ts';
 import { Obstacle } from '../components/Obstacle.ts';
 import { Dinosaur } from '../components/Dinosaur.ts';
-import { Sprite } from '../utils/Sprite.ts';
 import { Point } from '../utils/Point.ts';
 import { Dimension } from '../utils/Dimension.ts';
 
@@ -58,7 +57,7 @@ export class Game {
             0,
             0,
             this.#canvas.width,
-            this.#canvas.heigh,
+            this.#canvas.height,
         );
     }
 

@@ -131,7 +131,7 @@ export class ForestDinosaur extends Dinosaur {
             this.position.x,
             this.position.y,
             this.size.width,
-            this.size.heigh,
+            this.size.height,
         );
     }
 }
