@@ -10,14 +10,14 @@ export interface ObstacleProtoype {
 
 export abstract class Obstacle implements ObstacleProtoype, Drawable {
     private _sprite: Sprite;
-    private _point: Point;
+    private _position: Point;
     private _size: Dimension;
     private _behaviour: BehaviourStrategy;
     private _hitBox: HitBox;
 
     constructor(sprite: Sprite, point: Point, size: Dimension, hitBox: HitBox) {
         this._sprite = sprite;
-        this._point = point;
+        this._position = point;
         this._size = size;
         this._behaviour = new TraditionalStrategy();
         this._hitBox = hitBox;
@@ -27,9 +27,7 @@ export abstract class Obstacle implements ObstacleProtoype, Drawable {
         return this;
     }
 
-    draw(): void{
-
-    }
+    draw(): void {}
 
     public setBehaviour(behaviour: BehaviourStrategy): void {
         this._behaviour = behaviour;
@@ -43,12 +41,12 @@ export abstract class Obstacle implements ObstacleProtoype, Drawable {
         this._sprite = value;
     }
 
-    public get point(): Point {
-        return this._point;
+    public get position(): Point {
+        return this._position;
     }
 
-    public set point(value: Point) {
-        this._point = value;
+    public set position(value: Point) {
+        this._position = value;
     }
 
     public get size(): Dimension {

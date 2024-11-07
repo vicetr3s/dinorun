@@ -5,6 +5,7 @@ import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 import { Background } from '../components/Background.ts';
 import { Obstacle } from '../components/Obstacle.ts';
 import { Dinosaur } from '../components/Dinosaur.ts';
+import { Sprite } from '../utils/Sprite.ts';
 import { Point } from '../utils/Point.ts';
 import { Dimension } from '../utils/Dimension.ts';
 
@@ -18,11 +19,17 @@ export class Game {
     #obstacleList: Obstacle[];
     #dinosaur: Dinosaur;
 
-    public constructor(initialPoint: Point, factory: ComponentFactory) {
+    public constructor(dinosaurPosition: Point, factory: ComponentFactory) {
         this.#canvas = GameData.instance.canvas;
         this.#canvasContext = GameData.instance.canvasContext;
-        this.#dinosaur = factory.createDinosaur(initialPoint, new Dimension(50, 100));
+        this.#dinosaur = factory.createDinosaur(
+            dinosaurPosition,
+            new Dimension(50, 100),
+        );
         this.#background = factory.createBackground();
+
+        this.jumpUserInput();
+        this.bendDownUserInput();
     }
 
     public startGame() {
@@ -30,7 +37,9 @@ export class Game {
     }
 
     private animate = (timeStamp: DOMHighResTimeStamp) => {
-        GameData.instance.deltaTime = Math.floor(timeStamp - GameData.instance.timePassed);
+        GameData.instance.deltaTime = Math.floor(
+            timeStamp - GameData.instance.timePassed,
+        );
         GameData.instance.timePassed = timeStamp;
 
         this.clearCanvas();
@@ -45,6 +54,36 @@ export class Game {
     }
 
     private clearCanvas(): void {
-        this.#canvasContext.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
+        this.#canvasContext.clearRect(
+            0,
+            0,
+            this.#canvas.width,
+            this.#canvas.heigh,
+        );
+    }
+
+    private jumpUserInput(): void {
+        document.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (
+                e.key === ' ' ||
+                e.key === 'Spacebar' ||
+                e.key === 'ArrowUp' ||
+                e.key === 'Up'
+            ) {
+                this.#dinosaur.jump();
+            }
+        });
+    }
+
+    private bendDownUserInput(): void {
+        document.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.key === 'ArrowDown' || e.key === 'Down') {
+                this.#dinosaur.bendDown();
+            }
+        });
+    }
+
+    private isObstacleOutOfBounds(obstacle: Obstacle): boolean {
+        return obstacle.position.x < 0;
     }
 }

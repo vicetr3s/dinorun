@@ -1,6 +1,7 @@
 import { Point } from '../utils/Point.ts';
 import { Dimension } from '../utils/Dimension.ts';
 import { HitBox } from '../utils/HitBox.ts';
+import { Sprite } from '../utils/Sprite.ts';
 import { Drawable } from '../main/Interfaces.ts';
 import { GameData } from '../main/GameData.ts';
 
@@ -16,11 +17,16 @@ export abstract class Dinosaur implements Drawable {
     #isJumping: boolean;
 
     public constructor(position: Point, size: Dimension) {
-        /*this.#idleSprite = algo;
+        /*
+        this.#idleSprite = new Sprite(
+            ['public/sprites/dinosaur/run/dino.png'],
+            new Dimension(200, 200),
+        );
+
         this.#runSprite = algo;
         this.#bendDownSprite = algo;
         this.#currentSprite = algo;
-         */
+    */
         this.#position = position;
         this.#size = size;
         this.#hitBox = new HitBox(this.#position, this.#size);
@@ -29,22 +35,15 @@ export abstract class Dinosaur implements Drawable {
 
     abstract draw(): void;
 
-    public jump(): void {
+    public jump(): void {}
 
-    }
-    public run(): void {
+    public run(): void {}
 
-    }
-    public idle(): void {
+    public idle(): void {}
 
-    }
-    public die(): void {
+    public die(): void {}
 
-    }
-
-    public bendDown(): void {
-
-    }
+    public bendDown(): void {}
 
     public get idleSprite(): Sprite {
         return this.#idleSprite;
@@ -102,7 +101,6 @@ export abstract class Dinosaur implements Drawable {
         this.#hitBox = value;
     }
 
-
     get isJumping(): boolean {
         return this.#isJumping;
     }
@@ -116,7 +114,12 @@ export class DesertDinosaur extends Dinosaur {
     public draw(): void {
         if (GameData.instance.canvasContext == null) return;
         GameData.instance.canvasContext.fillStyle = 'black';
-        GameData.instance.canvasContext.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+        GameData.instance.canvasContext.fillRect(
+            this.position.x,
+            this.position.y,
+            this.size.width,
+            this.size.height,
+        );
     }
 }
 
@@ -124,7 +127,12 @@ export class ForestDinosaur extends Dinosaur {
     public draw(): void {
         if (GameData.instance.canvasContext == null) return;
         GameData.instance.canvasContext.fillStyle = 'black';
-        GameData.instance.canvasContext.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+        GameData.instance.canvasContext.fillRect(
+            this.position.x,
+            this.position.y,
+            this.size.width,
+            this.size.heigh,
+        );
     }
 }
 
@@ -132,6 +140,11 @@ export class HellDinosaur extends Dinosaur {
     public draw(): void {
         if (GameData.instance.canvasContext == null) return;
         GameData.instance.canvasContext.fillStyle = 'black';
-        GameData.instance.canvasContext.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+        GameData.instance.canvasContext.fillRect(
+            this.position.x,
+            this.position.y,
+            this.size.width,
+            this.size.height,
+        );
     }
 }

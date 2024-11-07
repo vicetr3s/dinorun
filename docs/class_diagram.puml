@@ -28,11 +28,13 @@ class Dinosaur implements Drawable {
     - position : Point
     - size : Dimension
     - hitBox : HitBox
+    - isJumping : boolean
 
     + jump(): void
     + run(): void
     + idle(): void
     + die(): void
+    + bendDown(): void
 }
 
 class Point {
@@ -83,7 +85,7 @@ class HellComponentFactory implements ComponentFactory {
 
 abstract class Obstacle implements Drawable, ObstaclePrototype {
     # sprite : Sprite
-    # point : Point
+    # position : Point
     # size : Dimension
     # behaviour : BehaviourStrategy
     # hitBox : HitBox
@@ -172,7 +174,7 @@ class Sprite {
     - timeSinceLastFrame : number
 
     - nextImage() : HTMLImageElement
-    + getImageSize() : Dimension
+    + getSpriteSize() : Dimension
     + nextFrame(deltaTime: number): void
 }
 

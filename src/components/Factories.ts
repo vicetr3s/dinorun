@@ -11,7 +11,9 @@ import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 export interface ComponentFactory {
     createDinosaur(point: Point, size: Dimension): Dinosaur;
     createGroundObstacle(): GroundObstacle;
+
     createAirObstacle(): AirObstacle;
+
     createBackground(): Background;
 }
 

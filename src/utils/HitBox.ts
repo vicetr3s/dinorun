@@ -9,11 +9,11 @@ export class HitBox {
 
         this.#points.push(new Point(position.x, position.y));
         this.#points.push(new Point(position.x + size.width, position.y));
-        this.#points.push(new Point(position.x + size.width, position.y + size.height));
+        this.#points.push(
+            new Point(position.x + size.width, position.y + size.height),
+        );
         this.#points.push(new Point(position.x, position.y + size.height));
     }
 
-    public isHit(hitBox: HitBox): boolean {
-
-    }
+    public isHit(hitBox: HitBox): boolean {}
 }

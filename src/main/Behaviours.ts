@@ -5,13 +5,9 @@ export interface BehaviourStrategy extends Movable {
 }
 
 export class TraditionalStrategy implements BehaviourStrategy {
-    move(): void {
-
-    }
+    move(): void {}
 }
 
 export class DynamicStrategy implements BehaviourStrategy {
-    move(): void {
-
-    }
+    move(): void {}
 }
