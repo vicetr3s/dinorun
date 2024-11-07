@@ -13,6 +13,9 @@ export class GameData {
     #timePassed: number;
     #deltaTime: number;
     static #instance: GameData;
+    #currentScoreSpan: HTMLElement;
+    #highestScoreSpan: HTMLElement;
+    #isGameOver: boolean;
 
     private constructor() {
         this.#gameAcceleration = 5;
@@ -28,6 +31,9 @@ export class GameData {
         this.#scoreMultiplier = 0.058;
         this.#canvas = <HTMLCanvasElement>document.getElementById('canvas');
         this.#canvasContext = <CanvasRenderingContext2D>this.#canvas.getContext('2d');
+        this.#highestScoreSpan = <HTMLElement>document.getElementById('highest-score');
+        this.#currentScoreSpan = <HTMLElement>document.getElementById('current-score');
+        this.#isGameOver = false;
     }
 
     private getLocalStorageScore(): number {
@@ -149,5 +155,29 @@ export class GameData {
 
     set scoreMultiplier(value: number) {
         this.#scoreMultiplier = value;
+    }
+
+    get currentScoreSpan(): HTMLElement {
+        return this.#currentScoreSpan;
+    }
+
+    set currentScoreSpan(value: HTMLElement) {
+        this.#currentScoreSpan = value;
+    }
+
+    get highestScoreSpan(): HTMLElement {
+        return this.#highestScoreSpan;
+    }
+
+    set highestScoreSpan(value: HTMLElement) {
+        this.#highestScoreSpan = value;
+    }
+
+    get isGameOver(): boolean {
+        return this.#isGameOver;
+    }
+
+    set isGameOver(value: boolean) {
+        this.#isGameOver = value;
     }
 }

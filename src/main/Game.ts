@@ -33,6 +33,8 @@ export class Game {
     }
 
     private animate = (timeStamp: DOMHighResTimeStamp) => {
+        if (GameData.instance.isGameOver) return;
+
         if (GameData.instance.timePassed === 0) GameData.instance.timePassed = timeStamp;
 
         GameData.instance.deltaTime = timeStamp - GameData.instance.timePassed;
@@ -76,5 +78,21 @@ export class Game {
 
     private addScore(): void {
         GameData.instance.currentScore += GameData.instance.deltaTime * GameData.instance.scoreMultiplier;
+        GameData.instance.currentScoreSpan.innerText = String(GameData.instance.currentScore);
+    }
+
+    private gameOver(): void {
+        GameData.instance.isGameOver = true;
+
+        if (GameData.instance.currentScore > GameData.instance.highestScore)
+            GameData.instance.setLocalStorageScore(GameData.instance.currentScore);
+
+        const restartButton = document.getElementById('restart-btn');
+        restartButton?.classList.toggle('hidden');
+        restartButton?.addEventListener('click', () => this.restartGame());
+    }
+
+    private restartGame(): void {
+        location.reload();
     }
 }

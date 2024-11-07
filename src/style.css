@@ -11,3 +11,7 @@
     border: 1px solid #000000;
     margin-inline: auto;
 }
+
+.hidden {
+    display: none;
+}
