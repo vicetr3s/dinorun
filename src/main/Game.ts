@@ -5,6 +5,8 @@ import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 import { Background } from '../components/Background.ts';
 import { Obstacle } from '../components/Obstacle.ts';
 import { Dinosaur } from '../components/Dinosaur.ts';
+import { Point } from '../utils/Point.ts';
+import { Dimension } from '../utils/Dimension.ts';
 
 export class Game {
     #canvas: HTMLCanvasElement;
@@ -16,9 +18,11 @@ export class Game {
     #obstacleList: Obstacle[];
     #dinosaur: Dinosaur;
 
-    public constructor() {
-        this.#canvas = <HTMLCanvasElement>document.getElementById('canvas');
-        this.#canvasContext = <CanvasRenderingContext2D>this.#canvas.getContext('2d');
+    public constructor(initialPoint: Point, factory: ComponentFactory) {
+        this.#canvas = GameData.instance.canvas;
+        this.#canvasContext = GameData.instance.canvasContext;
+        this.#dinosaur = factory.createDinosaur(initialPoint, new Dimension(50, 100));
+        this.#background = factory.createBackground();
     }
 
     public startGame() {
@@ -36,6 +40,8 @@ export class Game {
     };
 
     private drawAll(): void {
+        this.#background.draw();
+        this.#dinosaur.draw();
     }
 
     private clearCanvas(): void {

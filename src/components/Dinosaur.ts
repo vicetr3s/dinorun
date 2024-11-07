@@ -1,26 +1,33 @@
 import { Point } from '../utils/Point.ts';
 import { Dimension } from '../utils/Dimension.ts';
 import { HitBox } from '../utils/HitBox.ts';
+import { Drawable } from '../main/Interfaces.ts';
+import { GameData } from '../main/GameData.ts';
 
-export class Dinosaur {
-    private _idleSprite: Sprite;
-    private _runSprite: Sprite;
-    private _bendDownSprite: Sprite;
-    //private _deathSprite: Sprite;
-    private _currentSprite: Sprite;
-    private _position: Point;
-    private _size: Dimension;
-    private _hitBox: HitBox;
+export abstract class Dinosaur implements Drawable {
+    #idleSprite: Sprite;
+    #runSprite: Sprite;
+    #bendDownSprite: Sprite;
+    //#deathSprite: Sprite;
+    #currentSprite: Sprite;
+    #position: Point;
+    #size: Dimension;
+    #hitBox: HitBox;
+    #isJumping: boolean;
 
-    constructor(idleSprite: Sprite, runSprite: Sprite, bendDownSprite: Sprite, currentSprite: Sprite, position: Point, size: Dimension) {
-        this._idleSprite = idleSprite;
-        this._runSprite = runSprite;
-        this._bendDownSprite = bendDownSprite;
-        this._currentSprite = currentSprite;
-        this._position = position;
-        this._size = size;
-        this._hitBox = new HitBox(this._position, this._size);
+    public constructor(position: Point, size: Dimension) {
+        /*this.#idleSprite = algo;
+        this.#runSprite = algo;
+        this.#bendDownSprite = algo;
+        this.#currentSprite = algo;
+         */
+        this.#position = position;
+        this.#size = size;
+        this.#hitBox = new HitBox(this.#position, this.#size);
+        this.#isJumping = false;
     }
+
+    abstract draw(): void;
 
     public jump(): void {
 
@@ -35,59 +42,96 @@ export class Dinosaur {
 
     }
 
+    public bendDown(): void {
+
+    }
+
     public get idleSprite(): Sprite {
-        return this._idleSprite;
+        return this.#idleSprite;
     }
 
     public set idleSprite(value: Sprite) {
-        this._idleSprite = value;
+        this.#idleSprite = value;
     }
 
     public get runSprite(): Sprite {
-        return this._runSprite;
+        return this.#runSprite;
     }
 
     public set runSprite(value: Sprite) {
-        this._runSprite = value;
+        this.#runSprite = value;
     }
 
     public get bendDownSprite(): Sprite {
-        return this._bendDownSprite;
+        return this.#bendDownSprite;
     }
 
     public set bendDownSprite(value: Sprite) {
-        this._bendDownSprite = value;
+        this.#bendDownSprite = value;
     }
 
     public get currentSprite(): Sprite {
-        return this._currentSprite;
+        return this.#currentSprite;
     }
 
     public set currentSprite(value: Sprite) {
-        this._currentSprite = value;
+        this.#currentSprite = value;
     }
 
     public get position(): Point {
-        return this._position;
+        return this.#position;
     }
 
     public set position(value: Point) {
-        this._position = value;
+        this.#position = value;
     }
 
     public get size(): Dimension {
-        return this._size;
+        return this.#size;
     }
 
     public set size(value: Dimension) {
-        this._size = value;
+        this.#size = value;
     }
 
     public get hitBox(): HitBox {
-        return this._hitBox;
+        return this.#hitBox;
     }
 
     public set hitBox(value: HitBox) {
-        this._hitBox = value;
+        this.#hitBox = value;
+    }
+
+
+    get isJumping(): boolean {
+        return this.#isJumping;
+    }
+
+    set isJumping(value: boolean) {
+        this.#isJumping = value;
+    }
+}
+
+export class DesertDinosaur extends Dinosaur {
+    public draw(): void {
+        if (GameData.instance.canvasContext == null) return;
+        GameData.instance.canvasContext.fillStyle = 'black';
+        GameData.instance.canvasContext.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+    }
+}
+
+export class ForestDinosaur extends Dinosaur {
+    public draw(): void {
+        if (GameData.instance.canvasContext == null) return;
+        GameData.instance.canvasContext.fillStyle = 'black';
+        GameData.instance.canvasContext.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+    }
+}
+
+export class HellDinosaur extends Dinosaur {
+    public draw(): void {
+        if (GameData.instance.canvasContext == null) return;
+        GameData.instance.canvasContext.fillStyle = 'black';
+        GameData.instance.canvasContext.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
     }
 }

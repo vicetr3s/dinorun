@@ -46,6 +46,7 @@ class Dimension {
 }
 
 class GameData {
+    - canvasContext : CanvasContext
     - gameAcceleration : number
     - airObstacleXSpeed : number
     - airObstacleYSpeed : number

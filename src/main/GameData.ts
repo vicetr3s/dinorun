@@ -1,4 +1,6 @@
 export class GameData {
+    #canvas: HTMLCanvasElement;
+    #canvasContext: CanvasRenderingContext2D;
     #gameAcceleration: number;
     #airObstacleXSpeed: number;
     #airObstacleYSpeed: number;
@@ -22,6 +24,8 @@ export class GameData {
         this.#currentScore = 0;
         this.#timePassed = 0;
         this.#deltaTime = 0;
+        this.#canvas = <HTMLCanvasElement>document.getElementById('canvas');
+        this.#canvasContext = <CanvasRenderingContext2D>this.#canvas.getContext('2d');
     }
 
     private getLocalStorageScore(): number {
@@ -119,5 +123,21 @@ export class GameData {
 
     set deltaTime(value: number) {
         this.#deltaTime = value;
+    }
+
+    get canvas(): HTMLCanvasElement {
+        return this.#canvas;
+    }
+
+    set canvas(value: HTMLCanvasElement) {
+        this.#canvas = value;
+    }
+
+    get canvasContext(): CanvasRenderingContext2D {
+        return this.#canvasContext;
+    }
+
+    set canvasContext(value: CanvasRenderingContext2D) {
+        this.#canvasContext = value;
     }
 }
