@@ -23,13 +23,15 @@ export class Game {
         this.#canvasContext = GameData.instance.canvasContext;
         this.#dinosaur = factory.createDinosaur(dinosaurPosition, new Dimension(50, 100));
         this.#background = factory.createBackground();
-
-        this.jumpUserInput();
-        this.bendDownUserInput();
     }
 
     public startGame() {
         requestAnimationFrame(this.animate);
+
+        GameData.instance.highestScoreSpan.innerText = `H ${GameData.instance.highestScore}`;
+
+        this.jumpUserInput();
+        this.bendDownUserInput();
     }
 
     private animate = (timeStamp: DOMHighResTimeStamp) => {

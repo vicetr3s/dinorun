@@ -5,11 +5,9 @@ export class Sprite {
     #currentImage: HTMLImageElement;
     #frameDuration: number;
     #timeSinceLastFrame: number;
-    #size: Dimension;
 
-    constructor(imagePaths: string[], size: Dimension, frameDuration: number) {
+    constructor(imagePaths: string[], frameDuration: number) {
         this.#images = [];
-        this.#size = size;
         this.#frameDuration = frameDuration;
         this.#timeSinceLastFrame = 0;
 
@@ -38,9 +36,6 @@ export class Sprite {
             const img = new Image();
             img.src = path;
 
-            img.width = this.#size.width;
-            img.height = this.#size.height;
-
             this.#images.push(img);
 
             if (!this.#currentImage) this.#currentImage = img;
@@ -61,10 +56,6 @@ export class Sprite {
 
     get timeSinceLastFrame(): number {
         return this.#timeSinceLastFrame;
-    }
-
-    get size(): Dimension {
-        return this.#size;
     }
 
     set currentImage(value: HTMLImageElement) {

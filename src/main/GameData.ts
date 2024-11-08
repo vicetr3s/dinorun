@@ -34,6 +34,12 @@ export class GameData {
         this.#highestScoreSpan = <HTMLElement>document.getElementById('highest-score');
         this.#currentScoreSpan = <HTMLElement>document.getElementById('current-score');
         this.#isGameOver = false;
+
+        this.configureCanvas();
+    }
+
+    private configureCanvas(): void {
+        this.canvasContext.imageSmoothingEnabled = false;
     }
 
     private getLocalStorageScore(): number {
