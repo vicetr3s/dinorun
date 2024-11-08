@@ -48,6 +48,7 @@ export class Game {
         this.clearCanvas();
         this.updateAll();
         this.drawAll();
+        this.nextFrameAll();
         this.addScore();
 
         requestAnimationFrame(this.animate);
@@ -163,5 +164,16 @@ export class Game {
         }
 
         return this.createGroundObstacle();
+    }
+
+    private nextFrameObstacles(): void {
+        this.#obstacleList.forEach((obstacle) => {
+            obstacle.sprite.nextFrame(GameData.instance.deltaTime);
+        });
+    }
+
+    private nextFrameAll(): void {
+        this.#dinosaur.currentSprite.nextFrame(GameData.instance.deltaTime);
+        this.nextFrameObstacles();
     }
 }

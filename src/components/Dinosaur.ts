@@ -137,7 +137,7 @@ export class DesertDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/desert/idle/idle_3.png',
                 '/sprites/dinosaurs/desert/idle/idle_4.png',
             ],
-            10,
+            90,
         );
         this._runSprite = new Sprite(
             [
@@ -146,7 +146,7 @@ export class DesertDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/desert/run/run_3.png',
                 '/sprites/dinosaurs/desert/run/run_4.png',
             ],
-            10,
+            9,
         );
         this.currentSprite = this.idleSprite;
     }
@@ -162,7 +162,7 @@ export class ForestDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/forest/idle/idle_3.png',
                 '/sprites/dinosaurs/forest/idle/idle_4.png',
             ],
-            10,
+            90,
         );
         this._runSprite = new Sprite(
             [
@@ -173,7 +173,7 @@ export class ForestDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/forest/run/run_5.png',
                 '/sprites/dinosaurs/forest/run/run_6.png',
             ],
-            10,
+            9,
         );
         this.currentSprite = this.idleSprite;
     }
@@ -189,7 +189,7 @@ export class HellDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/hell/idle/idle_3.png',
                 '/sprites/dinosaurs/hell/idle/idle_4.png',
             ],
-            10,
+            90,
         );
         this._runSprite = new Sprite(
             [
@@ -200,7 +200,7 @@ export class HellDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/hell/run/run_5.png',
                 '/sprites/dinosaurs/hell/run/run_6.png',
             ],
-            10,
+            9,
         );
         this.currentSprite = this.idleSprite;
     }
