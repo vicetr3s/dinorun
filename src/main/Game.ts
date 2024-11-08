@@ -11,7 +11,6 @@ import { Dimension } from '../utils/Dimension.ts';
 export class Game {
     #canvas: HTMLCanvasElement;
     #canvasContext: CanvasRenderingContext2D;
-    #componentsFactory: ComponentFactory;
     #originalAirObstacle: AirObstacle;
     #originalGroundObstacle: GroundObstacle;
     #background: Background;
@@ -23,6 +22,9 @@ export class Game {
         this.#canvasContext = GameData.instance.canvasContext;
         this.#dinosaur = factory.createDinosaur(dinosaurPosition, new Dimension(50, 100));
         this.#background = factory.createBackground();
+        this.#originalAirObstacle = factory.createAirObstacle();
+        this.#originalGroundObstacle = factory.createGroundObstacle();
+        this.#obstacleList = [];
     }
 
     public startGame() {
@@ -42,6 +44,7 @@ export class Game {
         GameData.instance.deltaTime = timeStamp - GameData.instance.timePassed;
         GameData.instance.timePassed = timeStamp;
 
+        //this.spawnObstacle();
         this.clearCanvas();
         this.updateAll();
         this.drawAll();
@@ -53,11 +56,13 @@ export class Game {
     private updateAll(): void {
         this.#dinosaur.update();
         this.#background.update();
+        this.updateObstacles();
     }
 
     private drawAll(): void {
         this.#background.draw();
         this.#dinosaur.draw();
+        this.drawObstacles();
     }
 
     private clearCanvas(): void {
@@ -86,7 +91,7 @@ export class Game {
 
     private addScore(): void {
         GameData.instance.currentScore += GameData.instance.deltaTime * GameData.instance.scoreMultiplier;
-        GameData.instance.currentScoreSpan.innerText = String(GameData.instance.currentScore);
+        GameData.instance.currentScoreSpan.innerText = String(Math.round(GameData.instance.currentScore));
     }
 
     private gameOver(): void {
@@ -102,5 +107,61 @@ export class Game {
 
     private restartGame(): void {
         location.reload();
+    }
+
+    private drawObstacles(): void {
+        this.#obstacleList.forEach((obstacle) => {
+            obstacle.draw();
+        });
+    }
+
+    private updateObstacles(): void {
+        const temp: Obstacle[] = [];
+
+        this.#obstacleList.forEach((obstacle) => {
+            if (this.isObstacleOutOfBounds(obstacle)) return;
+
+            //obstacle.update();
+
+            temp.push(obstacle);
+        });
+
+        this.#obstacleList = temp;
+    }
+
+    private createAirObstacle(): AirObstacle {
+        return this.#originalAirObstacle.clone();
+    }
+
+    private createGroundObstacle(): GroundObstacle {
+        return this.#originalGroundObstacle.clone();
+    }
+
+    private spawnObstacle(): void {
+        if (
+            GameData.instance.lastObstacleTimestamp + GameData.instance.timeBetweenObstacles <
+            GameData.instance.timePassed
+        )
+            return;
+
+        const obstacle = this.createRandomObstacle();
+
+        obstacle.position.x =
+            this.#obstacleList.length === 0
+                ? GameData.instance.canvas.width / 2
+                : this.#obstacleList[this.#obstacleList.length - 1].position.x +
+                  GameData.instance.distanceBetweenObstacles;
+
+        this.#obstacleList.push(obstacle);
+
+        GameData.instance.lastObstacleTimestamp = GameData.instance.timePassed;
+    }
+
+    private createRandomObstacle(): Obstacle {
+        if (Math.random() < GameData.instance.airObstacleGenerationProbability) {
+            return this.createAirObstacle();
+        }
+
+        return this.createGroundObstacle();
     }
 }

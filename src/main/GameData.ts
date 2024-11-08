@@ -17,6 +17,10 @@ export class GameData {
     #highestScoreSpan: HTMLElement;
     #isGameOver: boolean;
     #groundLevelForDinosaur: number;
+    #airObstacleGenerationProbability: number;
+    #distanceBetweenObstacles: number;
+    #timeBetweenObstacles: number;
+    #lastObstacleTimestamp: number;
 
     private constructor() {
         this.#gameAcceleration = 5;
@@ -29,13 +33,17 @@ export class GameData {
         this.#currentScore = 0;
         this.#timePassed = 0;
         this.#deltaTime = 0;
-        this.#scoreMultiplier = 0.058;
+        this.#scoreMultiplier = 0.005;
         this.#canvas = <HTMLCanvasElement>document.getElementById('canvas');
         this.#canvasContext = <CanvasRenderingContext2D>this.#canvas.getContext('2d');
         this.#highestScoreSpan = <HTMLElement>document.getElementById('highest-score');
         this.#currentScoreSpan = <HTMLElement>document.getElementById('current-score');
         this.#isGameOver = false;
         this.#groundLevelForDinosaur = 200;
+        this.#airObstacleGenerationProbability = 0.1;
+        this.#distanceBetweenObstacles = 10;
+        this.#timeBetweenObstacles = 1000;
+        this.#lastObstacleTimestamp = 0;
 
         this.configureCanvas();
     }
@@ -114,7 +122,7 @@ export class GameData {
     }
 
     set currentScore(value: number) {
-        this.#currentScore = Math.floor(value);
+        this.#currentScore = value;
     }
 
     get timePassed(): number {
@@ -195,5 +203,25 @@ export class GameData {
 
     set groundLevelForDinosaur(value: number) {
         this.#groundLevelForDinosaur = value;
+    }
+
+    get airObstacleGenerationProbability(): number {
+        return this.#airObstacleGenerationProbability;
+    }
+
+    get distanceBetweenObstacles(): number {
+        return this.#distanceBetweenObstacles;
+    }
+
+    get timeBetweenObstacles(): number {
+        return this.#timeBetweenObstacles;
+    }
+
+    get lastObstacleTimestamp(): number {
+        return this.#lastObstacleTimestamp;
+    }
+
+    set lastObstacleTimestamp(value: number) {
+        this.#lastObstacleTimestamp = value;
     }
 }

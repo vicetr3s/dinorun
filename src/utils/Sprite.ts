@@ -1,5 +1,3 @@
-import { Dimension } from './Dimension.ts';
-
 export class Sprite {
     #images: HTMLImageElement[];
     #currentImage: HTMLImageElement;
