@@ -12,6 +12,7 @@ export class Sprite {
         this.#timeSinceLastFrame = 0;
 
         this.setImagesFromPaths(imagePaths);
+        this.#currentImage = this.#images[0];
     }
 
     private nextImage(): void {

@@ -16,6 +16,7 @@ export class GameData {
     #currentScoreSpan: HTMLElement;
     #highestScoreSpan: HTMLElement;
     #isGameOver: boolean;
+    #groundLevelForDinosaur: number;
 
     private constructor() {
         this.#gameAcceleration = 5;
@@ -23,7 +24,7 @@ export class GameData {
         this.#airObstacleYSpeed = 8;
         this.#groundObstacleXSpeed = 5;
         this.#groundObstacleYSpeed = 8;
-        this.#gravity = 10;
+        this.#gravity = 0.098;
         this.#highestScore = this.getLocalStorageScore();
         this.#currentScore = 0;
         this.#timePassed = 0;
@@ -34,6 +35,7 @@ export class GameData {
         this.#highestScoreSpan = <HTMLElement>document.getElementById('highest-score');
         this.#currentScoreSpan = <HTMLElement>document.getElementById('current-score');
         this.#isGameOver = false;
+        this.#groundLevelForDinosaur = 200;
 
         this.configureCanvas();
     }
@@ -185,5 +187,13 @@ export class GameData {
 
     set isGameOver(value: boolean) {
         this.#isGameOver = value;
+    }
+
+    get groundLevelForDinosaur(): number {
+        return this.#groundLevelForDinosaur;
+    }
+
+    set groundLevelForDinosaur(value: number) {
+        this.#groundLevelForDinosaur = value;
     }
 }

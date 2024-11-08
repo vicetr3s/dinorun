@@ -43,11 +43,17 @@ export class Game {
         GameData.instance.timePassed = timeStamp;
 
         this.clearCanvas();
+        this.updateAll();
         this.drawAll();
         this.addScore();
 
         requestAnimationFrame(this.animate);
     };
+
+    private updateAll(): void {
+        this.#dinosaur.update();
+        this.#background.update();
+    }
 
     private drawAll(): void {
         this.#background.draw();
