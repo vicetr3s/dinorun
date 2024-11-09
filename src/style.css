@@ -67,6 +67,7 @@ p {
         background-color,
         border-color 0.1s ease-out;
     min-width: 10rem;
+    cursor: pointer;
 
     &:hover {
         background-color: #ffffff;
@@ -97,9 +98,9 @@ p {
     }
 
     & label:hover {
-            + svg {
-                fill: var(--accent-clr);
-            }
+        + svg {
+            fill: var(--accent-clr);
+        }
     }
 
     & input {
@@ -117,9 +118,7 @@ p {
             height: 3rem;
             fill: var(--primary-clr);
             stroke: none;
-
         }
-
     }
 }
 
@@ -165,4 +164,28 @@ p {
 
 #game-title {
     margin-bottom: 1rem;
+}
+
+#menu-btn {
+    display: block;
+    margin-left: auto;
+    background-color: transparent;
+    border: none;
+    margin-top: 0.5rem;
+}
+
+.link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--primary-clr);
+    font-size: 1rem;
+
+    &:hover {
+        color: var(--accent-clr);
+    }
+}
+
+main {
+    width: fit-content;
+    margin-inline: auto;
 }

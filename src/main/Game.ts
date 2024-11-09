@@ -25,6 +25,7 @@ export class Game {
 
         this.jumpUserInput();
         this.bendDownUserInput();
+        this.initializeMenuButton();
     }
 
     private initializeGame(): void {
@@ -212,5 +213,17 @@ export class Game {
 
             if (isHit) this.gameOver();
         });
+    }
+
+    private initializeMenuButton(): void {
+        const btn = document.getElementById('menu-btn');
+
+        btn?.classList.toggle('hidden');
+
+        btn?.addEventListener('click', () => this.goToMenu());
+    }
+
+    private goToMenu(): void {
+        location.reload();
     }
 }
