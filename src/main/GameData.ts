@@ -16,19 +16,19 @@ export class GameData {
     #currentScoreSpan: HTMLElement;
     #highestScoreSpan: HTMLElement;
     #isGameOver: boolean;
-    #groundLevelForDinosaur: number;
+    #groundLevel: number;
     #airObstacleGenerationProbability: number;
     #distanceBetweenObstacles: number;
     #timeBetweenObstacles: number;
     #lastObstacleTimestamp: number;
 
     private constructor() {
-        this.#gameAcceleration = 5;
+        this.#gameAcceleration = 0.001;
         this.#airObstacleXSpeed = 5;
         this.#airObstacleYSpeed = 8;
         this.#groundObstacleXSpeed = 5;
         this.#groundObstacleYSpeed = 8;
-        this.#gravity = 0.098;
+        this.#gravity = 0.00098;
         this.#highestScore = this.getLocalStorageScore();
         this.#currentScore = 0;
         this.#timePassed = 0;
@@ -39,7 +39,7 @@ export class GameData {
         this.#highestScoreSpan = <HTMLElement>document.getElementById('highest-score');
         this.#currentScoreSpan = <HTMLElement>document.getElementById('current-score');
         this.#isGameOver = false;
-        this.#groundLevelForDinosaur = 200;
+        this.#groundLevel = 300;
         this.#airObstacleGenerationProbability = 0.1;
         this.#distanceBetweenObstacles = 10;
         this.#timeBetweenObstacles = 1000;
@@ -197,12 +197,12 @@ export class GameData {
         this.#isGameOver = value;
     }
 
-    get groundLevelForDinosaur(): number {
-        return this.#groundLevelForDinosaur;
+    get groundLevel(): number {
+        return this.#groundLevel;
     }
 
-    set groundLevelForDinosaur(value: number) {
-        this.#groundLevelForDinosaur = value;
+    set groundLevel(value: number) {
+        this.#groundLevel = value;
     }
 
     get airObstacleGenerationProbability(): number {

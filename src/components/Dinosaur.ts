@@ -2,7 +2,7 @@ import { Point } from '../utils/Point.ts';
 import { Dimension } from '../utils/Dimension.ts';
 import { HitBox } from '../utils/HitBox.ts';
 import { Sprite } from '../utils/Sprite.ts';
-import { Drawable, Movable } from '../main/Interfaces.ts';
+import { Drawable } from '../main/Interfaces.ts';
 import { GameData } from '../main/GameData.ts';
 
 export abstract class Dinosaur implements Drawable {
@@ -13,37 +13,49 @@ export abstract class Dinosaur implements Drawable {
     protected _currentSprite: Sprite;
     protected _position: Point;
     protected _size: Dimension;
+    protected _sizeMultiplier: number;
     protected _hitBox: HitBox;
     protected _isJumping: boolean;
     protected _velocityY: number;
 
-    public constructor(position: Point, size: Dimension) {
+    public constructor(position: Point, sizeMultiplier: number) {
         this._position = position;
-        this._size = size;
-        this._hitBox = new HitBox(this._position, this._size);
+        this._sizeMultiplier = sizeMultiplier;
         this._isJumping = false;
         this._velocityY = 0;
     }
 
+    protected constructorPart2() {
+        this.currentSprite = this.idleSprite;
+        this._size = new Dimension(this._currentSprite.currentImage.width * this._sizeMultiplier,
+            this._currentSprite.currentImage.height * this._sizeMultiplier);
+        this._position.y -= this._size.height;
+        this._hitBox = new HitBox(this._position, this._size);
+    }
+
     public draw(): void {
         GameData.instance.canvasContext.drawImage(
-            this.currentSprite.currentImage,
-            this.position.x,
-            this.position.y,
-            this.size.width,
-            this.size.height,
+            this._currentSprite.currentImage,
+            this._position.x,
+            this._position.y,
+            this._size.width,
+            this._size.height
         );
     }
 
     public update(): void {
+        this._size = new Dimension(this._currentSprite.currentImage.width * this._sizeMultiplier,
+            this._currentSprite.currentImage.height * this._sizeMultiplier);
+        this._hitBox = new HitBox(this._position, this._size);
         if (!this.isJumping) return;
-        this._velocityY += GameData.instance.gravity;
-        this._position.y += this._velocityY;
+        this._velocityY += GameData.instance.gravity * GameData.instance.deltaTime;
+        this._position.y += this._velocityY * GameData.instance.deltaTime;
 
-        if (this._position.y >= GameData.instance.groundLevelForDinosaur) {
+        if (this._position.y >= GameData.instance.groundLevel - this._size.height) {
             this.isJumping = false;
-            this._position.y = GameData.instance.groundLevelForDinosaur;
+            this._position.y = GameData.instance.groundLevel - this._size.height;
             this._velocityY = 0;
+            this.run();
         }
     }
 
@@ -51,10 +63,12 @@ export abstract class Dinosaur implements Drawable {
         if (this.isJumping) return;
         this._currentSprite = this._idleSprite;
         this.isJumping = true;
-        this._velocityY = -6; // Initial jump velocity
+        this._velocityY = -0.5; // Initial jump velocity
     }
 
-    public run(): void {}
+    public run(): void {
+        this._currentSprite = this.runSprite;
+    }
 
     public idle(): void {}
 
@@ -128,8 +142,8 @@ export abstract class Dinosaur implements Drawable {
 }
 
 export class DesertDinosaur extends Dinosaur {
-    public constructor(point: Point, size: Dimension) {
-        super(point, size);
+    public constructor(point: Point, sizeMultiplier: number) {
+        super(point, sizeMultiplier);
         this._idleSprite = new Sprite(
             [
                 '/sprites/dinosaurs/desert/idle/idle_1.png',
@@ -146,15 +160,15 @@ export class DesertDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/desert/run/run_3.png',
                 '/sprites/dinosaurs/desert/run/run_4.png',
             ],
-            9,
+            90
         );
-        this.currentSprite = this.idleSprite;
+        this.constructorPart2();
     }
 }
 
 export class ForestDinosaur extends Dinosaur {
-    public constructor(point: Point, size: Dimension) {
-        super(point, size);
+    public constructor(point: Point, sizeMultiplier: number) {
+        super(point, sizeMultiplier);
         this._idleSprite = new Sprite(
             [
                 '/sprites/dinosaurs/forest/idle/idle_1.png',
@@ -173,15 +187,15 @@ export class ForestDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/forest/run/run_5.png',
                 '/sprites/dinosaurs/forest/run/run_6.png',
             ],
-            9,
+            90
         );
-        this.currentSprite = this.idleSprite;
+        this.constructorPart2();
     }
 }
 
 export class HellDinosaur extends Dinosaur {
-    public constructor(point: Point, size: Dimension) {
-        super(point, size);
+    public constructor(point: Point, sizeMultiplier: number) {
+        super(point, sizeMultiplier);
         this._idleSprite = new Sprite(
             [
                 '/sprites/dinosaurs/hell/idle/idle_1.png',
@@ -200,8 +214,8 @@ export class HellDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/hell/run/run_5.png',
                 '/sprites/dinosaurs/hell/run/run_6.png',
             ],
-            9,
+            90
         );
-        this.currentSprite = this.idleSprite;
+        this.constructorPart2();
     }
 }

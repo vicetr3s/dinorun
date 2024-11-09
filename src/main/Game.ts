@@ -20,15 +20,16 @@ export class Game {
     public constructor(dinosaurPosition: Point, factory: ComponentFactory) {
         this.#canvas = GameData.instance.canvas;
         this.#canvasContext = GameData.instance.canvasContext;
-        this.#dinosaur = factory.createDinosaur(dinosaurPosition, new Dimension(50, 100));
+        this.#dinosaur = factory.createDinosaur(dinosaurPosition, 3);
         this.#background = factory.createBackground();
-        this.#originalAirObstacle = factory.createAirObstacle();
-        this.#originalGroundObstacle = factory.createGroundObstacle();
+        this.#originalAirObstacle = factory.createAirObstacle(new Point(0, GameData.instance.groundLevel), 3);
+        this.#originalGroundObstacle = factory.createGroundObstacle(new Point(0, GameData.instance.groundLevel), 3);
         this.#obstacleList = [];
     }
 
     public startGame() {
         requestAnimationFrame(this.animate);
+        this.#dinosaur.run();
 
         GameData.instance.highestScoreSpan.innerText = `H ${GameData.instance.highestScore}`;
 
@@ -44,7 +45,7 @@ export class Game {
         GameData.instance.deltaTime = timeStamp - GameData.instance.timePassed;
         GameData.instance.timePassed = timeStamp;
 
-        //this.spawnObstacle();
+        this.spawnObstacle();
         this.clearCanvas();
         this.updateAll();
         this.drawAll();
@@ -122,7 +123,7 @@ export class Game {
         this.#obstacleList.forEach((obstacle) => {
             if (this.isObstacleOutOfBounds(obstacle)) return;
 
-            //obstacle.update();
+            obstacle.update();
 
             temp.push(obstacle);
         });

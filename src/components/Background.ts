@@ -12,11 +12,14 @@ export abstract class Background implements Drawable {
     frontLayerX: number;
     middleLayerX: number;
     backLayerX: number;
+    frontLayerLevel: number;
+    middleLayerLevel: number;
+    backLayerLevel: number;
 
     public constructor() {
-        this.frontLayerSpeed = 2;
-        this.middleLayerSpeed = 1;
-        this.backLayerSpeed = 0.5;
+        this.frontLayerSpeed = 1;
+        this.middleLayerSpeed = 0.5;
+        this.backLayerSpeed = 0.25;
         this.frontLayerX = 0;
         this.middleLayerX = 0;
         this.backLayerX = 0;
@@ -24,6 +27,9 @@ export abstract class Background implements Drawable {
 
     update() {
         const canvas = GameData.instance.canvas;
+        this.frontLayerSpeed += GameData.instance.gameAcceleration;
+        this.middleLayerSpeed += GameData.instance.gameAcceleration;
+        this.backLayerSpeed += GameData.instance.gameAcceleration;
         this.frontLayerX -= this.frontLayerSpeed;
         this.middleLayerX -= this.middleLayerSpeed;
         this.backLayerX -= this.backLayerSpeed;
@@ -42,27 +48,27 @@ export abstract class Background implements Drawable {
     public draw(): void {
         const canvas = GameData.instance.canvas;
         const canvasContext = GameData.instance.canvasContext;
-        canvasContext.drawImage(this.backLayer.currentImage, this.backLayerX, 0, canvas.width, canvas.height);
+        canvasContext.drawImage(this.backLayer.currentImage, this.backLayerX, this.backLayerLevel, canvas.width, canvas.height);
         canvasContext.drawImage(
             this.backLayer.currentImage,
             this.backLayerX + canvas.width,
-            0,
+            this.backLayerLevel,
             canvas.width,
             canvas.height,
         );
-        canvasContext.drawImage(this.middleLayer.currentImage, this.middleLayerX, 50, canvas.width, canvas.height);
+        canvasContext.drawImage(this.middleLayer.currentImage, this.middleLayerX, this.middleLayerLevel, canvas.width, canvas.height);
         canvasContext.drawImage(
             this.middleLayer.currentImage,
             this.middleLayerX + canvas.width,
-            50,
+            this.middleLayerLevel,
             canvas.width,
             canvas.height,
         );
-        canvasContext.drawImage(this.frontLayer.currentImage, this.frontLayerX, 80, canvas.width, canvas.height);
+        canvasContext.drawImage(this.frontLayer.currentImage, this.frontLayerX, this.frontLayerLevel, canvas.width, canvas.height);
         canvasContext.drawImage(
             this.frontLayer.currentImage,
             this.frontLayerX + canvas.width,
-            80,
+            this.frontLayerLevel,
             canvas.width,
             canvas.height,
         );
@@ -72,8 +78,8 @@ export abstract class Background implements Drawable {
         gradient.addColorStop(0.8, 'orange');
         gradient.addColorStop(1, 'brown');
         canvasContext.fillStyle = gradient;
-        canvasContext.fillRect(0, 300, canvas.width, canvas.height);
+        canvasContext.fillRect(0, GameData.instance.groundLevel, canvas.width, canvas.height);
         canvasContext.strokeStyle = 'black';
-        canvasContext.strokeRect(0, 300, canvas.width, canvas.height);
+        canvasContext.strokeRect(0, GameData.instance.groundLevel, canvas.width, canvas.height);
     }
 }

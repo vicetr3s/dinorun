@@ -3,31 +3,46 @@ import { Dimension } from '../utils/Dimension.ts';
 import { HitBox } from '../utils/HitBox.ts';
 import { Drawable } from '../main/Interfaces.ts';
 import { BehaviourStrategy, TraditionalStrategy } from '../main/Behaviours.ts';
+import { Sprite } from '../utils/Sprite.ts';
+import { GameData } from '../main/GameData.ts';
 
 export interface ObstacleProtoype {
     clone(): Obstacle;
 }
 
 export abstract class Obstacle implements ObstacleProtoype, Drawable {
-    private _sprite: Sprite;
-    private _position: Point;
-    private _size: Dimension;
-    private _behaviour: BehaviourStrategy;
-    private _hitBox: HitBox;
+    protected _sprite: Sprite;
+    protected _position: Point;
+    protected _size: Dimension;
+    protected _behaviour: BehaviourStrategy;
+    protected _hitBox: HitBox;
+    protected _sizeMultiplier: number;
 
-    constructor(sprite: Sprite, point: Point, size: Dimension, hitBox: HitBox) {
-        this._sprite = sprite;
+    constructor(point: Point, sizeMultiplier: number) {
         this._position = point;
-        this._size = size;
         this._behaviour = new TraditionalStrategy();
-        this._hitBox = hitBox;
+        this._sizeMultiplier = sizeMultiplier;
     }
 
-    clone(): Obstacle {
-        return this;
+    protected constructorPart2() {
+        this._size = new Dimension(this._sprite.currentImage.width * this._sizeMultiplier,
+            this._sprite.currentImage.height * this._sizeMultiplier);
+        this._position.y -= this._size.height;
+        this._hitBox = new HitBox(this._position, this._size);
     }
 
-    draw(): void {}
+    abstract clone(): Obstacle;
+
+    public draw(): void {
+        GameData.instance.canvasContext.drawImage(this._sprite.currentImage,
+            this._position.x,
+            this._position.y,
+            this._size.width,
+            this._size.height
+        );
+    }
+
+    abstract update(): void;
 
     public setBehaviour(behaviour: BehaviourStrategy): void {
         this._behaviour = behaviour;
