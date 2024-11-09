@@ -27,8 +27,10 @@ export abstract class Dinosaur implements Drawable {
 
     protected constructorPart2() {
         this.currentSprite = this.idleSprite;
-        this._size = new Dimension(this._currentSprite.currentImage.width * this._sizeMultiplier,
-            this._currentSprite.currentImage.height * this._sizeMultiplier);
+        this._size = new Dimension(
+            this._currentSprite.currentImage.width * this._sizeMultiplier,
+            this._currentSprite.currentImage.height * this._sizeMultiplier,
+        );
         this._position.y -= this._size.height;
         this._hitBox = new HitBox(this._position, this._size);
     }
@@ -39,13 +41,15 @@ export abstract class Dinosaur implements Drawable {
             this._position.x,
             this._position.y,
             this._size.width,
-            this._size.height
+            this._size.heigh,
         );
     }
 
     public update(): void {
-        this._size = new Dimension(this._currentSprite.currentImage.width * this._sizeMultiplier,
-            this._currentSprite.currentImage.height * this._sizeMultiplier);
+        this._size = new Dimension(
+            this._currentSprite.currentImage.width * this._sizeMultiplier,
+            this._currentSprite.currentImage.height * this._sizeMultiplier,
+        );
         this._hitBox = new HitBox(this._position, this._size);
         if (!this.isJumping) return;
         this._velocityY += GameData.instance.gravity * GameData.instance.deltaTime;
@@ -160,7 +164,7 @@ export class DesertDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/desert/run/run_3.png',
                 '/sprites/dinosaurs/desert/run/run_4.png',
             ],
-            90
+            9,
         );
         this.constructorPart2();
     }
@@ -187,7 +191,7 @@ export class ForestDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/forest/run/run_5.png',
                 '/sprites/dinosaurs/forest/run/run_6.png',
             ],
-            90
+            90,
         );
         this.constructorPart2();
     }
@@ -214,7 +218,7 @@ export class HellDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/hell/run/run_5.png',
                 '/sprites/dinosaurs/hell/run/run_6.png',
             ],
-            90
+            9,
         );
         this.constructorPart2();
     }

@@ -88,7 +88,7 @@ export class Game {
     }
 
     private isObstacleOutOfBounds(obstacle: Obstacle): boolean {
-        return obstacle.position.x < 0;
+        return obstacle.position.x + obstacle.size.width < 0;
     }
 
     private addScore(): void {
@@ -121,9 +121,9 @@ export class Game {
         const temp: Obstacle[] = [];
 
         this.#obstacleList.forEach((obstacle) => {
-            if (this.isObstacleOutOfBounds(obstacle)) return;
-
             obstacle.update();
+
+            if (this.isObstacleOutOfBounds(obstacle)) return;
 
             temp.push(obstacle);
         });
@@ -141,7 +141,7 @@ export class Game {
 
     private spawnObstacle(): void {
         if (
-            GameData.instance.lastObstacleTimestamp + GameData.instance.timeBetweenObstacles <
+            GameData.instance.lastObstacleTimestamp + GameData.instance.timeBetweenObstacles >
             GameData.instance.timePassed
         )
             return;
@@ -150,7 +150,7 @@ export class Game {
 
         obstacle.position.x =
             this.#obstacleList.length === 0
-                ? GameData.instance.canvas.width / 2
+                ? GameData.instance.canvas.width - GameData.instance.canvas.width / 3
                 : this.#obstacleList[this.#obstacleList.length - 1].position.x +
                   GameData.instance.distanceBetweenObstacles;
 

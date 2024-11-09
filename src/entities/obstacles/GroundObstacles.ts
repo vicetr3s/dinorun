@@ -5,10 +5,6 @@ import { GameData } from '../../main/GameData.ts';
 
 export abstract class GroundObstacle extends Obstacle {
     public update(): void {
-        if (this._position.x < 0) {
-            this._position.x = -1;
-            return;
-        }
         GameData.instance.groundObstacleXSpeed += GameData.instance.gameAcceleration;
         this._position.x -= GameData.instance.groundObstacleXSpeed;
     }
@@ -17,12 +13,7 @@ export abstract class GroundObstacle extends Obstacle {
 export class DesertGroundObstacle extends GroundObstacle {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._sprite = new Sprite(
-            [
-                '/sprites/obstacles/ground/desert/cactus.png'
-            ],
-            90
-        );
+        this._sprite = new Sprite(['/sprites/obstacles/ground/desert/cactus.png'], 90);
         this.constructorPart2();
     }
 
@@ -34,12 +25,7 @@ export class DesertGroundObstacle extends GroundObstacle {
 export class ForestGroundObstacle extends GroundObstacle {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._sprite = new Sprite(
-            [
-                '/sprites/obstacles/ground/tree_trunk.png'
-            ],
-            90
-        );
+        this._sprite = new Sprite(['/sprites/obstacles/ground/tree_trunk.png'], 90);
         this.constructorPart2();
     }
 
@@ -54,9 +40,9 @@ export class HellGroundObstacle extends GroundObstacle {
         this._sprite = new Sprite(
             [
                 '/sprites/obstacles/ground/hell/hand/malefic_hand_1.png',
-                '/sprites/obstacles/ground/hell/hand/malefic_hand_2.png'
+                '/sprites/obstacles/ground/hell/hand/malefic_hand_2.png',
             ],
-            90
+            9,
         );
         this.constructorPart2();
     }

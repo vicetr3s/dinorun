@@ -41,7 +41,7 @@ export class GameData {
         this.#isGameOver = false;
         this.#groundLevel = 300;
         this.#airObstacleGenerationProbability = 0.1;
-        this.#distanceBetweenObstacles = 10;
+        this.#distanceBetweenObstacles = 350;
         this.#timeBetweenObstacles = 1000;
         this.#lastObstacleTimestamp = 0;
 

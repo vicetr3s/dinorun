@@ -25,8 +25,10 @@ export abstract class Obstacle implements ObstacleProtoype, Drawable {
     }
 
     protected constructorPart2() {
-        this._size = new Dimension(this._sprite.currentImage.width * this._sizeMultiplier,
-            this._sprite.currentImage.height * this._sizeMultiplier);
+        this._size = new Dimension(
+            this._sprite.currentImage.width * this._sizeMultiplier,
+            this._sprite.currentImage.height * this._sizeMultiplier,
+        );
         this._position.y -= this._size.height;
         this._hitBox = new HitBox(this._position, this._size);
     }
@@ -34,11 +36,12 @@ export abstract class Obstacle implements ObstacleProtoype, Drawable {
     abstract clone(): Obstacle;
 
     public draw(): void {
-        GameData.instance.canvasContext.drawImage(this._sprite.currentImage,
+        GameData.instance.canvasContext.drawImage(
+            this._sprite.currentImage,
             this._position.x,
             this._position.y,
             this._size.width,
-            this._size.height
+            this._size.height,
         );
     }
 

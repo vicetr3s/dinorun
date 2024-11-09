@@ -48,7 +48,13 @@ export abstract class Background implements Drawable {
     public draw(): void {
         const canvas = GameData.instance.canvas;
         const canvasContext = GameData.instance.canvasContext;
-        canvasContext.drawImage(this.backLayer.currentImage, this.backLayerX, this.backLayerLevel, canvas.width, canvas.height);
+        canvasContext.drawImage(
+            this.backLayer.currentImage,
+            this.backLayerX,
+            this.backLayerLevel,
+            canvas.width,
+            canvas.height,
+        );
         canvasContext.drawImage(
             this.backLayer.currentImage,
             this.backLayerX + canvas.width,
@@ -56,7 +62,13 @@ export abstract class Background implements Drawable {
             canvas.width,
             canvas.height,
         );
-        canvasContext.drawImage(this.middleLayer.currentImage, this.middleLayerX, this.middleLayerLevel, canvas.width, canvas.height);
+        canvasContext.drawImage(
+            this.middleLayer.currentImage,
+            this.middleLayerX,
+            this.middleLayerLevel,
+            canvas.width,
+            canvas.heigh,
+        );
         canvasContext.drawImage(
             this.middleLayer.currentImage,
             this.middleLayerX + canvas.width,
@@ -64,7 +76,13 @@ export abstract class Background implements Drawable {
             canvas.width,
             canvas.height,
         );
-        canvasContext.drawImage(this.frontLayer.currentImage, this.frontLayerX, this.frontLayerLevel, canvas.width, canvas.height);
+        canvasContext.drawImage(
+            this.frontLayer.currentImage,
+            this.frontLayerX,
+            this.frontLayerLevel,
+            canvas.width,
+            canvas.height,
+        );
         canvasContext.drawImage(
             this.frontLayer.currentImage,
             this.frontLayerX + canvas.width,
