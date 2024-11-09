@@ -41,7 +41,7 @@ export abstract class Dinosaur implements Drawable {
             this._position.x,
             this._position.y,
             this._size.width,
-            this._size.heigh,
+            this._size.height,
         );
     }
 
@@ -218,7 +218,7 @@ export class HellDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/hell/run/run_5.png',
                 '/sprites/dinosaurs/hell/run/run_6.png',
             ],
-            9,
+            90,
         );
         this.constructorPart2();
     }

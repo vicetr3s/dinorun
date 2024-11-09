@@ -20,7 +20,7 @@ export class DesertAirObstacle extends AirObstacle {
                 '/sprites/obstacles/air/desert/pterosaur_3.png',
                 '/sprites/obstacles/air/desert/pterosaur_4.png',
             ],
-            9,
+            90,
         );
         this.constructorPart2();
     }
@@ -60,7 +60,7 @@ export class HellAirObstacle extends AirObstacle {
                 '/sprites/obstacles/air/hell/demon/demon_idle_3.png',
                 '/sprites/obstacles/air/hell/demon/demon_idle_4.png',
             ],
-            9,
+            90,
         );
         this.constructorPart2();
     }

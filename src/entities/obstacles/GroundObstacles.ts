@@ -42,7 +42,7 @@ export class HellGroundObstacle extends GroundObstacle {
                 '/sprites/obstacles/ground/hell/hand/malefic_hand_1.png',
                 '/sprites/obstacles/ground/hell/hand/malefic_hand_2.png',
             ],
-            9,
+            90,
         );
         this.constructorPart2();
     }
