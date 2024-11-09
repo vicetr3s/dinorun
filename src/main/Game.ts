@@ -15,30 +15,42 @@ export class Game {
     #background: Background;
     #obstacleList: Obstacle[];
     #dinosaur: Dinosaur;
+    #factory: ComponentFactory;
+    #isGameOver: boolean;
+    #animationFrameId: number | null;
 
-    public constructor(dinosaurPosition: Point, factory: ComponentFactory) {
-        this.#canvas = GameData.instance.canvas;
-        this.#canvasContext = GameData.instance.canvasContext;
-        this.#dinosaur = factory.createDinosaur(dinosaurPosition, 3);
-        this.#background = factory.createBackground();
-        this.#originalAirObstacle = factory.createAirObstacle(new Point(0, GameData.instance.groundLevel), 3);
-        this.#originalGroundObstacle = factory.createGroundObstacle(new Point(0, GameData.instance.groundLevel), 3);
-        this.#obstacleList = [];
-    }
-
-    public startGame() {
-        requestAnimationFrame(this.animate);
-
-        this.#dinosaur.run();
-
-        GameData.instance.highestScoreSpan.innerText = `H ${GameData.instance.highestScore}`;
+    public constructor(factory: ComponentFactory) {
+        this.#factory = factory;
+        this.initializeGame();
 
         this.jumpUserInput();
         this.bendDownUserInput();
     }
 
+    private initializeGame(): void {
+        this.#canvas = GameData.instance.canvas;
+        this.#canvasContext = GameData.instance.canvasContext;
+        this.#dinosaur = this.#factory.createDinosaur(GameData.instance.dinosaurSpawnPosition, 3);
+        this.#background = this.#factory.createBackground();
+        this.#originalAirObstacle = this.#factory.createAirObstacle(new Point(0, GameData.instance.groundLevel), 3);
+        this.#originalGroundObstacle = this.#factory.createGroundObstacle(
+            new Point(0, GameData.instance.groundLevel),
+            3,
+        );
+        this.#obstacleList = [];
+        this.#isGameOver = false;
+
+        GameData.instance.highestScoreSpan.innerText = `H ${GameData.instance.highestScore}`;
+    }
+
+    public startGame() {
+        this.#animationFrameId = requestAnimationFrame(this.animate);
+
+        this.#dinosaur.run();
+    }
+
     private animate = (timeStamp: DOMHighResTimeStamp) => {
-        if (GameData.instance.isGameOver) return;
+        if (this.#isGameOver) return;
 
         if (GameData.instance.timePassed === 0) GameData.instance.timePassed = timeStamp;
 
@@ -53,7 +65,7 @@ export class Game {
         this.addScore();
         this.checkObstaclesCollision();
 
-        requestAnimationFrame(this.animate);
+        this.#animationFrameId = requestAnimationFrame(this.animate);
     };
 
     private updateAll(): void {
@@ -95,11 +107,11 @@ export class Game {
 
     private addScore(): void {
         GameData.instance.currentScore += GameData.instance.deltaTime * GameData.instance.scoreMultiplier;
-        GameData.instance.currentScoreSpan.innerText = String(Math.round(GameData.instance.currentScore));
+        GameData.instance.currentScoreSpan.innerText = String(Math.floor(GameData.instance.currentScore));
     }
 
     private gameOver(): void {
-        GameData.instance.isGameOver = true;
+        this.#isGameOver = true;
 
         if (GameData.instance.currentScore > GameData.instance.highestScore)
             GameData.instance.setLocalStorageScore(GameData.instance.currentScore);
@@ -112,7 +124,18 @@ export class Game {
     }
 
     private restartGame(): void {
-        location.reload();
+        const gameOverSection = document.getElementById('game-over');
+
+        gameOverSection?.classList.add('hidden');
+
+        if (this.#animationFrameId !== null) {
+            cancelAnimationFrame(this.#animationFrameId);
+            this.#animationFrameId = null;
+        }
+
+        GameData.instance.initializeNewGameVariables();
+        this.initializeGame();
+        this.startGame();
     }
 
     private drawObstacles(): void {

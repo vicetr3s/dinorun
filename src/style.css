@@ -27,7 +27,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 h1 {
@@ -46,6 +46,10 @@ h1,
 
 p {
     color: var(--primary-clr);
+}
+
+#obstacles-type {
+    padding: 1rem;
 }
 
 .scores {
@@ -77,24 +81,51 @@ p {
 
 #theme-menu {
     text-align: center;
-    top: 3rem;
+    top: 2rem;
 
     & h2 {
-        margin-bottom: 1rem;
+        margin-bottom: 2.5rem;
     }
 
-    & ul {
+    & form {
         display: flex;
         flex-direction: column;
+        align-items: center;
         gap: 2rem;
         list-style: none;
+        flex-wrap: wrap;
+    }
+
+    & label:hover {
+            + svg {
+                fill: var(--accent-clr);
+            }
+    }
+
+    & input {
+        appearance: none;
+    }
+
+    & fieldset {
+        display: flex;
+        align-items: center;
+        border: none;
+        gap: 2rem;
+
+        & svg {
+            width: 3rem;
+            height: 3rem;
+            fill: var(--primary-clr);
+            stroke: none;
+
+        }
+
     }
 }
 
 #canvas-frame {
     margin-inline: auto;
     position: relative;
-    border: 1px solid blue;
     width: fit-content;
 }
 
@@ -109,10 +140,29 @@ p {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &:before {
+        content: '';
+        position: absolute;
+        background-color: var(--secondary-clr);
+        height: 100%;
+        width: 100%;
+        opacity: 0.3;
+        z-index: -1;
+    }
 
     & h2 {
         font-weight: 700;
         margin-bottom: 1rem;
-
     }
+}
+
+#game-title {
+    margin-bottom: 1rem;
 }

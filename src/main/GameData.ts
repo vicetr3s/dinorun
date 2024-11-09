@@ -1,3 +1,5 @@
+import { Point } from '../utils/Point.ts';
+
 export class GameData {
     #canvas: HTMLCanvasElement;
     #canvasContext: CanvasRenderingContext2D;
@@ -15,35 +17,39 @@ export class GameData {
     static #instance: GameData;
     #currentScoreSpan: HTMLElement;
     #highestScoreSpan: HTMLElement;
-    #isGameOver: boolean;
     #groundLevel: number;
     #airObstacleGenerationProbability: number;
     #timeBetweenObstacles: number;
     #lastObstacleTimestamp: number;
+    #dinosaurSpawnPosition: Point;
 
     private constructor() {
         this.#gameAcceleration = 0.001;
-        this.#airObstacleXSpeed = 5;
-        this.#airObstacleYSpeed = 8;
-        this.#groundObstacleXSpeed = 5;
-        this.#groundObstacleYSpeed = 8;
         this.#gravity = 0.00098;
-        this.#highestScore = this.getLocalStorageScore();
-        this.#currentScore = 0;
-        this.#timePassed = 0;
-        this.#deltaTime = 0;
         this.#scoreMultiplier = 0.005;
         this.#canvas = <HTMLCanvasElement>document.getElementById('canvas');
         this.#canvasContext = <CanvasRenderingContext2D>this.#canvas.getContext('2d');
         this.#highestScoreSpan = <HTMLElement>document.getElementById('highest-score');
         this.#currentScoreSpan = <HTMLElement>document.getElementById('current-score');
-        this.#isGameOver = false;
         this.#groundLevel = 300;
-        this.#airObstacleGenerationProbability = 0.1;
         this.#timeBetweenObstacles = 1000;
-        this.#lastObstacleTimestamp = 0;
+        this.#dinosaurSpawnPosition = new Point(50, this.#groundLevel);
 
         this.configureCanvas();
+        this.initializeNewGameVariables();
+    }
+
+    public initializeNewGameVariables(): void {
+        this.#airObstacleXSpeed = 5;
+        this.#airObstacleYSpeed = 8;
+        this.#groundObstacleXSpeed = 5;
+        this.#groundObstacleYSpeed = 8;
+        this.#highestScore = this.getLocalStorageScore();
+        this.#lastObstacleTimestamp = 0;
+        this.#airObstacleGenerationProbability = 0.1;
+        this.#currentScore = 0;
+        this.#timePassed = 0;
+        this.#deltaTime = 0;
     }
 
     private configureCanvas(): void {
@@ -103,16 +109,8 @@ export class GameData {
         return this.#gravity;
     }
 
-    set gravity(value: number) {
-        this.#gravity = value;
-    }
-
     get highestScore(): number {
         return this.#highestScore;
-    }
-
-    set highestScore(value: number) {
-        this.#highestScore = value;
     }
 
     get currentScore(): number {
@@ -151,56 +149,24 @@ export class GameData {
         return this.#canvas;
     }
 
-    set canvas(value: HTMLCanvasElement) {
-        this.#canvas = value;
-    }
-
     get canvasContext(): CanvasRenderingContext2D {
         return this.#canvasContext;
-    }
-
-    set canvasContext(value: CanvasRenderingContext2D) {
-        this.#canvasContext = value;
     }
 
     get scoreMultiplier(): number {
         return this.#scoreMultiplier;
     }
 
-    set scoreMultiplier(value: number) {
-        this.#scoreMultiplier = value;
-    }
-
     get currentScoreSpan(): HTMLElement {
         return this.#currentScoreSpan;
-    }
-
-    set currentScoreSpan(value: HTMLElement) {
-        this.#currentScoreSpan = value;
     }
 
     get highestScoreSpan(): HTMLElement {
         return this.#highestScoreSpan;
     }
 
-    set highestScoreSpan(value: HTMLElement) {
-        this.#highestScoreSpan = value;
-    }
-
-    get isGameOver(): boolean {
-        return this.#isGameOver;
-    }
-
-    set isGameOver(value: boolean) {
-        this.#isGameOver = value;
-    }
-
     get groundLevel(): number {
         return this.#groundLevel;
-    }
-
-    set groundLevel(value: number) {
-        this.#groundLevel = value;
     }
 
     get airObstacleGenerationProbability(): number {
@@ -217,5 +183,9 @@ export class GameData {
 
     set lastObstacleTimestamp(value: number) {
         this.#lastObstacleTimestamp = value;
+    }
+
+    get dinosaurSpawnPosition(): Point {
+        return this.#dinosaurSpawnPosition;
     }
 }
