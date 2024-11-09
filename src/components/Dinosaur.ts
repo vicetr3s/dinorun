@@ -164,7 +164,7 @@ export class DesertDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/desert/run/run_3.png',
                 '/sprites/dinosaurs/desert/run/run_4.png',
             ],
-            9,
+            90,
         );
         this.constructorPart2();
     }

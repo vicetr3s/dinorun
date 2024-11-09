@@ -40,7 +40,7 @@ export class ForestAirObstacle extends AirObstacle {
                 '/sprites/obstacles/air/forest/pterosaur_3.png',
                 '/sprites/obstacles/air/forest/pterosaur_4.png',
             ],
-            9,
+            90,
         );
         this.constructorPart2();
     }

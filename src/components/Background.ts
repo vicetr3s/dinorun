@@ -67,7 +67,7 @@ export abstract class Background implements Drawable {
             this.middleLayerX,
             this.middleLayerLevel,
             canvas.width,
-            canvas.heigh,
+            canvas.height,
         );
         canvasContext.drawImage(
             this.middleLayer.currentImage,
