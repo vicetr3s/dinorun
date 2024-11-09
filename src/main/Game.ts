@@ -6,7 +6,6 @@ import { Background } from '../components/Background.ts';
 import { Obstacle } from '../components/Obstacle.ts';
 import { Dinosaur } from '../components/Dinosaur.ts';
 import { Point } from '../utils/Point.ts';
-import { Dimension } from '../utils/Dimension.ts';
 
 export class Game {
     #canvas: HTMLCanvasElement;
@@ -29,6 +28,7 @@ export class Game {
 
     public startGame() {
         requestAnimationFrame(this.animate);
+
         this.#dinosaur.run();
 
         GameData.instance.highestScoreSpan.innerText = `H ${GameData.instance.highestScore}`;
@@ -51,6 +51,7 @@ export class Game {
         this.drawAll();
         this.nextFrameAll();
         this.addScore();
+        this.checkObstaclesCollision();
 
         requestAnimationFrame(this.animate);
     };
@@ -64,6 +65,7 @@ export class Game {
     private drawAll(): void {
         this.#background.draw();
         this.#dinosaur.draw();
+        this.#dinosaur.hitBox.draw();
         this.drawObstacles();
     }
 
@@ -114,6 +116,7 @@ export class Game {
     private drawObstacles(): void {
         this.#obstacleList.forEach((obstacle) => {
             obstacle.draw();
+            obstacle.hitBox.draw();
         });
     }
 
@@ -150,7 +153,7 @@ export class Game {
 
         obstacle.position.x =
             this.#obstacleList.length === 0
-                ? GameData.instance.canvas.width - GameData.instance.canvas.width / 3
+                ? GameData.instance.canvas.width
                 : this.#obstacleList[this.#obstacleList.length - 1].position.x +
                   GameData.instance.distanceBetweenObstacles;
 
@@ -176,5 +179,17 @@ export class Game {
     private nextFrameAll(): void {
         this.#dinosaur.currentSprite.nextFrame(GameData.instance.deltaTime);
         this.nextFrameObstacles();
+    }
+
+    private isDinosaurHitObstacle(dinosaur: Dinosaur, obstacle: Obstacle): boolean {
+        return dinosaur.hitBox.isHit(obstacle.hitBox);
+    }
+
+    private checkObstaclesCollision(): void {
+        this.#obstacleList.forEach((obstacle) => {
+            const isHit = this.isDinosaurHitObstacle(this.#dinosaur, obstacle);
+
+            if (isHit) this.gameOver();
+        });
     }
 }
