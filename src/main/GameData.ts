@@ -18,7 +18,6 @@ export class GameData {
     #isGameOver: boolean;
     #groundLevel: number;
     #airObstacleGenerationProbability: number;
-    #distanceBetweenObstacles: number;
     #timeBetweenObstacles: number;
     #lastObstacleTimestamp: number;
 
@@ -41,7 +40,6 @@ export class GameData {
         this.#isGameOver = false;
         this.#groundLevel = 300;
         this.#airObstacleGenerationProbability = 0.1;
-        this.#distanceBetweenObstacles = 350;
         this.#timeBetweenObstacles = 1000;
         this.#lastObstacleTimestamp = 0;
 
@@ -57,7 +55,7 @@ export class GameData {
     }
 
     public setLocalStorageScore(score: number) {
-        localStorage.setItem('h-score', String(score));
+        localStorage.setItem('h-score', String(Math.floor(score)));
     }
 
     get gameAcceleration(): number {
@@ -207,10 +205,6 @@ export class GameData {
 
     get airObstacleGenerationProbability(): number {
         return this.#airObstacleGenerationProbability;
-    }
-
-    get distanceBetweenObstacles(): number {
-        return this.#distanceBetweenObstacles;
     }
 
     get timeBetweenObstacles(): number {

@@ -1,16 +1,37 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dino run</title>
-    <script type="module" src="/src/main.ts" defer></script>
-    <link rel="stylesheet" href="src/style.css">
-  </head>
-  <body>
-  <canvas id="canvas" width="800" height="400"></canvas>
-  <span id="highest-score"></span>
-  <span id="current-score"></span>
-  <button id="restart-btn" class="hidden">Restart</button>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dino run</title>
+        <script type="module" src="/src/main.ts" defer></script>
+        <link rel="stylesheet" href="src/style.css" />
+    </head>
+    <body>
+        <h1>DINO RUN CLONE</h1>
+        <p>
+            Press <span class="accent-text">Space</span> or Up arrow key to <span class="accent-text">jump</span> <br />
+            Press <span class="accent-text">Down</span> arrow key to <span class="accent-text">bend down</span>
+        </p>
+
+        <section id="canvas-frame">
+            <div class="over-canvas scores">
+                <span id="highest-score"></span>
+                <span id="current-score"></span>
+            </div>
+            <section id="theme-menu" class="over-canvas hidden">
+                <h2>Select your game theme</h2>
+                <ul>
+                    <li><button class="btn">Desert</button></li>
+                    <li><button class="btn">Forest</button></li>
+                    <li><button class="btn">Hell</button></li>
+                </ul>
+            </section>
+            <section id="game-over" class="over-canvas hidden">
+                <h2>GAME OVER</h2>
+                <button id="restart-btn" class="btn">Restart</button>
+            </section>
+            <canvas id="canvas" width="800" height="400"></canvas>
+        </section>
+    </body>
 </html>

@@ -104,8 +104,10 @@ export class Game {
         if (GameData.instance.currentScore > GameData.instance.highestScore)
             GameData.instance.setLocalStorageScore(GameData.instance.currentScore);
 
+        const gameOverSection = document.getElementById('game-over');
         const restartButton = document.getElementById('restart-btn');
-        restartButton?.classList.toggle('hidden');
+
+        gameOverSection?.classList.toggle('hidden');
         restartButton?.addEventListener('click', () => this.restartGame());
     }
 
@@ -151,11 +153,7 @@ export class Game {
 
         const obstacle = this.createRandomObstacle();
 
-        obstacle.position.x =
-            this.#obstacleList.length === 0
-                ? GameData.instance.canvas.width
-                : this.#obstacleList[this.#obstacleList.length - 1].position.x +
-                  GameData.instance.distanceBetweenObstacles;
+        obstacle.position.x = GameData.instance.canvas.width;
 
         this.#obstacleList.push(obstacle);
 
