@@ -16,12 +16,15 @@ export abstract class Dinosaur implements Drawable {
     protected _sizeMultiplier: number;
     protected _hitBox: HitBox;
     protected _isJumping: boolean;
+    protected _isBentDown: boolean;
     protected _velocityY: number;
+    protected _timeSinceBentDown: number;
 
     public constructor(position: Point, sizeMultiplier: number) {
         this._position = new Point(position.x, position.y);
         this._sizeMultiplier = sizeMultiplier;
         this._isJumping = false;
+        this._isBentDown = false;
         this._velocityY = 0;
     }
 
@@ -54,6 +57,7 @@ export abstract class Dinosaur implements Drawable {
             this._currentSprite.currentImage.height * this._sizeMultiplier,
         );
         this._hitBox = new HitBox(this._position, this._size);
+        if (this._position.y < GameData.instance.groundLevel - this._size.height) this._isJumping = true;
         if (!this.isJumping) return;
         this._velocityY += GameData.instance.gravity * GameData.instance.deltaTime;
         this._position.y += this._velocityY * GameData.instance.deltaTime;
@@ -62,13 +66,13 @@ export abstract class Dinosaur implements Drawable {
             this.isJumping = false;
             this._position.y = GameData.instance.groundLevel - this._size.height;
             this._velocityY = 0;
-            this.run();
+            if (!this._isBentDown) this.run();
         }
     }
 
     public jump(): void {
         if (this.isJumping) return;
-        this._currentSprite = this._idleSprite;
+        if (!this._isBentDown) this._currentSprite = this._idleSprite;
         this.isJumping = true;
         this._velocityY = GameData.instance.initialVelocityJump;
     }
@@ -77,11 +81,24 @@ export abstract class Dinosaur implements Drawable {
         this._currentSprite = this.runSprite;
     }
 
-    public idle(): void {}
+    public idle(): void {
+        this._currentSprite = this.idleSprite;
+    }
 
     public die(): void {}
 
-    public bendDown(): void {}
+    public bendDown(): void {
+        this._currentSprite = this._bendDownSprite;
+        this._isBentDown = true;
+        if (this._size.height != this._bendDownSprite.currentImage.height * this._sizeMultiplier)
+            this._position.y += this._size.height - this._bendDownSprite.currentImage.height * this._sizeMultiplier;
+    }
+
+    public standUp(): void {
+        this._isBentDown = false;
+        this._position.y -= this._runSprite.currentImage.height * this._sizeMultiplier - this._size.height;
+        this.run();
+    }
 
     public get idleSprite(): Sprite {
         return this._idleSprite;
@@ -169,6 +186,15 @@ export class DesertDinosaur extends Dinosaur {
             ],
             90,
         );
+        this._bendDownSprite = new Sprite(
+            [
+                '/sprites/dinosaurs/desert/bend/bend_1.png',
+                '/sprites/dinosaurs/desert/bend/bend_2.png',
+                '/sprites/dinosaurs/desert/bend/bend_3.png',
+                '/sprites/dinosaurs/desert/bend/bend_4.png',
+            ],
+            90,
+        );
         this.constructorPart2();
     }
 }
@@ -196,6 +222,15 @@ export class ForestDinosaur extends Dinosaur {
             ],
             90,
         );
+        this._bendDownSprite = new Sprite(
+            [
+                '/sprites/dinosaurs/forest/bend/bend_1.png',
+                '/sprites/dinosaurs/forest/bend/bend_2.png',
+                '/sprites/dinosaurs/forest/bend/bend_3.png',
+                '/sprites/dinosaurs/forest/bend/bend_4.pn',
+            ],
+            0,
+        );
         this.constructorPart2();
     }
 }
@@ -220,6 +255,15 @@ export class HellDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/hell/run/run_4.png',
                 '/sprites/dinosaurs/hell/run/run_5.png',
                 '/sprites/dinosaurs/hell/run/run_6.png',
+            ],
+            90,
+        );
+        this._bendDownSprite = new Sprite(
+            [
+                '/sprites/dinosaurs/hell/bend/bend_1.png',
+                '/sprites/dinosaurs/hell/bend/bend_2.png',
+                '/sprites/dinosaurs/hell/bend/bend_3.png',
+                '/sprites/dinosaurs/hell/bend/bend_4.png',
             ],
             90,
         );

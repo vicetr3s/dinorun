@@ -29,6 +29,7 @@ export class Game {
 
         this.jumpUserInput();
         this.bendDownUserInput();
+        this.standUpUserInput();
         this.initializeMenuButton();
 
         document.getElementById('jump-to-start')?.classList.remove('hidden');
@@ -131,6 +132,14 @@ export class Game {
         document.addEventListener('keydown', (e: KeyboardEvent) => {
             if (e.key === 'ArrowDown' || e.key === 'Down') {
                 this.#dinosaur.bendDown();
+            }
+        });
+    }
+
+    private standUpUserInput(): void {
+        document.addEventListener('keyup', (e: KeyboardEvent) => {
+            if (e.key === 'ArrowDown' || e.key === 'Down') {
+                this.#dinosaur.standUp();
             }
         });
     }
