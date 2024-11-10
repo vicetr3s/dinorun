@@ -189,3 +189,11 @@ main {
     width: fit-content;
     margin-inline: auto;
 }
+
+#jump-to-start {
+    text-align: center;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    text-transform: uppercase;
+}
