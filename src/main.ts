@@ -25,7 +25,6 @@ form?.addEventListener('click', (event: Event) => {
 function getThemeFactory(theme: string): ComponentFactory {
     switch (theme) {
         case 'forest':
-            console.log('forest');
             return new ForestComponentFactory();
         case 'hell':
             return new HellComponentFactory();

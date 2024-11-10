@@ -4,14 +4,16 @@ import { GameData } from '../main/GameData.ts';
 
 export class HitBox {
     #points: Point[];
+    #shrink: number;
 
     constructor(position: Point, size: Dimension) {
         this.#points = [];
+        this.#shrink = GameData.instance.hitBoxShrink;
 
-        this.#points.push(new Point(position.x, position.y));
-        this.#points.push(new Point(position.x + size.width, position.y));
-        this.#points.push(new Point(position.x + size.width, position.y + size.height));
-        this.#points.push(new Point(position.x, position.y + size.height));
+        this.#points.push(new Point(position.x + this.#shrink, position.y + this.#shrink));
+        this.#points.push(new Point(position.x + size.width - this.#shrink, position.y + this.#shrink));
+        this.#points.push(new Point(position.x + size.width - this.#shrink, position.y + size.height - this.#shrink));
+        this.#points.push(new Point(position.x + this.#shrink, position.y + size.height - this.#shrink));
     }
 
     public isHit(hitBox: HitBox): boolean {
