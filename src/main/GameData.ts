@@ -22,6 +22,9 @@ export class GameData {
     #timeBetweenObstacles: number;
     #lastObstacleTimestamp: number;
     #dinosaurSpawnPosition: Point;
+    #airObstacleGenerationStartProbability: number;
+    #airObstacleGenerationEndProbability: number;
+    #airObstacleGenerationProbabilityMultiplier: number;
 
     private constructor() {
         this.#gameAcceleration = 0.001;
@@ -46,7 +49,10 @@ export class GameData {
         this.#groundObstacleYSpeed = 8;
         this.#highestScore = this.getLocalStorageScore();
         this.#lastObstacleTimestamp = 0;
+        this.#airObstacleGenerationStartProbability = 0.1;
+        this.#airObstacleGenerationEndProbability = 0.7;
         this.#airObstacleGenerationProbability = 0.1;
+        this.#airObstacleGenerationProbabilityMultiplier = 0.00001;
         this.#currentScore = 0;
         this.#timePassed = 0;
         this.#deltaTime = 0;
@@ -187,5 +193,21 @@ export class GameData {
 
     get dinosaurSpawnPosition(): Point {
         return this.#dinosaurSpawnPosition;
+    }
+
+    get airObstacleGenerationStartProbability(): number {
+        return this.#airObstacleGenerationStartProbability;
+    }
+
+    get airObstacleGenerationEndProbability(): number {
+        return this.#airObstacleGenerationEndProbability;
+    }
+
+    get airObstacleGenerationProbabilityMultiplier(): number {
+        return this.#airObstacleGenerationProbabilityMultiplier;
+    }
+
+    set airObstacleGenerationProbability(value: number) {
+        this.#airObstacleGenerationProbability = value;
     }
 }

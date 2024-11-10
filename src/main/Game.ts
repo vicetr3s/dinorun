@@ -18,6 +18,7 @@ export class Game {
     #factory: ComponentFactory;
     #isGameOver: boolean;
     #animationFrameId: number | null;
+    #gameDataInstance: GameData;
 
     public constructor(factory: ComponentFactory) {
         this.#factory = factory;
@@ -29,19 +30,22 @@ export class Game {
     }
 
     private initializeGame(): void {
-        this.#canvas = GameData.instance.canvas;
-        this.#canvasContext = GameData.instance.canvasContext;
-        this.#dinosaur = this.#factory.createDinosaur(GameData.instance.dinosaurSpawnPosition, 3);
+        this.#gameDataInstance = GameData.instance;
+        this.#canvas = this.#gameDataInstance.canvas;
+        this.#canvasContext = this.#gameDataInstance.canvasContext;
+        this.#dinosaur = this.#factory.createDinosaur(this.#gameDataInstance.dinosaurSpawnPosition, 3);
         this.#background = this.#factory.createBackground();
-        this.#originalAirObstacle = this.#factory.createAirObstacle(new Point(0, GameData.instance.groundLevel), 3);
+        this.#originalAirObstacle = this.#factory.createAirObstacle(
+            new Point(0, this.#gameDataInstance.groundLevel),
+            3,
+        );
         this.#originalGroundObstacle = this.#factory.createGroundObstacle(
-            new Point(0, GameData.instance.groundLevel),
+            new Point(0, this.#gameDataInstance.groundLevel),
             3,
         );
         this.#obstacleList = [];
         this.#isGameOver = false;
-
-        GameData.instance.highestScoreSpan.innerText = `H ${GameData.instance.highestScore}`;
+        this.#gameDataInstance.highestScoreSpan.innerText = `H ${this.#gameDataInstance.highestScore}`;
     }
 
     public startGame() {
@@ -53,18 +57,19 @@ export class Game {
     private animate = (timeStamp: DOMHighResTimeStamp) => {
         if (this.#isGameOver) return;
 
-        if (GameData.instance.timePassed === 0) GameData.instance.timePassed = timeStamp;
+        if (this.#gameDataInstance.timePassed === 0) this.#gameDataInstance.timePassed = timeStamp;
 
-        GameData.instance.deltaTime = timeStamp - GameData.instance.timePassed;
-        GameData.instance.timePassed = timeStamp;
+        this.#gameDataInstance.deltaTime = timeStamp - this.#gameDataInstance.timePassed;
+        this.#gameDataInstance.timePassed = timeStamp;
 
-        this.spawnObstacle();
         this.clearCanvas();
+        this.spawnObstacle();
         this.updateAll();
         this.drawAll();
         this.nextFrameAll();
         this.addScore();
         this.checkObstaclesCollision();
+        this.increaseAirObstacleProbability();
 
         this.#animationFrameId = requestAnimationFrame(this.animate);
     };
@@ -107,15 +112,16 @@ export class Game {
     }
 
     private addScore(): void {
-        GameData.instance.currentScore += GameData.instance.deltaTime * GameData.instance.scoreMultiplier;
-        GameData.instance.currentScoreSpan.innerText = String(Math.floor(GameData.instance.currentScore));
+        this.#gameDataInstance.currentScore +=
+            this.#gameDataInstance.deltaTime * this.#gameDataInstance.scoreMultiplier;
+        this.#gameDataInstance.currentScoreSpan.innerText = String(Math.floor(this.#gameDataInstance.currentScore));
     }
 
     private gameOver(): void {
         this.#isGameOver = true;
 
-        if (GameData.instance.currentScore > GameData.instance.highestScore)
-            GameData.instance.setLocalStorageScore(GameData.instance.currentScore);
+        if (this.#gameDataInstance.currentScore > this.#gameDataInstance.highestScore)
+            this.#gameDataInstance.setLocalStorageScore(this.#gameDataInstance.currentScore);
 
         const gameOverSection = document.getElementById('game-over');
         const restartButton = document.getElementById('restart-btn');
@@ -134,7 +140,7 @@ export class Game {
             this.#animationFrameId = null;
         }
 
-        GameData.instance.initializeNewGameVariables();
+        this.#gameDataInstance.initializeNewGameVariables();
         this.initializeGame();
         this.startGame();
     }
@@ -170,22 +176,22 @@ export class Game {
 
     private spawnObstacle(): void {
         if (
-            GameData.instance.lastObstacleTimestamp + GameData.instance.timeBetweenObstacles >
-            GameData.instance.timePassed
+            this.#gameDataInstance.lastObstacleTimestamp + this.#gameDataInstance.timeBetweenObstacles >
+            this.#gameDataInstance.timePassed
         )
             return;
 
         const obstacle = this.createRandomObstacle();
 
-        obstacle.position.x = GameData.instance.canvas.width;
+        obstacle.position.x = this.#gameDataInstance.canvas.width;
 
         this.#obstacleList.push(obstacle);
 
-        GameData.instance.lastObstacleTimestamp = GameData.instance.timePassed;
+        this.#gameDataInstance.lastObstacleTimestamp = this.#gameDataInstance.timePassed;
     }
 
     private createRandomObstacle(): Obstacle {
-        if (Math.random() < GameData.instance.airObstacleGenerationProbability) {
+        if (Math.random() < this.#gameDataInstance.airObstacleGenerationProbability) {
             return this.createAirObstacle();
         }
 
@@ -194,12 +200,12 @@ export class Game {
 
     private nextFrameObstacles(): void {
         this.#obstacleList.forEach((obstacle) => {
-            obstacle.sprite.nextFrame(GameData.instance.deltaTime);
+            obstacle.sprite.nextFrame(this.#gameDataInstance.deltaTime);
         });
     }
 
     private nextFrameAll(): void {
-        this.#dinosaur.currentSprite.nextFrame(GameData.instance.deltaTime);
+        this.#dinosaur.currentSprite.nextFrame(this.#gameDataInstance.deltaTime);
         this.nextFrameObstacles();
     }
 
@@ -225,5 +231,20 @@ export class Game {
 
     private goToMenu(): void {
         location.reload();
+    }
+
+    private increaseAirObstacleProbability(): void {
+        if (
+            this.#gameDataInstance.airObstacleGenerationProbability >
+            this.#gameDataInstance.airObstacleGenerationEndProbability
+        ) {
+            this.#gameDataInstance.airObstacleGenerationProbability =
+                this.#gameDataInstance.airObstacleGenerationStartProbability;
+            return;
+        }
+
+        this.#gameDataInstance.airObstacleGenerationProbability +=
+            this.#gameDataInstance.airObstacleGenerationProbabilityMultiplier * this.#gameDataInstance.deltaTime;
+        console.log(this.#gameDataInstance.airObstacleGenerationProbability);
     }
 }
