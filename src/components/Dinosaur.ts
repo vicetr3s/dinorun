@@ -26,12 +26,15 @@ export abstract class Dinosaur implements Drawable {
     }
 
     protected constructorPart2() {
-        this.currentSprite = this.idleSprite;
+        this._currentSprite = this.idleSprite;
         this._size = new Dimension(
             this._currentSprite.currentImage.width * this._sizeMultiplier,
             this._currentSprite.currentImage.height * this._sizeMultiplier,
         );
-        if (this._position.y > GameData.instance.groundLevel - this._size.height) this._position.y -= this._size.height;
+        if (this._position.y >= GameData.instance.groundLevel) {
+            this._position.y -= this._size.height;
+            if (this._size.height == 0) this._position.y -= 17 * this._sizeMultiplier;
+        }
         this._hitBox = new HitBox(this._position, this._size);
     }
 
