@@ -19,14 +19,19 @@ export class Game {
     #isGameOver: boolean;
     #animationFrameId: number | null;
     #gameDataInstance: GameData;
+    #isGameStarted: boolean;
 
     public constructor(factory: ComponentFactory) {
         this.#factory = factory;
+        this.#isGameStarted = false;
+
         this.initializeGame();
 
         this.jumpUserInput();
         this.bendDownUserInput();
         this.initializeMenuButton();
+
+        document.getElementById('jump-to-start')?.classList.remove('hidden');
     }
 
     private initializeGame(): void {
@@ -46,12 +51,30 @@ export class Game {
         this.#obstacleList = [];
         this.#isGameOver = false;
         this.#gameDataInstance.highestScoreSpan.innerText = `H ${this.#gameDataInstance.highestScore}`;
+        this.#gameDataInstance.currentScoreSpan.innerText = '';
+    }
+
+    public idleGame(): void {
+        this.clearCanvas();
+        this.drawAll();
+        this.nextFrameAll();
     }
 
     public startGame() {
         this.#animationFrameId = requestAnimationFrame(this.animate);
 
-        this.#dinosaur.run();
+        this.#dinosaur.idle();
+    }
+
+    private runningGame(): void {
+        this.clearCanvas();
+        this.spawnObstacle();
+        this.updateAll();
+        this.drawAll();
+        this.nextFrameAll();
+        this.addScore();
+        this.checkObstaclesCollision();
+        this.increaseAirObstacleProbability();
     }
 
     private animate = (timeStamp: DOMHighResTimeStamp) => {
@@ -62,14 +85,11 @@ export class Game {
         this.#gameDataInstance.deltaTime = timeStamp - this.#gameDataInstance.timePassed;
         this.#gameDataInstance.timePassed = timeStamp;
 
-        this.clearCanvas();
-        this.spawnObstacle();
-        this.updateAll();
-        this.drawAll();
-        this.nextFrameAll();
-        this.addScore();
-        this.checkObstaclesCollision();
-        this.increaseAirObstacleProbability();
+        if (this.#isGameStarted) {
+            this.runningGame();
+        } else {
+            this.idleGame();
+        }
 
         this.#animationFrameId = requestAnimationFrame(this.animate);
     };
@@ -96,6 +116,12 @@ export class Game {
     private jumpUserInput(): void {
         document.addEventListener('keydown', (e: KeyboardEvent) => {
             if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'ArrowUp' || e.key === 'Up') {
+                if (!this.#isGameStarted) {
+                    this.#isGameStarted = true;
+
+                    document.getElementById('jump-to-start')?.classList.add('hidden');
+                }
+
                 this.#dinosaur.jump();
             }
         });
@@ -125,17 +151,16 @@ export class Game {
         if (this.#gameDataInstance.currentScore > this.#gameDataInstance.highestScore)
             this.#gameDataInstance.setLocalStorageScore(this.#gameDataInstance.currentScore);
 
-        const gameOverSection = document.getElementById('game-over');
-        const restartButton = document.getElementById('restart-btn');
+        document.getElementById('game-over')?.classList.toggle('hidden');
 
-        gameOverSection?.classList.toggle('hidden');
-        restartButton?.addEventListener('click', () => this.restartGame());
+        this.initializeRestartButton();
     }
 
     private restartGame(): void {
         const gameOverSection = document.getElementById('game-over');
 
         gameOverSection?.classList.add('hidden');
+        document.getElementById('jump-to-start')?.classList.add('hidden');
 
         if (this.#animationFrameId !== null) {
             cancelAnimationFrame(this.#animationFrameId);
@@ -247,5 +272,21 @@ export class Game {
 
         this.#gameDataInstance.airObstacleGenerationProbability +=
             this.#gameDataInstance.airObstacleGenerationProbabilityMultiplier * this.#gameDataInstance.deltaTime;
+    }
+
+    private initializeRestartButton(): void {
+        const restartButton = document.getElementById('restart-btn');
+
+        restartButton?.addEventListener('click', () => this.restartGame());
+
+        const handleRestart = (e: KeyboardEvent) => {
+            if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'ArrowUp' || e.key === 'Up' || e.key === 'Enter') {
+                this.restartGame();
+
+                document.removeEventListener('keydown',handleRestart);
+            }
+        };
+
+        document.addEventListener('keydown', handleRestart);
     }
 }

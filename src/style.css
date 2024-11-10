@@ -9,6 +9,7 @@
 
 body {
     padding-top: 1.5rem;
+    background-color: var(--background-clr);
 }
 
 *,
@@ -196,4 +197,27 @@ main {
     left: 50%;
     transform: translate(-50%, -100%);
     text-transform: uppercase;
+    animation: floating-text 3s ease-in-out infinite;
+}
+
+.background-text {
+    background-color: var(--background-clr);
+    width: fit-content;
+    padding: 0.1rem 0.5rem;
+}
+
+@keyframes floating-text {
+    0% {
+        transform: translate(-50%, -100%);
+    }
+
+    50% {
+
+        transform: translate(-50%, calc(-100% + 0.3rem));
+    }
+
+    100% {
+        transform: translate(-50%, -100%);
+
+    }
 }
