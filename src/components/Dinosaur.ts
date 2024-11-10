@@ -18,10 +18,9 @@ export abstract class Dinosaur implements Drawable {
     protected _isJumping: boolean;
     protected _isBentDown: boolean;
     protected _velocityY: number;
-    protected _timeSinceBentDown: number;
 
     public constructor(position: Point, sizeMultiplier: number) {
-        this._position = new Point(position.x, position.y);
+        this._position = position;
         this._sizeMultiplier = sizeMultiplier;
         this._isJumping = false;
         this._isBentDown = false;
@@ -227,7 +226,7 @@ export class ForestDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/forest/bend/bend_1.png',
                 '/sprites/dinosaurs/forest/bend/bend_2.png',
                 '/sprites/dinosaurs/forest/bend/bend_3.png',
-                '/sprites/dinosaurs/forest/bend/bend_4.pn',
+                '/sprites/dinosaurs/forest/bend/bend_4.png',
             ],
             0,
         );

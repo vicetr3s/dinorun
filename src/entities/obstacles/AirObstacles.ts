@@ -3,6 +3,7 @@ import { Point } from '../../utils/Point.ts';
 import { Sprite } from '../../utils/Sprite.ts';
 import { GameData } from '../../main/GameData.ts';
 import { HitBox } from '../../utils/HitBox.ts';
+import { DesertComponentFactory, ForestComponentFactory, HellComponentFactory } from '../../components/Factories.ts';
 
 export abstract class AirObstacle extends Obstacle {
     public update(): void {
@@ -27,7 +28,7 @@ export class DesertAirObstacle extends AirObstacle {
     }
 
     public clone(): Obstacle {
-        return new DesertAirObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier);
+        return new DesertComponentFactory().createAirObstacle(this._sizeMultiplier);
     }
 }
 
@@ -47,7 +48,7 @@ export class ForestAirObstacle extends AirObstacle {
     }
 
     public clone(): Obstacle {
-        return new ForestAirObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier);
+        return new ForestComponentFactory().createAirObstacle(this._sizeMultiplier);
     }
 }
 
@@ -67,6 +68,6 @@ export class HellAirObstacle extends AirObstacle {
     }
 
     public clone(): Obstacle {
-        return new HellAirObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier);
+        return new HellComponentFactory().createAirObstacle(this._sizeMultiplier);
     }
 }

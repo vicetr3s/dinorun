@@ -22,6 +22,9 @@ export class GameData {
     #timeBetweenObstacles: number;
     #lastObstacleTimestamp: number;
     #dinosaurSpawnPosition: Point;
+    #dinosaurSizeMultiplier: number;
+    #groundObstacleSizeMultiplier: number;
+    #airObstacleSizeMultiplier: number;
     #airObstacleGenerationStartProbability: number;
     #airObstacleGenerationEndProbability: number;
     #airObstacleGenerationProbabilityMultiplier: number;
@@ -29,7 +32,7 @@ export class GameData {
     #hitBoxShrink: number;
 
     private constructor() {
-        this.#gameAcceleration = 0.00001;
+        this.#gameAcceleration = 0.00002;
         this.#gravity = 0.00098;
         this.#scoreMultiplier = 0.005;
         this.#canvas = <HTMLCanvasElement>document.getElementById('canvas');
@@ -39,6 +42,9 @@ export class GameData {
         this.#groundLevel = 300;
         this.#timeBetweenObstacles = 2000;
         this.#dinosaurSpawnPosition = new Point(50, this.#groundLevel);
+        this.#dinosaurSizeMultiplier = 3;
+        this.#groundObstacleSizeMultiplier = 2;
+        this.#airObstacleSizeMultiplier = 2;
         this.#initialVelocityJump = -0.5;
         this.#hitBoxShrink = 6;
 
@@ -196,6 +202,19 @@ export class GameData {
 
     get dinosaurSpawnPosition(): Point {
         return this.#dinosaurSpawnPosition;
+    }
+
+
+    get dinosaurSizeMultiplier(): number {
+        return this.#dinosaurSizeMultiplier;
+    }
+
+    get groundObstacleSizeMultiplier(): number {
+        return this.#groundObstacleSizeMultiplier;
+    }
+
+    get airObstacleSizeMultiplier(): number {
+        return this.#airObstacleSizeMultiplier;
     }
 
     get airObstacleGenerationStartProbability(): number {

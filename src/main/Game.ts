@@ -39,16 +39,10 @@ export class Game {
         this.#gameDataInstance = GameData.instance;
         this.#canvas = this.#gameDataInstance.canvas;
         this.#canvasContext = this.#gameDataInstance.canvasContext;
-        this.#dinosaur = this.#factory.createDinosaur(this.#gameDataInstance.dinosaurSpawnPosition, 3);
+        this.#dinosaur = this.#factory.createDinosaur(this.#gameDataInstance.dinosaurSpawnPosition, this.#gameDataInstance.dinosaurSizeMultiplier);
         this.#background = this.#factory.createBackground();
-        this.#originalAirObstacle = this.#factory.createAirObstacle(
-            new Point(0, this.#gameDataInstance.groundLevel),
-            2,
-        );
-        this.#originalGroundObstacle = this.#factory.createGroundObstacle(
-            new Point(0, this.#gameDataInstance.groundLevel),
-            2,
-        );
+        this.#originalAirObstacle = this.#factory.createAirObstacle(this.#gameDataInstance.airObstacleSizeMultiplier);
+        this.#originalGroundObstacle = this.#factory.createGroundObstacle(this.#gameDataInstance.groundObstacleSizeMultiplier);
         this.#obstacleList = [];
         this.#isGameOver = false;
         this.#gameDataInstance.highestScoreSpan.innerText = `H ${this.#gameDataInstance.highestScore}`;

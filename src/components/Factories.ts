@@ -3,7 +3,7 @@ import {
     AirObstacle,
     DesertAirObstacle,
     ForestAirObstacle,
-    HellAirObstacle
+    HellAirObstacle,
 } from '../entities/obstacles/AirObstacles.ts';
 import { ForestBackground } from '../entities/backgrounds/ForestBackground.ts';
 import { DesertBackground } from '../entities/backgrounds/DesertBackground.ts';
@@ -16,30 +16,46 @@ import {
     GroundObstacle,
     HellGroundObstacle,
 } from '../entities/obstacles/GroundObstacles.ts';
+import { GameData } from '../main/GameData.ts';
 
 export interface ComponentFactory {
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur;
 
-    createGroundObstacle(point: Point, sizeMultiplier: number): GroundObstacle;
+    createGroundObstacle(sizeMultiplier: number): GroundObstacle;
 
-    createAirObstacle(point: Point, sizeMultiplier: number): AirObstacle;
+    createAirObstacle(sizeMultiplier: number): AirObstacle;
 
     createBackground(): Background;
 }
 
 export class DesertComponentFactory implements ComponentFactory {
-    public constructor() {}
+    protected dinosaurBentDown: HTMLImageElement;
+
+    public constructor() {
+        this.dinosaurBentDown = new Image();
+        this.dinosaurBentDown.src = '/sprites/dinosaurs/desert/bend/bend_1.png';
+    }
 
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur {
-        return new DesertDinosaur(point, sizeMultiplier);
+        return new DesertDinosaur(new Point(point.x, point.y), sizeMultiplier);
     }
 
-    createGroundObstacle(point: Point, sizeMultiplier: number): GroundObstacle {
-        return new DesertGroundObstacle(point, sizeMultiplier);
+    createGroundObstacle(sizeMultiplier: number): GroundObstacle {
+        return new DesertGroundObstacle(
+            new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
+            sizeMultiplier,
+        );
     }
 
-    createAirObstacle(point: Point, sizeMultiplier: number): AirObstacle {
-        return new DesertAirObstacle(point, sizeMultiplier);
+    createAirObstacle(sizeMultiplier: number): AirObstacle {
+        const obstacle = new DesertAirObstacle(new Point(GameData.instance.canvas.width, 0), sizeMultiplier);
+        const maxY =
+            GameData.instance.groundLevel -
+            this.dinosaurBentDown.height * GameData.instance.dinosaurSizeMultiplier -
+            obstacle.size.height;
+        const minY = 0;
+        obstacle.position.y = Math.random() * (maxY - minY) + minY;
+        return obstacle;
     }
 
     createBackground(): Background {
@@ -48,16 +64,33 @@ export class DesertComponentFactory implements ComponentFactory {
 }
 
 export class ForestComponentFactory implements ComponentFactory {
+    protected dinosaurBentDown: HTMLImageElement;
+
+    public constructor() {
+        this.dinosaurBentDown = new Image();
+        this.dinosaurBentDown.src = '/sprites/dinosaurs/forest/bend/bend_1.png';
+    }
+
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur {
         return new ForestDinosaur(point, sizeMultiplier);
     }
 
-    createGroundObstacle(point: Point, sizeMultiplier: number): GroundObstacle {
-        return new ForestGroundObstacle(point, sizeMultiplier);
+    createGroundObstacle(sizeMultiplier: number): GroundObstacle {
+        return new ForestGroundObstacle(
+            new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
+            sizeMultiplier,
+        );
     }
 
-    createAirObstacle(point: Point, sizeMultiplier: number): AirObstacle {
-        return new ForestAirObstacle(point, sizeMultiplier);
+    createAirObstacle(sizeMultiplier: number): AirObstacle {
+        const obstacle = new ForestAirObstacle(new Point(GameData.instance.canvas.width, 0), sizeMultiplier);
+        const maxY =
+            GameData.instance.groundLevel -
+            this.dinosaurBentDown.height * GameData.instance.dinosaurSizeMultiplier -
+            obstacle.size.height;
+        const minY = 0;
+        obstacle.position.y = Math.random() * (maxY - minY) + minY;
+        return obstacle;
     }
 
     createBackground(): Background {
@@ -66,16 +99,33 @@ export class ForestComponentFactory implements ComponentFactory {
 }
 
 export class HellComponentFactory implements ComponentFactory {
+    protected dinosaurBentDown: HTMLImageElement;
+
+    public constructor() {
+        this.dinosaurBentDown = new Image();
+        this.dinosaurBentDown.src = '/sprites/dinosaurs/hell/bend/bend_1.png';
+    }
+
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur {
         return new HellDinosaur(point, sizeMultiplier);
     }
 
-    createGroundObstacle(point: Point, sizeMultiplier: number): GroundObstacle {
-        return new HellGroundObstacle(point, sizeMultiplier);
+    createGroundObstacle(sizeMultiplier: number): GroundObstacle {
+        return new HellGroundObstacle(
+            new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
+            sizeMultiplier,
+        );
     }
 
-    createAirObstacle(point: Point, sizeMultiplier: number): AirObstacle {
-        return new HellAirObstacle(point, sizeMultiplier);
+    createAirObstacle(sizeMultiplier: number): AirObstacle {
+        const obstacle = new HellAirObstacle(new Point(GameData.instance.canvas.width, 0), sizeMultiplier);
+        const maxY =
+            GameData.instance.groundLevel -
+            this.dinosaurBentDown.height * GameData.instance.dinosaurSizeMultiplier -
+            obstacle.size.height;
+        const minY = 0;
+        obstacle.position.y = Math.random() * (maxY - minY) + minY;
+        return obstacle;
     }
 
     createBackground(): Background {
