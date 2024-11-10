@@ -157,9 +157,7 @@ export class Game {
     }
 
     private restartGame(): void {
-        const gameOverSection = document.getElementById('game-over');
-
-        gameOverSection?.classList.add('hidden');
+        document.getElementById('game-over')?.classList.add('hidden');
         document.getElementById('jump-to-start')?.classList.add('hidden');
 
         if (this.#animationFrameId !== null) {
@@ -277,16 +275,22 @@ export class Game {
     private initializeRestartButton(): void {
         const restartButton = document.getElementById('restart-btn');
 
-        restartButton?.addEventListener('click', () => this.restartGame());
+        const handleRestartAndListeners = () => {
+            this.restartGame();
 
-        const handleRestart = (e: KeyboardEvent) => {
+            document.removeEventListener('keydown', handleKey);
+        };
+
+        const handleKey = (e: KeyboardEvent) => {
             if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'ArrowUp' || e.key === 'Up' || e.key === 'Enter') {
-                this.restartGame();
-
-                document.removeEventListener('keydown',handleRestart);
+                handleRestartAndListeners();
             }
         };
 
-        document.addEventListener('keydown', handleRestart);
+        restartButton?.addEventListener('click', () => {
+            handleRestartAndListeners();
+        });
+
+        document.addEventListener('keydown', handleKey);
     }
 }
