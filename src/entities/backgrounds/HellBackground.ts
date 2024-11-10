@@ -8,7 +8,7 @@ export class HellBackground extends Background {
         this.middleLayer = new Sprite(['/sprites/backgrounds/hell/bg_2.png'], 0);
         this.frontLayer = new Sprite(['/sprites/backgrounds/hell/bg_3.png'], 0);
         this.backLayerLevel = 0;
-        this.middleLayerLevel = 50;
-        this.frontLayerLevel = 80;
+        this.middleLayerLevel = -20;
+        this.frontLayerLevel = -10;
     }
 }

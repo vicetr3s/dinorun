@@ -247,6 +247,5 @@ export class Game {
 
         this.#gameDataInstance.airObstacleGenerationProbability +=
             this.#gameDataInstance.airObstacleGenerationProbabilityMultiplier * this.#gameDataInstance.deltaTime;
-        console.log(this.#gameDataInstance.airObstacleGenerationProbability);
     }
 }

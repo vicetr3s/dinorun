@@ -6,12 +6,14 @@ export abstract class Background implements Drawable {
     frontLayer: Sprite;
     middleLayer: Sprite;
     backLayer: Sprite;
+    ground: Sprite;
     frontLayerSpeed: number;
     middleLayerSpeed: number;
     backLayerSpeed: number;
     frontLayerX: number;
     middleLayerX: number;
     backLayerX: number;
+    groundX: number;
     frontLayerLevel: number;
     middleLayerLevel: number;
     backLayerLevel: number;
@@ -23,6 +25,7 @@ export abstract class Background implements Drawable {
         this.frontLayerX = 0;
         this.middleLayerX = 0;
         this.backLayerX = 0;
+        this.groundX = 0;
     }
 
     update() {
@@ -33,6 +36,7 @@ export abstract class Background implements Drawable {
         this.frontLayerX -= this.frontLayerSpeed;
         this.middleLayerX -= this.middleLayerSpeed;
         this.backLayerX -= this.backLayerSpeed;
+        this.groundX -= GameData.instance.groundObstacleXSpeed;
 
         if (this.frontLayerX <= -canvas.width) {
             this.frontLayerX = 0;
@@ -42,6 +46,10 @@ export abstract class Background implements Drawable {
         }
         if (this.backLayerX <= -canvas.width) {
             this.backLayerX = 0;
+        }
+
+        if (this.groundX <= -canvas.width) {
+            this.groundX = 0;
         }
     }
 
@@ -91,13 +99,20 @@ export abstract class Background implements Drawable {
             canvas.height,
         );
 
-        const gradient = canvasContext.createLinearGradient(0, 0, 0, canvas.height);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(0.8, 'orange');
-        gradient.addColorStop(1, 'brown');
-        canvasContext.fillStyle = gradient;
-        canvasContext.fillRect(0, GameData.instance.groundLevel, canvas.width, canvas.height);
-        canvasContext.strokeStyle = 'black';
-        canvasContext.strokeRect(0, GameData.instance.groundLevel, canvas.width, canvas.height);
+        canvasContext.drawImage(
+            this.ground.currentImage,
+            this.groundX,
+            GameData.instance.groundLevel,
+            canvas.width,
+            canvas.height,
+        );
+
+        canvasContext.drawImage(
+            this.ground.currentImage,
+            this.groundX + canvas.width,
+            GameData.instance.groundLevel,
+            canvas.width,
+            canvas.height,
+        );
     }
 }

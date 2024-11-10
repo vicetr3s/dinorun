@@ -31,7 +31,7 @@ export abstract class Dinosaur implements Drawable {
             this._currentSprite.currentImage.width * this._sizeMultiplier,
             this._currentSprite.currentImage.height * this._sizeMultiplier,
         );
-        if (this._position.y >= GameData.instance.groundLevel) this._position.y -= this._size.height;
+        if (this._position.y > GameData.instance.groundLevel - this._size.height) this._position.y -= this._size.height;
         this._hitBox = new HitBox(this._position, this._size);
     }
 
@@ -67,7 +67,7 @@ export abstract class Dinosaur implements Drawable {
         if (this.isJumping) return;
         this._currentSprite = this._idleSprite;
         this.isJumping = true;
-        this._velocityY = -0.5; // Initial jump velocity
+        this._velocityY = GameData.instance.initialVelocityJump;
     }
 
     public run(): void {

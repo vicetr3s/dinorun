@@ -25,6 +25,7 @@ export class GameData {
     #airObstacleGenerationStartProbability: number;
     #airObstacleGenerationEndProbability: number;
     #airObstacleGenerationProbabilityMultiplier: number;
+    #initialVelocityJump: number;
 
     private constructor() {
         this.#gameAcceleration = 0.00001;
@@ -37,6 +38,7 @@ export class GameData {
         this.#groundLevel = 300;
         this.#timeBetweenObstacles = 2000;
         this.#dinosaurSpawnPosition = new Point(50, this.#groundLevel);
+        this.#initialVelocityJump = -0.5;
 
         this.configureCanvas();
         this.initializeNewGameVariables();
@@ -208,5 +210,9 @@ export class GameData {
 
     set airObstacleGenerationProbability(value: number) {
         this.#airObstacleGenerationProbability = value;
+    }
+
+    get initialVelocityJump(): number {
+        return this.#initialVelocityJump;
     }
 }
