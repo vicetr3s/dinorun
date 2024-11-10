@@ -27,9 +27,9 @@ export abstract class Background implements Drawable {
 
     update() {
         const canvas = GameData.instance.canvas;
-        this.frontLayerSpeed += GameData.instance.gameAcceleration;
-        this.middleLayerSpeed += GameData.instance.gameAcceleration;
-        this.backLayerSpeed += GameData.instance.gameAcceleration;
+        this.frontLayerSpeed += GameData.instance.gameAcceleration * GameData.instance.deltaTime;
+        this.middleLayerSpeed += GameData.instance.gameAcceleration * GameData.instance.deltaTime;
+        this.backLayerSpeed += GameData.instance.gameAcceleration * GameData.instance.deltaTime;
         this.frontLayerX -= this.frontLayerSpeed;
         this.middleLayerX -= this.middleLayerSpeed;
         this.backLayerX -= this.backLayerSpeed;

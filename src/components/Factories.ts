@@ -10,7 +10,12 @@ import { DesertBackground } from '../entities/backgrounds/DesertBackground.ts';
 import { HellBackground } from '../entities/backgrounds/HellBackground.ts';
 import { DesertDinosaur, Dinosaur, ForestDinosaur, HellDinosaur } from './Dinosaur.ts';
 import { Point } from '../utils/Point.ts';
-import { DesertGroundObstacle, GroundObstacle, HellGroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
+import {
+    DesertGroundObstacle,
+    ForestGroundObstacle,
+    GroundObstacle,
+    HellGroundObstacle,
+} from '../entities/obstacles/GroundObstacles.ts';
 
 export interface ComponentFactory {
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur;

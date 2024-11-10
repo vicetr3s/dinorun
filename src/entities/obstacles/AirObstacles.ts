@@ -2,11 +2,12 @@ import { Obstacle } from '../../components/Obstacle.ts';
 import { Point } from '../../utils/Point.ts';
 import { Sprite } from '../../utils/Sprite.ts';
 import { GameData } from '../../main/GameData.ts';
+import { HitBox } from '../../utils/HitBox.ts';
 
 export abstract class AirObstacle extends Obstacle {
     public update(): void {
-        GameData.instance.airObstacleXSpeed += GameData.instance.gameAcceleration;
         this._position.x -= GameData.instance.airObstacleXSpeed;
+        this._hitBox = new HitBox(this._position, this._size);
     }
 }
 

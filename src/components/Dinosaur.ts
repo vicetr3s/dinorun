@@ -19,7 +19,7 @@ export abstract class Dinosaur implements Drawable {
     protected _velocityY: number;
 
     public constructor(position: Point, sizeMultiplier: number) {
-        this._position = position;
+        this._position = new Point(position.x, position.y);
         this._sizeMultiplier = sizeMultiplier;
         this._isJumping = false;
         this._velocityY = 0;
@@ -31,7 +31,7 @@ export abstract class Dinosaur implements Drawable {
             this._currentSprite.currentImage.width * this._sizeMultiplier,
             this._currentSprite.currentImage.height * this._sizeMultiplier,
         );
-        this._position.y -= this._size.height;
+        if (this._position.y >= GameData.instance.groundLevel) this._position.y -= this._size.height;
         this._hitBox = new HitBox(this._position, this._size);
     }
 

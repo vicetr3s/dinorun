@@ -2,11 +2,12 @@ import { Obstacle } from '../../components/Obstacle.ts';
 import { Point } from '../../utils/Point.ts';
 import { Sprite } from '../../utils/Sprite.ts';
 import { GameData } from '../../main/GameData.ts';
+import { HitBox } from '../../utils/HitBox.ts';
 
 export abstract class GroundObstacle extends Obstacle {
     public update(): void {
-        GameData.instance.groundObstacleXSpeed += GameData.instance.gameAcceleration;
         this._position.x -= GameData.instance.groundObstacleXSpeed;
+        this._hitBox = new HitBox(this._position, this._size);
     }
 }
 
@@ -25,7 +26,7 @@ export class DesertGroundObstacle extends GroundObstacle {
 export class ForestGroundObstacle extends GroundObstacle {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._sprite = new Sprite(['/sprites/obstacles/ground/tree_trunk.png'], 90);
+        this._sprite = new Sprite(['/sprites/obstacles/ground/forest/tree_trunk.png'], 90);
         this.constructorPart2();
     }
 

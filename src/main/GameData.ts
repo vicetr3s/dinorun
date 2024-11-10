@@ -27,7 +27,7 @@ export class GameData {
     #airObstacleGenerationProbabilityMultiplier: number;
 
     private constructor() {
-        this.#gameAcceleration = 0.001;
+        this.#gameAcceleration = 0.00001;
         this.#gravity = 0.00098;
         this.#scoreMultiplier = 0.005;
         this.#canvas = <HTMLCanvasElement>document.getElementById('canvas');
@@ -35,7 +35,7 @@ export class GameData {
         this.#highestScoreSpan = <HTMLElement>document.getElementById('highest-score');
         this.#currentScoreSpan = <HTMLElement>document.getElementById('current-score');
         this.#groundLevel = 300;
-        this.#timeBetweenObstacles = 1000;
+        this.#timeBetweenObstacles = 2000;
         this.#dinosaurSpawnPosition = new Point(50, this.#groundLevel);
 
         this.configureCanvas();
@@ -43,10 +43,10 @@ export class GameData {
     }
 
     public initializeNewGameVariables(): void {
-        this.#airObstacleXSpeed = 5;
-        this.#airObstacleYSpeed = 8;
-        this.#groundObstacleXSpeed = 5;
-        this.#groundObstacleYSpeed = 8;
+        this.#airObstacleXSpeed = 2;
+        this.#airObstacleYSpeed = 4;
+        this.#groundObstacleXSpeed = 2;
+        this.#groundObstacleYSpeed = 4;
         this.#highestScore = this.getLocalStorageScore();
         this.#lastObstacleTimestamp = 0;
         this.#airObstacleGenerationStartProbability = 0.1;
@@ -83,7 +83,6 @@ export class GameData {
     }
 
     set airObstacleXSpeed(value: number) {
-        if (value < 5) return;
         this.#airObstacleXSpeed = value;
     }
 

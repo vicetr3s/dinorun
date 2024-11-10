@@ -37,11 +37,11 @@ export class Game {
         this.#background = this.#factory.createBackground();
         this.#originalAirObstacle = this.#factory.createAirObstacle(
             new Point(0, this.#gameDataInstance.groundLevel),
-            3,
+            2,
         );
         this.#originalGroundObstacle = this.#factory.createGroundObstacle(
             new Point(0, this.#gameDataInstance.groundLevel),
-            3,
+            2,
         );
         this.#obstacleList = [];
         this.#isGameOver = false;
@@ -78,6 +78,8 @@ export class Game {
         this.#dinosaur.update();
         this.#background.update();
         this.updateObstacles();
+        GameData.instance.airObstacleXSpeed += GameData.instance.gameAcceleration * GameData.instance.deltaTime;
+        GameData.instance.groundObstacleXSpeed += GameData.instance.gameAcceleration * GameData.instance.deltaTime;
     }
 
     private drawAll(): void {

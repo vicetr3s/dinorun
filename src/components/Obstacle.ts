@@ -29,7 +29,7 @@ export abstract class Obstacle implements ObstacleProtoype, Drawable {
             this._sprite.currentImage.width * this._sizeMultiplier,
             this._sprite.currentImage.height * this._sizeMultiplier,
         );
-        this._position.y -= this._size.height;
+        if (this._position.y >= GameData.instance.groundLevel) this._position.y -= this._size.height;
         this._hitBox = new HitBox(this._position, this._size);
     }
 
