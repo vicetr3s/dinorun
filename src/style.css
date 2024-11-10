@@ -54,9 +54,8 @@ p {
 }
 
 .scores {
-    margin-left: auto;
+    margin: 1rem 1rem 1rem auto;
     width: fit-content;
-    padding: 1rem;
 }
 
 .btn {
@@ -146,6 +145,7 @@ p {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
 
     &:before {
         content: '';
@@ -159,7 +159,6 @@ p {
 
     & h2 {
         font-weight: 700;
-        margin-bottom: 1rem;
     }
 }
 
@@ -212,12 +211,10 @@ main {
     }
 
     50% {
-
         transform: translate(-50%, calc(-100% + 0.3rem));
     }
 
     100% {
         transform: translate(-50%, -100%);
-
     }
 }

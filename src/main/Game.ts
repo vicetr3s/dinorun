@@ -146,12 +146,14 @@ export class Game {
     }
 
     private gameOver(): void {
+        const gameOverScore = <HTMLElement>document.getElementById('game-over-score');
         this.#isGameOver = true;
 
         if (this.#gameDataInstance.currentScore > this.#gameDataInstance.highestScore)
             this.#gameDataInstance.setLocalStorageScore(this.#gameDataInstance.currentScore);
 
         document.getElementById('game-over')?.classList.toggle('hidden');
+        gameOverScore.innerText = `Your score: ${Math.floor(this.#gameDataInstance.currentScore)}`;
 
         this.initializeRestartButton();
     }
