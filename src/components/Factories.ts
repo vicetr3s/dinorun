@@ -17,6 +17,7 @@ import {
     HellGroundObstacle,
 } from '../entities/obstacles/GroundObstacles.ts';
 import { GameData } from '../main/GameData.ts';
+import { DesertImagePaths, ForestImagePaths, HellImagePaths, ImagePaths } from './ImagePaths.ts';
 
 export interface ComponentFactory {
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur;
@@ -26,6 +27,8 @@ export interface ComponentFactory {
     createAirObstacle(sizeMultiplier: number): AirObstacle;
 
     createBackground(): Background;
+
+    createImagePaths(): ImagePaths;
 }
 
 export class DesertComponentFactory implements ComponentFactory {
@@ -63,6 +66,10 @@ export class DesertComponentFactory implements ComponentFactory {
     createBackground(): Background {
         return new DesertBackground();
     }
+
+    createImagePaths(): ImagePaths {
+        return new DesertImagePaths();
+    }
 }
 
 export class ForestComponentFactory implements ComponentFactory {
@@ -83,7 +90,7 @@ export class ForestComponentFactory implements ComponentFactory {
                 (GameData.instance.groundObstacleMaxSizeMultiplier -
                     GameData.instance.groundObstacleMinSizeMultiplier) +
             GameData.instance.groundObstacleMinSizeMultiplier;
-        return new ForestGroundObstacle(new Point(GameData.instance.canvas.width, GameData.instance.groundLevel), size);
+        return new ForestGroundObstacle(new Point(GameData.instance.canvas.width, GameData.instance.groundLevel), size * 0.75);
     }
 
     createAirObstacle(sizeMultiplier: number): AirObstacle {
@@ -99,6 +106,10 @@ export class ForestComponentFactory implements ComponentFactory {
 
     createBackground(): Background {
         return new ForestBackground();
+    }
+
+    createImagePaths(): ImagePaths {
+        return new ForestImagePaths();
     }
 }
 
@@ -122,7 +133,7 @@ export class HellComponentFactory implements ComponentFactory {
             GameData.instance.groundObstacleMinSizeMultiplier;
         return new HellGroundObstacle(
             new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
-            size * 2.1,
+            size * 1.35,
         );
     }
 
@@ -139,5 +150,9 @@ export class HellComponentFactory implements ComponentFactory {
 
     createBackground(): Background {
         return new HellBackground();
+    }
+
+    createImagePaths(): ImagePaths {
+        return new HellImagePaths();
     }
 }

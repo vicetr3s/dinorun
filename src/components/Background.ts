@@ -1,6 +1,7 @@
 import { Drawable } from '../main/Interfaces.ts';
 import { Sprite } from '../utils/Sprite.ts';
 import { GameData } from '../main/GameData.ts';
+import { ImageLoader } from '../utils/ImageLoader.ts';
 
 export abstract class Background implements Drawable {
     frontLayer: Sprite;
@@ -26,6 +27,8 @@ export abstract class Background implements Drawable {
         this.middleLayerX = 0;
         this.backLayerX = 0;
         this.groundX = 0;
+
+        this.setSpritesFromImageLoader();
     }
 
     update() {
@@ -114,5 +117,12 @@ export abstract class Background implements Drawable {
             canvas.width,
             canvas.height,
         );
+    }
+
+    private setSpritesFromImageLoader(): void {
+        this.backLayer = new Sprite([ImageLoader.instance.getImages('background')[0]], 0);
+        this.middleLayer = new Sprite([ImageLoader.instance.getImages('background')[1]], 0);
+        this.frontLayer = new Sprite([ImageLoader.instance.getImages('background')[2]], 0);
+        this.ground = new Sprite([ImageLoader.instance.getImages('background')[3]], 0);
     }
 }

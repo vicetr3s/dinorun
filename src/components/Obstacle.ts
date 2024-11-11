@@ -6,11 +6,11 @@ import { BehaviourStrategy, TraditionalStrategy } from '../main/Behaviours.ts';
 import { Sprite } from '../utils/Sprite.ts';
 import { GameData } from '../main/GameData.ts';
 
-export interface ObstacleProtoype {
+export interface ObstaclePrototype {
     clone(): Obstacle;
 }
 
-export abstract class Obstacle implements ObstacleProtoype, Drawable {
+export abstract class Obstacle implements ObstaclePrototype, Drawable {
     protected _sprite: Sprite;
     protected _position: Point;
     protected _size: Dimension;
@@ -23,6 +23,8 @@ export abstract class Obstacle implements ObstacleProtoype, Drawable {
         this._position = point;
         this._behaviour = new TraditionalStrategy();
         this._sizeMultiplier = sizeMultiplier;
+
+        this.setSpriteFromImageLoader();
         this._velocityY = 0;
     }
 
@@ -57,9 +59,7 @@ export abstract class Obstacle implements ObstacleProtoype, Drawable {
         return this._sprite;
     }
 
-    public set sprite(value: Sprite) {
-        this._sprite = value;
-    }
+    public abstract setSpriteFromImageLoader(): void;
 
     public get position(): Point {
         return this._position;

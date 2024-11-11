@@ -4,6 +4,7 @@ import { Sprite } from '../../utils/Sprite.ts';
 import { GameData } from '../../main/GameData.ts';
 import { HitBox } from '../../utils/HitBox.ts';
 import { DesertComponentFactory, ForestComponentFactory, HellComponentFactory } from '../../components/Factories.ts';
+import { ImageLoader } from '../../utils/ImageLoader.ts';
 
 export abstract class AirObstacle extends Obstacle {
     public update(): void {
@@ -27,20 +28,16 @@ export abstract class AirObstacle extends Obstacle {
         if (this._position.y < this._size.height) this._position.y = this._size.height;
         this._hitBox = new HitBox(this._position, this._size);
     }
+
+    public setSpriteFromImageLoader() {
+        this._sprite = new Sprite(ImageLoader.instance.getImages('air_obst'), 90);
+    }
 }
 
 export class DesertAirObstacle extends AirObstacle {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._sprite = new Sprite(
-            [
-                '/sprites/obstacles/air/desert/pterosaur_1.png',
-                '/sprites/obstacles/air/desert/pterosaur_2.png',
-                '/sprites/obstacles/air/desert/pterosaur_3.png',
-                '/sprites/obstacles/air/desert/pterosaur_4.png',
-            ],
-            90,
-        );
+
         this.constructorPart2();
     }
 
@@ -52,15 +49,7 @@ export class DesertAirObstacle extends AirObstacle {
 export class ForestAirObstacle extends AirObstacle {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._sprite = new Sprite(
-            [
-                '/sprites/obstacles/air/forest/pterosaur_1.png',
-                '/sprites/obstacles/air/forest/pterosaur_2.png',
-                '/sprites/obstacles/air/forest/pterosaur_3.png',
-                '/sprites/obstacles/air/forest/pterosaur_4.png',
-            ],
-            90,
-        );
+
         this.constructorPart2();
     }
 
@@ -72,15 +61,7 @@ export class ForestAirObstacle extends AirObstacle {
 export class HellAirObstacle extends AirObstacle {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._sprite = new Sprite(
-            [
-                '/sprites/obstacles/air/hell/demon/demon_idle_1.png',
-                '/sprites/obstacles/air/hell/demon/demon_idle_2.png',
-                '/sprites/obstacles/air/hell/demon/demon_idle_3.png',
-                '/sprites/obstacles/air/hell/demon/demon_idle_4.png',
-            ],
-            90,
-        );
+
         this.constructorPart2();
     }
 

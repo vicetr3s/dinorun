@@ -4,6 +4,7 @@ import { HitBox } from '../utils/HitBox.ts';
 import { Sprite } from '../utils/Sprite.ts';
 import { Drawable } from '../main/Interfaces.ts';
 import { GameData } from '../main/GameData.ts';
+import { ImageLoader } from '../utils/ImageLoader.ts';
 
 export abstract class Dinosaur implements Drawable {
     protected _idleSprite: Sprite;
@@ -25,6 +26,8 @@ export abstract class Dinosaur implements Drawable {
         this._isJumping = false;
         this._isBentDown = false;
         this._velocityY = 0;
+
+        this.setSpritesFromImageLoader();
     }
 
     protected constructorPart2() {
@@ -103,24 +106,18 @@ export abstract class Dinosaur implements Drawable {
         return this._idleSprite;
     }
 
-    public set idleSprite(value: Sprite) {
-        this._idleSprite = value;
-    }
-
     public get runSprite(): Sprite {
         return this._runSprite;
-    }
-
-    public set runSprite(value: Sprite) {
-        this._runSprite = value;
     }
 
     public get bendDownSprite(): Sprite {
         return this._bendDownSprite;
     }
 
-    public set bendDownSprite(value: Sprite) {
-        this._bendDownSprite = value;
+    private setSpritesFromImageLoader() {
+        this._idleSprite = new Sprite(ImageLoader.instance.getImages('dino_idle'),90);
+        this._runSprite = new Sprite(ImageLoader.instance.getImages('dino_run'),90);
+        this._bendDownSprite = new Sprite(ImageLoader.instance.getImages('dino_bend'),90);
     }
 
     public get currentSprite(): Sprite {
@@ -167,33 +164,6 @@ export abstract class Dinosaur implements Drawable {
 export class DesertDinosaur extends Dinosaur {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._idleSprite = new Sprite(
-            [
-                '/sprites/dinosaurs/desert/idle/idle_1.png',
-                '/sprites/dinosaurs/desert/idle/idle_2.png',
-                '/sprites/dinosaurs/desert/idle/idle_3.png',
-                '/sprites/dinosaurs/desert/idle/idle_4.png',
-            ],
-            90,
-        );
-        this._runSprite = new Sprite(
-            [
-                '/sprites/dinosaurs/desert/run/run_1.png',
-                '/sprites/dinosaurs/desert/run/run_2.png',
-                '/sprites/dinosaurs/desert/run/run_3.png',
-                '/sprites/dinosaurs/desert/run/run_4.png',
-            ],
-            90,
-        );
-        this._bendDownSprite = new Sprite(
-            [
-                '/sprites/dinosaurs/desert/bend/bend_1.png',
-                '/sprites/dinosaurs/desert/bend/bend_2.png',
-                '/sprites/dinosaurs/desert/bend/bend_3.png',
-                '/sprites/dinosaurs/desert/bend/bend_4.png',
-            ],
-            90,
-        );
         this.constructorPart2();
     }
 }
@@ -201,35 +171,6 @@ export class DesertDinosaur extends Dinosaur {
 export class ForestDinosaur extends Dinosaur {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._idleSprite = new Sprite(
-            [
-                '/sprites/dinosaurs/forest/idle/idle_1.png',
-                '/sprites/dinosaurs/forest/idle/idle_2.png',
-                '/sprites/dinosaurs/forest/idle/idle_3.png',
-                '/sprites/dinosaurs/forest/idle/idle_4.png',
-            ],
-            90,
-        );
-        this._runSprite = new Sprite(
-            [
-                '/sprites/dinosaurs/forest/run/run_1.png',
-                '/sprites/dinosaurs/forest/run/run_2.png',
-                '/sprites/dinosaurs/forest/run/run_3.png',
-                '/sprites/dinosaurs/forest/run/run_4.png',
-                '/sprites/dinosaurs/forest/run/run_5.png',
-                '/sprites/dinosaurs/forest/run/run_6.png',
-            ],
-            90,
-        );
-        this._bendDownSprite = new Sprite(
-            [
-                '/sprites/dinosaurs/forest/bend/bend_1.png',
-                '/sprites/dinosaurs/forest/bend/bend_2.png',
-                '/sprites/dinosaurs/forest/bend/bend_3.png',
-                '/sprites/dinosaurs/forest/bend/bend_4.png',
-            ],
-            90,
-        );
         this.constructorPart2();
     }
 }
@@ -237,35 +178,6 @@ export class ForestDinosaur extends Dinosaur {
 export class HellDinosaur extends Dinosaur {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._idleSprite = new Sprite(
-            [
-                '/sprites/dinosaurs/hell/idle/idle_1.png',
-                '/sprites/dinosaurs/hell/idle/idle_2.png',
-                '/sprites/dinosaurs/hell/idle/idle_3.png',
-                '/sprites/dinosaurs/hell/idle/idle_4.png',
-            ],
-            90,
-        );
-        this._runSprite = new Sprite(
-            [
-                '/sprites/dinosaurs/hell/run/run_1.png',
-                '/sprites/dinosaurs/hell/run/run_2.png',
-                '/sprites/dinosaurs/hell/run/run_3.png',
-                '/sprites/dinosaurs/hell/run/run_4.png',
-                '/sprites/dinosaurs/hell/run/run_5.png',
-                '/sprites/dinosaurs/hell/run/run_6.png',
-            ],
-            90,
-        );
-        this._bendDownSprite = new Sprite(
-            [
-                '/sprites/dinosaurs/hell/bend/bend_1.png',
-                '/sprites/dinosaurs/hell/bend/bend_2.png',
-                '/sprites/dinosaurs/hell/bend/bend_3.png',
-                '/sprites/dinosaurs/hell/bend/bend_4.png',
-            ],
-            90,
-        );
         this.constructorPart2();
     }
 }

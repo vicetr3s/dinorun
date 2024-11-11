@@ -45,8 +45,8 @@ export class GameData {
         this.#groundLevel = 300;
         this.#dinosaurSpawnPosition = new Point(50, this.#groundLevel);
         this.#dinosaurSizeMultiplier = 3;
-        this.#groundObstacleMinSizeMultiplier = 1;
-        this.#groundObstacleMaxSizeMultiplier = 4;
+        this.#groundObstacleMinSizeMultiplier = 1.5;
+        this.#groundObstacleMaxSizeMultiplier = 3;
         this.#airObstacleSizeMultiplier = 2;
         this.#maxHeightAirObstacles = 100;
         this.#initialVelocityJump = -0.5;
@@ -201,7 +201,6 @@ export class GameData {
     get groundObstacleMinSizeMultiplier(): number {
         return this.#groundObstacleMinSizeMultiplier;
     }
-
 
     get groundObstacleMaxSizeMultiplier(): number {
         return this.#groundObstacleMaxSizeMultiplier;

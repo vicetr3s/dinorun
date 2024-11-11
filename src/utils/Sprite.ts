@@ -4,12 +4,11 @@ export class Sprite {
     #frameDuration: number;
     #timeSinceLastFrame: number;
 
-    constructor(imagePaths: string[], frameDuration: number) {
-        this.#images = [];
+    constructor(images: HTMLImageElement[], frameDuration: number) {
+        this.#images = images;
         this.#frameDuration = frameDuration;
         this.#timeSinceLastFrame = 0;
 
-        this.setImagesFromPaths(imagePaths);
         this.#currentImage = this.#images[0];
     }
 
@@ -28,17 +27,6 @@ export class Sprite {
 
         this.nextImage();
         this.#timeSinceLastFrame = 0;
-    }
-
-    private setImagesFromPaths(imagePaths: string[]): void {
-        for (const path of imagePaths) {
-            const img = new Image();
-            img.src = path;
-
-            this.#images.push(img);
-
-            if (!this.#currentImage) this.#currentImage = img;
-        }
     }
 
     get images(): HTMLImageElement[] {

@@ -4,6 +4,7 @@ import { Sprite } from '../../utils/Sprite.ts';
 import { GameData } from '../../main/GameData.ts';
 import { HitBox } from '../../utils/HitBox.ts';
 import { DesertComponentFactory, ForestComponentFactory, HellComponentFactory } from '../../components/Factories.ts';
+import { ImageLoader } from '../../utils/ImageLoader.ts';
 
 export abstract class GroundObstacle extends Obstacle {
     public update(): void {
@@ -22,12 +23,16 @@ export abstract class GroundObstacle extends Obstacle {
         }
         this._hitBox = new HitBox(this._position, this._size);
     }
+
+    public setSpriteFromImageLoader() {
+        this._sprite = new Sprite(ImageLoader.instance.getImages('ground_obst'), 250);
+    }
 }
 
 export class DesertGroundObstacle extends GroundObstacle {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._sprite = new Sprite(['/sprites/obstacles/ground/desert/cactus.png'], 90);
+
         this.constructorPart2();
     }
 
@@ -39,7 +44,7 @@ export class DesertGroundObstacle extends GroundObstacle {
 export class ForestGroundObstacle extends GroundObstacle {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._sprite = new Sprite(['/sprites/obstacles/ground/forest/tree_trunk.png'], 90);
+
         this.constructorPart2();
     }
 
@@ -51,13 +56,7 @@ export class ForestGroundObstacle extends GroundObstacle {
 export class HellGroundObstacle extends GroundObstacle {
     public constructor(point: Point, sizeMultiplier: number) {
         super(point, sizeMultiplier);
-        this._sprite = new Sprite(
-            [
-                '/sprites/obstacles/ground/hell/hand/malefic_hand_1.png',
-                '/sprites/obstacles/ground/hell/hand/malefic_hand_2.png',
-            ],
-            90,
-        );
+
         this.constructorPart2();
     }
 

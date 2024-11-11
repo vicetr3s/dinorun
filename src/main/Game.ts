@@ -283,12 +283,8 @@ export class Game {
     }
 
     private decreaseTimeBetweenObstacles(): void {
-        if (
-            this.#gameDataInstance.timeBetweenObstacles <=
-            this.#gameDataInstance.endTimeBetweenObstacles
-        ) {
-            this.#gameDataInstance.timeBetweenObstacles =
-                this.#gameDataInstance.startTimeBetweenObstacles;
+        if (this.#gameDataInstance.timeBetweenObstacles <= this.#gameDataInstance.endTimeBetweenObstacles) {
+            this.#gameDataInstance.timeBetweenObstacles = this.#gameDataInstance.startTimeBetweenObstacles;
             return;
         }
 
