@@ -122,7 +122,7 @@ export class HellComponentFactory implements ComponentFactory {
             GameData.instance.groundObstacleMinSizeMultiplier;
         return new HellGroundObstacle(
             new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
-            size * 2.2,
+            size * 2.1,
         );
     }
 

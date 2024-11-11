@@ -5,6 +5,7 @@ import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 import { Background } from '../components/Background.ts';
 import { Obstacle } from '../components/Obstacle.ts';
 import { Dinosaur } from '../components/Dinosaur.ts';
+import { DynamicStrategy } from './Behaviours.ts';
 
 export class Game {
     #canvas: HTMLCanvasElement;
@@ -217,6 +218,7 @@ export class Game {
         const obstacle = this.createRandomObstacle();
 
         obstacle.position.x = this.#gameDataInstance.canvas.width;
+        obstacle.setBehaviour(new DynamicStrategy()); // The behaviour should be set here (I believe)
 
         this.#obstacleList.push(obstacle);
 
@@ -290,7 +292,6 @@ export class Game {
             return;
         }
 
-        console.log(this.#gameDataInstance.timeBetweenObstacles);
         this.#gameDataInstance.timeBetweenObstacles -=
             this.#gameDataInstance.timeBetweenObstaclesMultiplier * this.#gameDataInstance.deltaTime;
     }

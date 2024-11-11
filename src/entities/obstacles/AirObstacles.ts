@@ -4,10 +4,28 @@ import { Sprite } from '../../utils/Sprite.ts';
 import { GameData } from '../../main/GameData.ts';
 import { HitBox } from '../../utils/HitBox.ts';
 import { DesertComponentFactory, ForestComponentFactory, HellComponentFactory } from '../../components/Factories.ts';
+import { Game } from '../../main/Game.ts';
 
 export abstract class AirObstacle extends Obstacle {
     public update(): void {
         this._position.x -= GameData.instance.airObstacleXSpeed;
+        if (GameData.instance.airObstacleYSpeed == 0) {
+            if (this._position.y > GameData.instance.groundLevel - this._position.y) this._behaviour.move(true);
+            else this._behaviour.move(false);
+        }
+        const decelerate = 0.02;
+        if (GameData.instance.airObstacleYSpeed < 0) {
+            GameData.instance.airObstacleYSpeed += decelerate * GameData.instance.deltaTime;
+            if (GameData.instance.airObstacleYSpeed > 0) GameData.instance.airObstacleYSpeed = 0;
+        } else if (GameData.instance.airObstacleYSpeed > 0) {
+            GameData.instance.airObstacleYSpeed -= decelerate * GameData.instance.deltaTime;
+            if (GameData.instance.airObstacleYSpeed < 0) GameData.instance.airObstacleYSpeed = 0;
+        }
+        this._position.y += GameData.instance.airObstacleYSpeed;
+        if (this._position.y > GameData.instance.groundLevel - this._size.height)
+            this._position.y = GameData.instance.groundLevel - this._size.height;
+        if (this._position.y < this._size.height)
+            this._position.y = this._size.height;
         this._hitBox = new HitBox(this._position, this._size);
     }
 }

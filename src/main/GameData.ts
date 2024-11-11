@@ -60,9 +60,9 @@ export class GameData {
 
     public initializeNewGameVariables(): void {
         this.#airObstacleXSpeed = 2;
-        this.#airObstacleYSpeed = 4;
+        this.#airObstacleYSpeed = 0;
         this.#groundObstacleXSpeed = 2;
-        this.#groundObstacleYSpeed = 4;
+        this.#groundObstacleYSpeed = 0;
         this.#highestScore = this.getLocalStorageScore();
         this.#lastObstacleTimestamp = 0;
         this.#airObstacleGenerationStartProbability = 0.1;
