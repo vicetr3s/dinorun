@@ -44,9 +44,7 @@ export class Game {
         );
         this.#background = this.#factory.createBackground();
         this.#originalAirObstacle = this.#factory.createAirObstacle(this.#gameDataInstance.airObstacleSizeMultiplier);
-        this.#originalGroundObstacle = this.#factory.createGroundObstacle(
-            this.#gameDataInstance.groundObstacleSizeMultiplier,
-        );
+        this.#originalGroundObstacle = this.#factory.createGroundObstacle();
         this.#obstacleList = [];
         this.#isGameOver = false;
         this.#gameDataInstance.highestScoreSpan.innerText = `H ${this.#gameDataInstance.highestScore}`;

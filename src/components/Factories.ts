@@ -21,7 +21,7 @@ import { GameData } from '../main/GameData.ts';
 export interface ComponentFactory {
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur;
 
-    createGroundObstacle(sizeMultiplier: number): GroundObstacle;
+    createGroundObstacle(): GroundObstacle;
 
     createAirObstacle(sizeMultiplier: number): AirObstacle;
 
@@ -40,11 +40,13 @@ export class DesertComponentFactory implements ComponentFactory {
         return new DesertDinosaur(new Point(point.x, point.y), sizeMultiplier);
     }
 
-    createGroundObstacle(sizeMultiplier: number): GroundObstacle {
-        return new DesertGroundObstacle(
-            new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
-            sizeMultiplier,
-        );
+    createGroundObstacle(): GroundObstacle {
+        const size =
+            Math.random() *
+                (GameData.instance.groundObstacleMaxSizeMultiplier -
+                    GameData.instance.groundObstacleMinSizeMultiplier) +
+            GameData.instance.groundObstacleMinSizeMultiplier;
+        return new DesertGroundObstacle(new Point(GameData.instance.canvas.width, GameData.instance.groundLevel), size);
     }
 
     createAirObstacle(sizeMultiplier: number): AirObstacle {
@@ -53,7 +55,7 @@ export class DesertComponentFactory implements ComponentFactory {
             GameData.instance.groundLevel -
             this.dinosaurBentDown.height * GameData.instance.dinosaurSizeMultiplier -
             obstacle.size.height;
-        const minY = 0;
+        const minY = GameData.instance.maxHeightAirObstacles;
         obstacle.position.y = Math.random() * (maxY - minY) + minY;
         return obstacle;
     }
@@ -75,11 +77,13 @@ export class ForestComponentFactory implements ComponentFactory {
         return new ForestDinosaur(point, sizeMultiplier);
     }
 
-    createGroundObstacle(sizeMultiplier: number): GroundObstacle {
-        return new ForestGroundObstacle(
-            new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
-            sizeMultiplier,
-        );
+    createGroundObstacle(): GroundObstacle {
+        const size =
+            Math.random() *
+                (GameData.instance.groundObstacleMaxSizeMultiplier -
+                    GameData.instance.groundObstacleMinSizeMultiplier) +
+            GameData.instance.groundObstacleMinSizeMultiplier;
+        return new ForestGroundObstacle(new Point(GameData.instance.canvas.width, GameData.instance.groundLevel), size);
     }
 
     createAirObstacle(sizeMultiplier: number): AirObstacle {
@@ -88,7 +92,7 @@ export class ForestComponentFactory implements ComponentFactory {
             GameData.instance.groundLevel -
             this.dinosaurBentDown.height * GameData.instance.dinosaurSizeMultiplier -
             obstacle.size.height;
-        const minY = 0;
+        const minY = GameData.instance.maxHeightAirObstacles;
         obstacle.position.y = Math.random() * (maxY - minY) + minY;
         return obstacle;
     }
@@ -110,10 +114,15 @@ export class HellComponentFactory implements ComponentFactory {
         return new HellDinosaur(point, sizeMultiplier);
     }
 
-    createGroundObstacle(sizeMultiplier: number): GroundObstacle {
+    createGroundObstacle(): GroundObstacle {
+        const size =
+            Math.random() *
+                (GameData.instance.groundObstacleMaxSizeMultiplier -
+                    GameData.instance.groundObstacleMinSizeMultiplier) +
+            GameData.instance.groundObstacleMinSizeMultiplier;
         return new HellGroundObstacle(
             new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
-            sizeMultiplier,
+            size * 2.2,
         );
     }
 
@@ -123,7 +132,7 @@ export class HellComponentFactory implements ComponentFactory {
             GameData.instance.groundLevel -
             this.dinosaurBentDown.height * GameData.instance.dinosaurSizeMultiplier -
             obstacle.size.height;
-        const minY = 0;
+        const minY = GameData.instance.maxHeightAirObstacles;
         obstacle.position.y = Math.random() * (maxY - minY) + minY;
         return obstacle;
     }
