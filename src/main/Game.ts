@@ -74,6 +74,7 @@ export class Game {
         this.addScore();
         this.checkObstaclesCollision();
         this.increaseAirObstacleProbability();
+        this.decreaseTimeBetweenObstacles();
     }
 
     private animate = (timeStamp: DOMHighResTimeStamp) => {
@@ -279,6 +280,21 @@ export class Game {
 
         this.#gameDataInstance.airObstacleGenerationProbability +=
             this.#gameDataInstance.airObstacleGenerationProbabilityMultiplier * this.#gameDataInstance.deltaTime;
+    }
+
+    private decreaseTimeBetweenObstacles(): void {
+        if (
+            this.#gameDataInstance.timeBetweenObstacles <=
+            this.#gameDataInstance.endTimeBetweenObstacles
+        ) {
+            this.#gameDataInstance.timeBetweenObstacles =
+                this.#gameDataInstance.startTimeBetweenObstacles;
+            return;
+        }
+
+        console.log(this.#gameDataInstance.timeBetweenObstacles);
+        this.#gameDataInstance.timeBetweenObstacles -=
+            this.#gameDataInstance.timeBetweenObstaclesMultiplier * this.#gameDataInstance.deltaTime;
     }
 
     private initializeRestartButton(): void {

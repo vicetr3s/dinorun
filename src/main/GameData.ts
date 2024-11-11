@@ -30,6 +30,9 @@ export class GameData {
     #airObstacleGenerationProbabilityMultiplier: number;
     #initialVelocityJump: number;
     #hitBoxShrink: number;
+    #startTimeBetweenObstacles: number;
+    #endTimeBetweenObstacles: number;
+    #timeBetweenObstaclesMultiplier: number;
 
     private constructor() {
         this.#gameAcceleration = 0.00002;
@@ -40,7 +43,6 @@ export class GameData {
         this.#highestScoreSpan = <HTMLElement>document.getElementById('highest-score');
         this.#currentScoreSpan = <HTMLElement>document.getElementById('current-score');
         this.#groundLevel = 300;
-        this.#timeBetweenObstacles = 2000;
         this.#dinosaurSpawnPosition = new Point(50, this.#groundLevel);
         this.#dinosaurSizeMultiplier = 3;
         this.#groundObstacleSizeMultiplier = 2;
@@ -66,6 +68,10 @@ export class GameData {
         this.#currentScore = 0;
         this.#timePassed = 0;
         this.#deltaTime = 0;
+        this.#timeBetweenObstacles = 2000;
+        this.#startTimeBetweenObstacles = 1500;
+        this.#endTimeBetweenObstacles = 750;
+        this.#timeBetweenObstaclesMultiplier = 0.01;
     }
 
     private configureCanvas(): void {
@@ -238,5 +244,21 @@ export class GameData {
 
     get hitBoxShrink(): number {
         return this.#hitBoxShrink;
+    }
+
+    set timeBetweenObstacles(value: number) {
+        this.#timeBetweenObstacles = value;
+    }
+
+    get startTimeBetweenObstacles(): number {
+        return this.#startTimeBetweenObstacles;
+    }
+
+    get endTimeBetweenObstacles(): number {
+        return this.#endTimeBetweenObstacles;
+    }
+
+    get timeBetweenObstaclesMultiplier(): number {
+        return this.#timeBetweenObstaclesMultiplier;
     }
 }
