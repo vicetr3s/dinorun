@@ -5,9 +5,7 @@ export class GameData {
     #canvasContext: CanvasRenderingContext2D;
     #gameAcceleration: number;
     #airObstacleXSpeed: number;
-    #airObstacleYSpeed: number;
     #groundObstacleXSpeed: number;
-    #groundObstacleYSpeed: number;
     #gravity: number;
     #scoreMultiplier: number;
     #highestScore: number;
@@ -60,9 +58,7 @@ export class GameData {
 
     public initializeNewGameVariables(): void {
         this.#airObstacleXSpeed = 2;
-        this.#airObstacleYSpeed = 0;
         this.#groundObstacleXSpeed = 2;
-        this.#groundObstacleYSpeed = 0;
         this.#highestScore = this.getLocalStorageScore();
         this.#lastObstacleTimestamp = 0;
         this.#airObstacleGenerationStartProbability = 0.1;
@@ -106,28 +102,12 @@ export class GameData {
         this.#airObstacleXSpeed = value;
     }
 
-    get airObstacleYSpeed(): number {
-        return this.#airObstacleYSpeed;
-    }
-
-    set airObstacleYSpeed(value: number) {
-        this.#airObstacleYSpeed = value;
-    }
-
     get groundObstacleXSpeed(): number {
         return this.#groundObstacleXSpeed;
     }
 
     set groundObstacleXSpeed(value: number) {
         this.#groundObstacleXSpeed = value;
-    }
-
-    get groundObstacleYSpeed(): number {
-        return this.#groundObstacleYSpeed;
-    }
-
-    set groundObstacleYSpeed(value: number) {
-        this.#groundObstacleYSpeed = value;
     }
 
     get gravity(): number {

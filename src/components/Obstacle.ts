@@ -17,11 +17,13 @@ export abstract class Obstacle implements ObstacleProtoype, Drawable {
     protected _behaviour: BehaviourStrategy;
     protected _hitBox: HitBox;
     protected _sizeMultiplier: number;
+    protected _velocityY: number;
 
     constructor(point: Point, sizeMultiplier: number) {
         this._position = point;
         this._behaviour = new TraditionalStrategy();
         this._sizeMultiplier = sizeMultiplier;
+        this._velocityY = 0;
     }
 
     protected constructorPart2() {

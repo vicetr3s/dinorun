@@ -8,6 +8,18 @@ import { DesertComponentFactory, ForestComponentFactory, HellComponentFactory } 
 export abstract class GroundObstacle extends Obstacle {
     public update(): void {
         this._position.x -= GameData.instance.groundObstacleXSpeed;
+
+        if (this._position.y == GameData.instance.groundLevel - this._size.height) {
+            if (this._velocityY == 0 && Math.random() < 0.1) this._velocityY = this._behaviour.move() * -1; // adds a 10% chance that it jumps
+        }
+
+        this._velocityY += GameData.instance.gravity * GameData.instance.deltaTime;
+        this._position.y += this._velocityY * GameData.instance.deltaTime;
+
+        if (this._position.y >= GameData.instance.groundLevel - this._size.height) {
+            this._position.y = GameData.instance.groundLevel - this._size.height;
+            this._velocityY = 0;
+        }
         this._hitBox = new HitBox(this._position, this._size);
     }
 }

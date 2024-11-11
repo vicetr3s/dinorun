@@ -1,19 +1,18 @@
-import { GameData } from './GameData.ts';
-
 export interface BehaviourStrategy {
-    move(up: boolean): void;
+    move(): number;
 }
 
 export class TraditionalStrategy implements BehaviourStrategy {
-    move(up: boolean): void {
-        return;
+    move(): number {
+        return 0;
     }
 }
 
 export class DynamicStrategy implements BehaviourStrategy {
-    move(up: boolean): void {
-        if (Math.random() < 0.99) return; // 1% chance for the obstacle to move
-        GameData.instance.airObstacleYSpeed = Math.random() * (5 - 2) + 2; // Max speed 5, and min speed 2
-        if (up) GameData.instance.airObstacleYSpeed *= -1;
+    move(): number {
+        if (Math.random() < 0.99) return 0; // 1% chance for the obstacle to move
+        // Max speed 1.3, and min speed 0.5 for ground obstacles
+        // Max speed 1.3 * 4, and min speed 0.5 * 4 for air obstacles
+        return Math.random() * (1.3 - 0.5) + 0.5;
     }
 }
