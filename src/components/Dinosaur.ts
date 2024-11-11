@@ -228,7 +228,7 @@ export class ForestDinosaur extends Dinosaur {
                 '/sprites/dinosaurs/forest/bend/bend_3.png',
                 '/sprites/dinosaurs/forest/bend/bend_4.png',
             ],
-            0,
+            90,
         );
         this.constructorPart2();
     }

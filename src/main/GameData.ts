@@ -204,7 +204,6 @@ export class GameData {
         return this.#dinosaurSpawnPosition;
     }
 
-
     get dinosaurSizeMultiplier(): number {
         return this.#dinosaurSizeMultiplier;
     }

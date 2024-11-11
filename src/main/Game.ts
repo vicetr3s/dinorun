@@ -5,7 +5,6 @@ import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 import { Background } from '../components/Background.ts';
 import { Obstacle } from '../components/Obstacle.ts';
 import { Dinosaur } from '../components/Dinosaur.ts';
-import { Point } from '../utils/Point.ts';
 
 export class Game {
     #canvas: HTMLCanvasElement;
@@ -39,10 +38,15 @@ export class Game {
         this.#gameDataInstance = GameData.instance;
         this.#canvas = this.#gameDataInstance.canvas;
         this.#canvasContext = this.#gameDataInstance.canvasContext;
-        this.#dinosaur = this.#factory.createDinosaur(this.#gameDataInstance.dinosaurSpawnPosition, this.#gameDataInstance.dinosaurSizeMultiplier);
+        this.#dinosaur = this.#factory.createDinosaur(
+            this.#gameDataInstance.dinosaurSpawnPosition,
+            this.#gameDataInstance.dinosaurSizeMultiplier,
+        );
         this.#background = this.#factory.createBackground();
         this.#originalAirObstacle = this.#factory.createAirObstacle(this.#gameDataInstance.airObstacleSizeMultiplier);
-        this.#originalGroundObstacle = this.#factory.createGroundObstacle(this.#gameDataInstance.groundObstacleSizeMultiplier);
+        this.#originalGroundObstacle = this.#factory.createGroundObstacle(
+            this.#gameDataInstance.groundObstacleSizeMultiplier,
+        );
         this.#obstacleList = [];
         this.#isGameOver = false;
         this.#gameDataInstance.highestScoreSpan.innerText = `H ${this.#gameDataInstance.highestScore}`;
