@@ -5,7 +5,7 @@ import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 import { Background } from '../components/Background.ts';
 import { Obstacle } from '../components/Obstacle.ts';
 import { Dinosaur } from '../components/Dinosaur.ts';
-import { DynamicStrategy } from './Behaviours.ts';
+import { BehaviourStrategy, DynamicStrategy, TraditionalStrategy } from './Behaviours.ts';
 
 export class Game {
     #canvas: HTMLCanvasElement;
@@ -20,6 +20,7 @@ export class Game {
     #animationFrameId: number | null;
     #gameDataInstance: GameData;
     #isGameStarted: boolean;
+    #obstaclesBehaviour: BehaviourStrategy;
 
     public constructor(factory: ComponentFactory) {
         this.#factory = factory;
@@ -50,6 +51,8 @@ export class Game {
         this.#isGameOver = false;
         this.#gameDataInstance.highestScoreSpan.innerText = `H ${this.#gameDataInstance.highestScore}`;
         this.#gameDataInstance.currentScoreSpan.innerText = '';
+
+        this.selectRandomObstacleBehaviour();
     }
 
     public idleGame(): void {
@@ -217,8 +220,7 @@ export class Game {
 
         const obstacle = this.createRandomObstacle();
 
-        obstacle.position.x = this.#gameDataInstance.canvas.width;
-        obstacle.setBehaviour(new DynamicStrategy()); // The behaviour should be set here (I believe)
+        obstacle.setBehaviour(this.#obstaclesBehaviour);
 
         this.#obstacleList.push(obstacle);
 
@@ -312,5 +314,18 @@ export class Game {
         });
 
         document.addEventListener('keydown', handleKey);
+    }
+
+    private selectRandomObstacleBehaviour(): void {
+        // 50% chance
+        this.#obstaclesBehaviour = Math.random() < 0.5 ? new TraditionalStrategy() : new DynamicStrategy();
+
+        const obstaclesTypeSpan = <HTMLElement>document.getElementById('obstacles-type');
+
+        obstaclesTypeSpan.innerText =
+            this.#obstaclesBehaviour instanceof TraditionalStrategy ? 'Traditional obstacles' : 'Dynamic obstacles';
+
+        this.#originalAirObstacle.setBehaviour(this.#obstaclesBehaviour);
+        this.#originalGroundObstacle.setBehaviour(this.#obstaclesBehaviour);
     }
 }

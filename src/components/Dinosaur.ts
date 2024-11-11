@@ -115,9 +115,9 @@ export abstract class Dinosaur implements Drawable {
     }
 
     private setSpritesFromImageLoader() {
-        this._idleSprite = new Sprite(ImageLoader.instance.getImages('dino_idle'),90);
-        this._runSprite = new Sprite(ImageLoader.instance.getImages('dino_run'),90);
-        this._bendDownSprite = new Sprite(ImageLoader.instance.getImages('dino_bend'),90);
+        this._idleSprite = new Sprite(ImageLoader.instance.getImages('dino_idle'), 90);
+        this._runSprite = new Sprite(ImageLoader.instance.getImages('dino_run'), 90);
+        this._bendDownSprite = new Sprite(ImageLoader.instance.getImages('dino_bend'), 90);
     }
 
     public get currentSprite(): Sprite {

@@ -52,10 +52,6 @@ p {
     color: var(--primary-clr);
 }
 
-#obstacles-type {
-    padding: 1rem;
-}
-
 .scores {
     margin: 1rem 1rem 1rem auto;
     width: fit-content;
@@ -222,7 +218,11 @@ main {
     height: 100%;
     width: 100%;
     z-index: 3;
+}
 
+#obstacles-type {
+    margin: 1rem;
+    width: fit-content;
 }
 
 @keyframes floating-text {
