@@ -20,7 +20,7 @@ export class DesertGroundObstacle extends GroundObstacle {
     }
 
     public clone(): Obstacle {
-        return new DesertComponentFactory().createGroundObstacle(this._sizeMultiplier);
+        return new DesertComponentFactory().createGroundObstacle();
     }
 }
 
@@ -32,7 +32,7 @@ export class ForestGroundObstacle extends GroundObstacle {
     }
 
     public clone(): Obstacle {
-        return new ForestComponentFactory().createGroundObstacle(this._sizeMultiplier);
+        return new ForestComponentFactory().createGroundObstacle();
     }
 }
 
@@ -50,6 +50,6 @@ export class HellGroundObstacle extends GroundObstacle {
     }
 
     public clone(): Obstacle {
-        return new HellComponentFactory().createGroundObstacle(this._sizeMultiplier);
+        return new HellComponentFactory().createGroundObstacle();
     }
 }
