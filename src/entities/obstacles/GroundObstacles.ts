@@ -5,6 +5,7 @@ import { GameData } from '../../main/GameData.ts';
 import { HitBox } from '../../utils/HitBox.ts';
 import { DesertComponentFactory, ForestComponentFactory, HellComponentFactory } from '../../components/Factories.ts';
 import { ImageLoader } from '../../utils/ImageLoader.ts';
+import { BehaviourStrategy } from '../../main/Behaviours.ts';
 
 export abstract class GroundObstacle extends Obstacle {
     public update(): void {
@@ -30,37 +31,37 @@ export abstract class GroundObstacle extends Obstacle {
 }
 
 export class DesertGroundObstacle extends GroundObstacle {
-    public constructor(point: Point, sizeMultiplier: number) {
-        super(point, sizeMultiplier);
+    public constructor(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy) {
+        super(point, sizeMultiplier, behaviour);
 
         this.constructorPart2();
     }
 
     public clone(): Obstacle {
-        return new DesertComponentFactory().createGroundObstacle();
+        return new DesertComponentFactory().createGroundObstacle(this._behaviour);
     }
 }
 
 export class ForestGroundObstacle extends GroundObstacle {
-    public constructor(point: Point, sizeMultiplier: number) {
-        super(point, sizeMultiplier);
+    public constructor(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy) {
+        super(point, sizeMultiplier, behaviour);
 
         this.constructorPart2();
     }
 
     public clone(): Obstacle {
-        return new ForestComponentFactory().createGroundObstacle();
+        return new ForestComponentFactory().createGroundObstacle(this._behaviour);
     }
 }
 
 export class HellGroundObstacle extends GroundObstacle {
-    public constructor(point: Point, sizeMultiplier: number) {
-        super(point, sizeMultiplier);
+    public constructor(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy) {
+        super(point, sizeMultiplier, behaviour);
 
         this.constructorPart2();
     }
 
     public clone(): Obstacle {
-        return new HellComponentFactory().createGroundObstacle();
+        return new HellComponentFactory().createGroundObstacle(this._behaviour);
     }
 }

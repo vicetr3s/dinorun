@@ -5,6 +5,7 @@ import { GameData } from '../../main/GameData.ts';
 import { HitBox } from '../../utils/HitBox.ts';
 import { DesertComponentFactory, ForestComponentFactory, HellComponentFactory } from '../../components/Factories.ts';
 import { ImageLoader } from '../../utils/ImageLoader.ts';
+import { BehaviourStrategy } from '../../main/Behaviours.ts';
 
 export abstract class AirObstacle extends Obstacle {
     public update(): void {
@@ -35,37 +36,37 @@ export abstract class AirObstacle extends Obstacle {
 }
 
 export class DesertAirObstacle extends AirObstacle {
-    public constructor(point: Point, sizeMultiplier: number) {
-        super(point, sizeMultiplier);
+    public constructor(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy) {
+        super(point, sizeMultiplier, behaviour);
 
         this.constructorPart2();
     }
 
     public clone(): Obstacle {
-        return new DesertComponentFactory().createAirObstacle(this._sizeMultiplier);
+        return new DesertComponentFactory().createAirObstacle(this._sizeMultiplier, this._behaviour);
     }
 }
 
 export class ForestAirObstacle extends AirObstacle {
-    public constructor(point: Point, sizeMultiplier: number) {
-        super(point, sizeMultiplier);
+    public constructor(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy) {
+        super(point, sizeMultiplier, behaviour);
 
         this.constructorPart2();
     }
 
     public clone(): Obstacle {
-        return new ForestComponentFactory().createAirObstacle(this._sizeMultiplier);
+        return new ForestComponentFactory().createAirObstacle(this._sizeMultiplier, this._behaviour);
     }
 }
 
 export class HellAirObstacle extends AirObstacle {
-    public constructor(point: Point, sizeMultiplier: number) {
-        super(point, sizeMultiplier);
+    public constructor(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy) {
+        super(point, sizeMultiplier, behaviour);
 
         this.constructorPart2();
     }
 
     public clone(): Obstacle {
-        return new HellComponentFactory().createAirObstacle(this._sizeMultiplier);
+        return new HellComponentFactory().createAirObstacle(this._sizeMultiplier, this._behaviour);
     }
 }

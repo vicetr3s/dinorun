@@ -19,9 +19,10 @@ export abstract class Obstacle implements ObstaclePrototype, Drawable {
     protected _sizeMultiplier: number;
     protected _velocityY: number;
 
-    constructor(point: Point, sizeMultiplier: number) {
+    constructor(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy) {
         this._position = point;
-        this._behaviour = new TraditionalStrategy();
+        if (behaviour == undefined) this._behaviour = new TraditionalStrategy();
+        else this._behaviour = behaviour;
         this._sizeMultiplier = sizeMultiplier;
 
         this.setSpriteFromImageLoader();
