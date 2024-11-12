@@ -9,10 +9,10 @@ import { BehaviourStrategy } from '../../main/Behaviours.ts';
 
 export abstract class GroundObstacle extends Obstacle {
     public update(): void {
-        this._position.x -= GameData.instance.groundObstacleXSpeed;
+        this._position.x -= GameData.instance.groundObstacleXSpeed * GameData.instance.deltaTime;
 
         if (this._position.y == GameData.instance.groundLevel - this._size.height) {
-            if (this._velocityY == 0 && Math.random() < 0.1) this._velocityY = this._behaviour.move() * -1; // adds a 10% chance that it jumps
+            if (this._velocityY == 0 && Math.random() < 0.2) this._velocityY = this._behaviour.move() * -1; // adds a 20% chance that it jumps
         }
 
         this._velocityY += GameData.instance.gravity * GameData.instance.deltaTime;

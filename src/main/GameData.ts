@@ -35,7 +35,7 @@ export class GameData {
     #timeBetweenObstaclesMultiplier: number;
 
     private constructor() {
-        this.#gameAcceleration = 0.00002;
+        this.#gameAcceleration = 0.000002;
         this.#gravity = 0.00098;
         this.#scoreMultiplier = 0.005;
         this.#canvas = <HTMLCanvasElement>document.getElementById('canvas');
@@ -57,8 +57,8 @@ export class GameData {
     }
 
     public initializeNewGameVariables(): void {
-        this.#airObstacleXSpeed = 2;
-        this.#groundObstacleXSpeed = 2;
+        this.#airObstacleXSpeed = 0.4;
+        this.#groundObstacleXSpeed = 0.25;
         this.#highestScore = this.getLocalStorageScore();
         this.#lastObstacleTimestamp = 0;
         this.#airObstacleGenerationStartProbability = 0.1;

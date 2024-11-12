@@ -9,13 +9,13 @@ import { BehaviourStrategy } from '../../main/Behaviours.ts';
 
 export abstract class AirObstacle extends Obstacle {
     public update(): void {
-        this._position.x -= GameData.instance.airObstacleXSpeed;
+        this._position.x -= GameData.instance.airObstacleXSpeed * GameData.instance.deltaTime;
         if (this._velocityY == 0) {
             if (this._position.y > GameData.instance.groundLevel - this._position.y)
-                this._velocityY = this._behaviour.move() * 4;
-            else this._velocityY = this._behaviour.move() * -4;
+                this._velocityY = this._behaviour.move();
+            else this._velocityY = this._behaviour.move() * -1;
         }
-        const decelerate = 0.01;
+        const decelerate = 0.00001;
         if (this._velocityY < 0) {
             this._velocityY += decelerate * GameData.instance.deltaTime;
             if (this._velocityY > 0) this._velocityY = 0;
@@ -23,7 +23,7 @@ export abstract class AirObstacle extends Obstacle {
             this._velocityY -= decelerate * GameData.instance.deltaTime;
             if (this._velocityY < 0) this._velocityY = 0;
         }
-        this._position.y += this._velocityY;
+        this._position.y += this._velocityY * GameData.instance.deltaTime;
         if (this._position.y > GameData.instance.groundLevel - this._size.height)
             this._position.y = GameData.instance.groundLevel - this._size.height;
         if (this._position.y < this._size.height) this._position.y = this._size.height;

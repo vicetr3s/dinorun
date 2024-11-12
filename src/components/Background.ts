@@ -20,9 +20,9 @@ export abstract class Background implements Drawable {
     backLayerLevel: number;
 
     public constructor() {
-        this.frontLayerSpeed = 1;
-        this.middleLayerSpeed = 0.5;
-        this.backLayerSpeed = 0.25;
+        this.frontLayerSpeed = 0.2;
+        this.middleLayerSpeed = 0.1;
+        this.backLayerSpeed = 0.05;
         this.frontLayerX = 0;
         this.middleLayerX = 0;
         this.backLayerX = 0;
@@ -36,10 +36,10 @@ export abstract class Background implements Drawable {
         this.frontLayerSpeed += GameData.instance.gameAcceleration * GameData.instance.deltaTime;
         this.middleLayerSpeed += GameData.instance.gameAcceleration * GameData.instance.deltaTime;
         this.backLayerSpeed += GameData.instance.gameAcceleration * GameData.instance.deltaTime;
-        this.frontLayerX -= this.frontLayerSpeed;
-        this.middleLayerX -= this.middleLayerSpeed;
-        this.backLayerX -= this.backLayerSpeed;
-        this.groundX -= GameData.instance.groundObstacleXSpeed;
+        this.frontLayerX -= this.frontLayerSpeed * GameData.instance.deltaTime;
+        this.middleLayerX -= this.middleLayerSpeed * GameData.instance.deltaTime;
+        this.backLayerX -= this.backLayerSpeed * GameData.instance.deltaTime;
+        this.groundX -= GameData.instance.groundObstacleXSpeed * GameData.instance.deltaTime;
 
         if (this.frontLayerX <= -canvas.width) {
             this.frontLayerX = 0;
