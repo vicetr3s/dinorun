@@ -50,7 +50,11 @@ export class DesertComponentFactory implements ComponentFactory {
                 (GameData.instance.groundObstacleMaxSizeMultiplier -
                     GameData.instance.groundObstacleMinSizeMultiplier) +
             GameData.instance.groundObstacleMinSizeMultiplier;
-        return new DesertGroundObstacle(new Point(GameData.instance.canvas.width, GameData.instance.groundLevel), size, behaviour);
+        return new DesertGroundObstacle(
+            new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
+            size,
+            behaviour,
+        );
     }
 
     createAirObstacle(sizeMultiplier: number, behaviour?: BehaviourStrategy): AirObstacle {
@@ -138,7 +142,8 @@ export class HellComponentFactory implements ComponentFactory {
             GameData.instance.groundObstacleMinSizeMultiplier;
         return new HellGroundObstacle(
             new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
-            size * 1.35, behaviour
+            size * 1.35,
+            behaviour,
         );
     }
 

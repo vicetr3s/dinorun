@@ -13,7 +13,8 @@ export class Game {
     #originalAirObstacle: AirObstacle;
     #originalGroundObstacle: GroundObstacle;
     #background: Background;
-    #obstacleList: Obstacle[];
+    #airObstacleList: Obstacle[];
+    #groundObstacleList: Obstacle[];
     #dinosaur: Dinosaur;
     #factory: ComponentFactory;
     #isGameOver: boolean;
@@ -47,7 +48,8 @@ export class Game {
         this.#background = this.#factory.createBackground();
         this.#originalAirObstacle = this.#factory.createAirObstacle(this.#gameDataInstance.airObstacleSizeMultiplier);
         this.#originalGroundObstacle = this.#factory.createGroundObstacle();
-        this.#obstacleList = [];
+        this.#airObstacleList = [];
+        this.#groundObstacleList = [];
         this.#isGameOver = false;
         this.#gameDataInstance.highestScoreSpan.innerText = `H ${this.#gameDataInstance.highestScore}`;
         this.#gameDataInstance.currentScoreSpan.innerText = '';
@@ -182,15 +184,19 @@ export class Game {
     }
 
     private drawObstacles(): void {
-        this.#obstacleList.forEach((obstacle) => {
+        this.#airObstacleList.forEach((obstacle) => {
+            obstacle.draw();
+        });
+
+        this.#groundObstacleList.forEach((obstacle) => {
             obstacle.draw();
         });
     }
 
     private updateObstacles(): void {
-        const temp: Obstacle[] = [];
+        let temp: Obstacle[] = [];
 
-        this.#obstacleList.forEach((obstacle) => {
+        this.#airObstacleList.forEach((obstacle) => {
             obstacle.update();
 
             if (this.isObstacleOutOfBounds(obstacle)) return;
@@ -198,7 +204,19 @@ export class Game {
             temp.push(obstacle);
         });
 
-        this.#obstacleList = temp;
+        this.#airObstacleList = temp;
+
+        temp = [];
+
+        this.#groundObstacleList.forEach((obstacle) => {
+            obstacle.update();
+
+            if (this.isObstacleOutOfBounds(obstacle)) return;
+
+            temp.push(obstacle);
+        });
+
+        this.#groundObstacleList = temp;
     }
 
     private createAirObstacle(): AirObstacle {
@@ -216,23 +234,26 @@ export class Game {
         )
             return;
 
-        const obstacle = this.createRandomObstacle();
-
-        this.#obstacleList.push(obstacle);
+        this.createRandomObstacle();
 
         this.#gameDataInstance.lastObstacleTimestamp = this.#gameDataInstance.timePassed;
     }
 
-    private createRandomObstacle(): Obstacle {
+    private createRandomObstacle(): void {
         if (Math.random() < this.#gameDataInstance.airObstacleGenerationProbability) {
-            return this.createAirObstacle();
+            this.#airObstacleList.push(this.createAirObstacle());
+            return;
         }
 
-        return this.createGroundObstacle();
+        this.#groundObstacleList.push(this.createGroundObstacle());
     }
 
     private nextFrameObstacles(): void {
-        this.#obstacleList.forEach((obstacle) => {
+        this.#airObstacleList.forEach((obstacle) => {
+            obstacle.sprite.nextFrame(this.#gameDataInstance.deltaTime);
+        });
+
+        this.#groundObstacleList.forEach((obstacle) => {
             obstacle.sprite.nextFrame(this.#gameDataInstance.deltaTime);
         });
     }
@@ -247,7 +268,13 @@ export class Game {
     }
 
     private checkObstaclesCollision(): void {
-        this.#obstacleList.forEach((obstacle) => {
+        this.#airObstacleList.forEach((obstacle) => {
+            const isHit = this.isDinosaurHitObstacle(this.#dinosaur, obstacle);
+
+            if (isHit) this.gameOver();
+        });
+
+        this.#groundObstacleList.forEach((obstacle) => {
             const isHit = this.isDinosaurHitObstacle(this.#dinosaur, obstacle);
 
             if (isHit) this.gameOver();
