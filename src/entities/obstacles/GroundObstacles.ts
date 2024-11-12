@@ -12,7 +12,8 @@ export abstract class GroundObstacle extends Obstacle {
 
         // Only when the obstacle is on the ground it can jump
         if (this._position.y == GameData.instance.groundLevel - this._size.height) {
-            if (this._velocityY == 0 && Math.random() < GameData.instance.probabilityForAGroundObstacleToMove) this._velocityY = this._behaviour.move() * -1; // adds a 20% chance that it jumps
+            if (this._velocityY == 0 && Math.random() < GameData.instance.probabilityForAGroundObstacleToMove)
+                this._velocityY = this._behaviour.move() * -1; // adds a 20% chance that it jumps
         }
 
         // Applied gravity to the obstacle
@@ -35,19 +36,30 @@ export abstract class GroundObstacle extends Obstacle {
 
 export class DesertGroundObstacle extends GroundObstacle {
     public clone(): Obstacle {
-        return new DesertGroundObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier, this._behaviour);
+        return new DesertGroundObstacle(
+            new Point(this._position.x, this._position.y),
+            this._sizeMultiplier,
+            this._behaviour,
+        );
     }
 }
 
 export class ForestGroundObstacle extends GroundObstacle {
-
     public clone(): Obstacle {
-        return new ForestGroundObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier, this._behaviour);
+        return new ForestGroundObstacle(
+            new Point(this._position.x, this._position.y),
+            this._sizeMultiplier,
+            this._behaviour,
+        );
     }
 }
 
 export class HellGroundObstacle extends GroundObstacle {
     public clone(): Obstacle {
-        return new HellGroundObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier, this._behaviour);
+        return new HellGroundObstacle(
+            new Point(this._position.x, this._position.y),
+            this._sizeMultiplier,
+            this._behaviour,
+        );
     }
 }

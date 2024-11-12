@@ -1,6 +1,6 @@
 import { GameData } from './GameData.ts';
 import { ComponentFactory } from '../components/Factories.ts';
-import { AirObstacle} from '../entities/obstacles/AirObstacles.ts';
+import { AirObstacle } from '../entities/obstacles/AirObstacles.ts';
 import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 import { Background } from '../components/Background.ts';
 import { Obstacle } from '../components/Obstacle.ts';
@@ -45,11 +45,17 @@ export class Game {
         this.#canvasContext = this.#gameDataInstance.canvasContext;
         this.#dinosaur = this.#factory.createDinosaur(
             this.#gameDataInstance.dinosaurSpawnPosition,
-            this.#gameDataInstance.dinosaurSizeMultiplier
+            this.#gameDataInstance.dinosaurSizeMultiplier,
         );
         this.#background = this.#factory.createBackground();
-        this.#originalAirObstacle = this.#factory.createAirObstacle(new Point(this.#canvas.width, 0), this.#gameDataInstance.airObstacleSizeMultiplier);
-        this.#originalGroundObstacle = this.#factory.createGroundObstacle(new Point(this.#canvas.width, this.#gameDataInstance.groundLevel), 1);
+        this.#originalAirObstacle = this.#factory.createAirObstacle(
+            new Point(this.#canvas.width, 0),
+            this.#gameDataInstance.airObstacleSizeMultiplier,
+        );
+        this.#originalGroundObstacle = this.#factory.createGroundObstacle(
+            new Point(this.#canvas.width, this.#gameDataInstance.groundLevel),
+            1,
+        );
         this.#airObstacleList = [];
         this.#groundObstacleList = [];
         this.#isGameOver = false;
@@ -380,8 +386,8 @@ export class Game {
     private randomSizeForGroundObstacle(obstacle: GroundObstacle): void {
         const size =
             Math.random() *
-            (GameData.instance.groundObstacleMaxSizeMultiplier -
-                GameData.instance.groundObstacleMinSizeMultiplier) +
+                (GameData.instance.groundObstacleMaxSizeMultiplier -
+                    GameData.instance.groundObstacleMinSizeMultiplier) +
             GameData.instance.groundObstacleMinSizeMultiplier;
         obstacle.size.width *= size;
         obstacle.size.height *= size;
