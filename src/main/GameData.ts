@@ -56,6 +56,7 @@ export class GameData {
         this.initializeNewGameVariables();
     }
 
+    // Resets game variables to their initial values for a new game
     public initializeNewGameVariables(): void {
         this.#airObstacleXSpeed = 0.4;
         this.#groundObstacleXSpeed = 0.25;
@@ -82,6 +83,7 @@ export class GameData {
         return Number(localStorage.getItem('h-score')) || 0;
     }
 
+    // Saves the highest score to localStorage
     public setLocalStorageScore(score: number) {
         localStorage.setItem('h-score', String(Math.floor(score)));
     }

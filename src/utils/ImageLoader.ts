@@ -32,6 +32,7 @@ export class ImageLoader {
         }
     }
 
+    // Loads multiple images from paths and returns them as a Promise array, resolves each image after successful loading and decoding
     private loadImages(paths: string[]): Promise<HTMLImageElement[]> {
         return Promise.all(
             paths.map((path) => {

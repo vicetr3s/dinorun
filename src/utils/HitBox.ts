@@ -10,12 +10,14 @@ export class HitBox {
         this.#points = [];
         this.#shrink = GameData.instance.hitBoxShrink;
 
+        // Constructs a hit box with 4 points (clockwise) and applies shrink factor to reduce its size
         this.#points.push(new Point(position.x + this.#shrink, position.y + this.#shrink));
         this.#points.push(new Point(position.x + size.width - this.#shrink, position.y + this.#shrink));
         this.#points.push(new Point(position.x + size.width - this.#shrink, position.y + size.height - this.#shrink));
         this.#points.push(new Point(position.x + this.#shrink, position.y + size.height - this.#shrink));
     }
 
+    // Checks for collision with another hit box, defines 4 boundaries in each hit box and returns true if they are overlapping
     public isHit(hitBox: HitBox): boolean {
         const leftA = this.#points[0].x;
         const rightA = this.#points[1].x;
@@ -30,6 +32,7 @@ export class HitBox {
         return !(leftA >= rightB || rightA <= leftB || topA >= bottomB || bottomA <= topB);
     }
 
+    // Draw the hit box, just for testing
     public draw(): void {
         const ctx = GameData.instance.canvasContext;
 

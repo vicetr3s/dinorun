@@ -1,6 +1,6 @@
 import { GameData } from './GameData.ts';
 import { ComponentFactory } from '../components/Factories.ts';
-import { AirObstacle, HellAirObstacle } from '../entities/obstacles/AirObstacles.ts';
+import { AirObstacle} from '../entities/obstacles/AirObstacles.ts';
 import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 import { Background } from '../components/Background.ts';
 import { Obstacle } from '../components/Obstacle.ts';
@@ -38,6 +38,7 @@ export class Game {
         document.getElementById('jump-to-start')?.classList.remove('hidden');
     }
 
+    // Sets up game elements, canvas, obstacles, scores, and initial game state
     private initializeGame(): void {
         this.#gameDataInstance = GameData.instance;
         this.#canvas = this.#gameDataInstance.canvas;
@@ -70,6 +71,7 @@ export class Game {
         this.#dinosaur.idle();
     }
 
+    // Main game loop: clears canvas, spawns obstacles, updates, draws, scores, and checks collisions
     private runningGame(): void {
         this.clearCanvas();
         this.spawnObstacle();
@@ -82,6 +84,7 @@ export class Game {
         this.decreaseTimeBetweenObstacles();
     }
 
+    // Animation loop: updates game time, runs game or idle state, and requests next frame. Exits if game is over
     private animate = (timeStamp: DOMHighResTimeStamp) => {
         if (this.#isGameOver) return;
 
@@ -157,6 +160,7 @@ export class Game {
         this.#gameDataInstance.currentScoreSpan.innerText = String(Math.floor(this.#gameDataInstance.currentScore));
     }
 
+    // Ends the game: updates high score if needed, displays game-over screen with score, and sets up restart button
     private gameOver(): void {
         const gameOverScore = <HTMLElement>document.getElementById('game-over-score');
         this.#isGameOver = true;
@@ -170,6 +174,7 @@ export class Game {
         this.initializeRestartButton();
     }
 
+    // Restarts the game: hides game-over elements, cancels current animation frame, resets game variables, and reinitializes game
     private restartGame(): void {
         document.getElementById('game-over')?.classList.add('hidden');
         document.getElementById('jump-to-start')?.classList.add('hidden');
@@ -194,6 +199,7 @@ export class Game {
         });
     }
 
+    // Updates and filters out obstacles that are out of bounds for both air and ground obstacles
     private updateObstacles(): void {
         let temp: Obstacle[] = [];
 
@@ -228,6 +234,7 @@ export class Game {
         return this.#originalGroundObstacle.clone();
     }
 
+    // Spawns a new obstacle if enough time has passed since the last one
     private spawnObstacle(): void {
         if (
             this.#gameDataInstance.lastObstacleTimestamp + this.#gameDataInstance.timeBetweenObstacles >
@@ -263,6 +270,7 @@ export class Game {
         });
     }
 
+    // Advances to the next frame for the dinosaur sprite and obstacles
     private nextFrameAll(): void {
         this.#dinosaur.currentSprite.nextFrame(this.#gameDataInstance.deltaTime);
         this.nextFrameObstacles();
@@ -273,17 +281,17 @@ export class Game {
     }
 
     private checkObstaclesCollision(): void {
-        this.#airObstacleList.forEach((obstacle) => {
-            const isHit = this.isDinosaurHitObstacle(this.#dinosaur, obstacle);
+        let isHit = false;
 
-            if (isHit) this.gameOver();
+        this.#airObstacleList.forEach((obstacle) => {
+            isHit = this.isDinosaurHitObstacle(this.#dinosaur, obstacle);
         });
 
         this.#groundObstacleList.forEach((obstacle) => {
-            const isHit = this.isDinosaurHitObstacle(this.#dinosaur, obstacle);
-
-            if (isHit) this.gameOver();
+            isHit = this.isDinosaurHitObstacle(this.#dinosaur, obstacle);
         });
+
+        if (isHit) this.gameOver();
     }
 
     private initializeMenuButton(): void {
@@ -298,6 +306,7 @@ export class Game {
         location.reload();
     }
 
+    // Increases the probability of air obstacle generation, resets when a maximum is reached
     private increaseAirObstacleProbability(): void {
         if (
             this.#gameDataInstance.airObstacleGenerationProbability >
@@ -312,6 +321,7 @@ export class Game {
             this.#gameDataInstance.airObstacleGenerationProbabilityMultiplier * this.#gameDataInstance.deltaTime;
     }
 
+    // Decreases the time between obstacles, resets when a minimum is reached
     private decreaseTimeBetweenObstacles(): void {
         if (this.#gameDataInstance.timeBetweenObstacles <= this.#gameDataInstance.endTimeBetweenObstacles) {
             this.#gameDataInstance.timeBetweenObstacles = this.#gameDataInstance.startTimeBetweenObstacles;
@@ -344,6 +354,7 @@ export class Game {
         document.addEventListener('keydown', handleKey);
     }
 
+    // Randomly selects obstacle behavior (50% chance) and updates display. Applies selected behavior to air and ground obstacles
     private selectRandomObstacleBehaviour(): void {
         // 50% chance
         this.#obstaclesBehaviour = Math.random() < 0.5 ? new TraditionalStrategy() : new DynamicStrategy();
