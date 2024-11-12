@@ -107,7 +107,6 @@ export class Game {
     private drawAll(): void {
         this.#background.draw();
         this.#dinosaur.draw();
-        this.#dinosaur.hitBox.draw();
         this.drawObstacles();
     }
 
@@ -185,7 +184,6 @@ export class Game {
     private drawObstacles(): void {
         this.#obstacleList.forEach((obstacle) => {
             obstacle.draw();
-            obstacle.hitBox.draw();
         });
     }
 
@@ -219,8 +217,6 @@ export class Game {
             return;
 
         const obstacle = this.createRandomObstacle();
-
-        obstacle.setBehaviour(this.#obstaclesBehaviour);
 
         this.#obstacleList.push(obstacle);
 
