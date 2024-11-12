@@ -16,16 +16,15 @@ import {
     GroundObstacle,
     HellGroundObstacle,
 } from '../entities/obstacles/GroundObstacles.ts';
-import { GameData } from '../main/GameData.ts';
 import { DesertImagePaths, ForestImagePaths, HellImagePaths, ImagePaths } from './ImagePaths.ts';
 import { BehaviourStrategy } from '../main/Behaviours.ts';
 
 export interface ComponentFactory {
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur;
 
-    createGroundObstacle(): GroundObstacle;
+    createGroundObstacle(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy): GroundObstacle;
 
-    createAirObstacle(sizeMultiplier: number): AirObstacle;
+    createAirObstacle(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy): AirObstacle;
 
     createBackground(): Background;
 
@@ -44,28 +43,12 @@ export class DesertComponentFactory implements ComponentFactory {
         return new DesertDinosaur(new Point(point.x, point.y), sizeMultiplier);
     }
 
-    createGroundObstacle(behaviour?: BehaviourStrategy): GroundObstacle {
-        const size =
-            Math.random() *
-                (GameData.instance.groundObstacleMaxSizeMultiplier -
-                    GameData.instance.groundObstacleMinSizeMultiplier) +
-            GameData.instance.groundObstacleMinSizeMultiplier;
-        return new DesertGroundObstacle(
-            new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
-            size,
-            behaviour,
-        );
+    createGroundObstacle(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy): GroundObstacle {
+        return new DesertGroundObstacle(point, sizeMultiplier, behaviour);
     }
 
-    createAirObstacle(sizeMultiplier: number, behaviour?: BehaviourStrategy): AirObstacle {
-        const obstacle = new DesertAirObstacle(new Point(GameData.instance.canvas.width, 0), sizeMultiplier, behaviour);
-        const maxY =
-            GameData.instance.groundLevel -
-            this.dinosaurBentDown.height * GameData.instance.dinosaurSizeMultiplier -
-            obstacle.size.height;
-        const minY = GameData.instance.maxHeightAirObstacles;
-        obstacle.position.y = Math.random() * (maxY - minY) + minY;
-        return obstacle;
+    createAirObstacle(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy): AirObstacle {
+        return new DesertAirObstacle(point, sizeMultiplier, behaviour);
     }
 
     createBackground(): Background {
@@ -89,28 +72,12 @@ export class ForestComponentFactory implements ComponentFactory {
         return new ForestDinosaur(point, sizeMultiplier);
     }
 
-    createGroundObstacle(behaviour?: BehaviourStrategy): GroundObstacle {
-        const size =
-            Math.random() *
-                (GameData.instance.groundObstacleMaxSizeMultiplier -
-                    GameData.instance.groundObstacleMinSizeMultiplier) +
-            GameData.instance.groundObstacleMinSizeMultiplier;
-        return new ForestGroundObstacle(
-            new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
-            size * 0.75,
-            behaviour,
-        );
+    createGroundObstacle(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy): GroundObstacle {
+        return new ForestGroundObstacle(point, sizeMultiplier, behaviour);
     }
 
-    createAirObstacle(sizeMultiplier: number, behaviour?: BehaviourStrategy): AirObstacle {
-        const obstacle = new ForestAirObstacle(new Point(GameData.instance.canvas.width, 0), sizeMultiplier, behaviour);
-        const maxY =
-            GameData.instance.groundLevel -
-            this.dinosaurBentDown.height * GameData.instance.dinosaurSizeMultiplier -
-            obstacle.size.height;
-        const minY = GameData.instance.maxHeightAirObstacles;
-        obstacle.position.y = Math.random() * (maxY - minY) + minY;
-        return obstacle;
+    createAirObstacle(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy): AirObstacle {
+        return new ForestAirObstacle(point, sizeMultiplier, behaviour);
     }
 
     createBackground(): Background {
@@ -134,28 +101,12 @@ export class HellComponentFactory implements ComponentFactory {
         return new HellDinosaur(point, sizeMultiplier);
     }
 
-    createGroundObstacle(behaviour?: BehaviourStrategy): GroundObstacle {
-        const size =
-            Math.random() *
-                (GameData.instance.groundObstacleMaxSizeMultiplier -
-                    GameData.instance.groundObstacleMinSizeMultiplier) +
-            GameData.instance.groundObstacleMinSizeMultiplier;
-        return new HellGroundObstacle(
-            new Point(GameData.instance.canvas.width, GameData.instance.groundLevel),
-            size * 1.35,
-            behaviour,
-        );
+    createGroundObstacle(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy): GroundObstacle {
+        return new HellGroundObstacle(point, sizeMultiplier, behaviour);
     }
 
-    createAirObstacle(sizeMultiplier: number, behaviour?: BehaviourStrategy): AirObstacle {
-        const obstacle = new HellAirObstacle(new Point(GameData.instance.canvas.width, 0), sizeMultiplier, behaviour);
-        const maxY =
-            GameData.instance.groundLevel -
-            this.dinosaurBentDown.height * GameData.instance.dinosaurSizeMultiplier -
-            obstacle.size.height;
-        const minY = GameData.instance.maxHeightAirObstacles;
-        obstacle.position.y = Math.random() * (maxY - minY) + minY;
-        return obstacle;
+    createAirObstacle(point: Point, sizeMultiplier: number, behaviour?: BehaviourStrategy): AirObstacle {
+        return new HellAirObstacle(point, sizeMultiplier, behaviour);
     }
 
     createBackground(): Background {

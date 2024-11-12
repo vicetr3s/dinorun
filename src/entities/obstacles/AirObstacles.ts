@@ -43,7 +43,7 @@ export class DesertAirObstacle extends AirObstacle {
     }
 
     public clone(): Obstacle {
-        return new DesertComponentFactory().createAirObstacle(this._sizeMultiplier, this._behaviour);
+        return new DesertAirObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier, this._behaviour);
     }
 }
 
@@ -55,7 +55,7 @@ export class ForestAirObstacle extends AirObstacle {
     }
 
     public clone(): Obstacle {
-        return new ForestComponentFactory().createAirObstacle(this._sizeMultiplier, this._behaviour);
+        return new ForestAirObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier, this._behaviour);
     }
 }
 
@@ -67,6 +67,6 @@ export class HellAirObstacle extends AirObstacle {
     }
 
     public clone(): Obstacle {
-        return new HellComponentFactory().createAirObstacle(this._sizeMultiplier, this._behaviour);
+        return new HellAirObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier, this._behaviour);
     }
 }

@@ -46,7 +46,7 @@ export class GameData {
         this.#dinosaurSpawnPosition = new Point(50, this.#groundLevel);
         this.#dinosaurSizeMultiplier = 3;
         this.#groundObstacleMinSizeMultiplier = 1.5;
-        this.#groundObstacleMaxSizeMultiplier = 3;
+        this.#groundObstacleMaxSizeMultiplier = 2.5;
         this.#airObstacleSizeMultiplier = 2;
         this.#maxHeightAirObstacles = 100;
         this.#initialVelocityJump = -0.5;
@@ -61,9 +61,9 @@ export class GameData {
         this.#groundObstacleXSpeed = 0.25;
         this.#highestScore = this.getLocalStorageScore();
         this.#lastObstacleTimestamp = 0;
-        this.#airObstacleGenerationStartProbability = 0.1;
+        this.#airObstacleGenerationStartProbability = 0.7;
         this.#airObstacleGenerationEndProbability = 0.7;
-        this.#airObstacleGenerationProbability = 0.1;
+        this.#airObstacleGenerationProbability = 0.7;
         this.#airObstacleGenerationProbabilityMultiplier = 0.00001;
         this.#currentScore = 0;
         this.#timePassed = 0;

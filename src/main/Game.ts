@@ -1,11 +1,12 @@
 import { GameData } from './GameData.ts';
 import { ComponentFactory } from '../components/Factories.ts';
-import { AirObstacle } from '../entities/obstacles/AirObstacles.ts';
+import { AirObstacle, HellAirObstacle } from '../entities/obstacles/AirObstacles.ts';
 import { GroundObstacle } from '../entities/obstacles/GroundObstacles.ts';
 import { Background } from '../components/Background.ts';
 import { Obstacle } from '../components/Obstacle.ts';
 import { Dinosaur } from '../components/Dinosaur.ts';
 import { BehaviourStrategy, DynamicStrategy, TraditionalStrategy } from './Behaviours.ts';
+import { Point } from '../utils/Point.ts';
 
 export class Game {
     #canvas: HTMLCanvasElement;
@@ -43,11 +44,11 @@ export class Game {
         this.#canvasContext = this.#gameDataInstance.canvasContext;
         this.#dinosaur = this.#factory.createDinosaur(
             this.#gameDataInstance.dinosaurSpawnPosition,
-            this.#gameDataInstance.dinosaurSizeMultiplier,
+            this.#gameDataInstance.dinosaurSizeMultiplier
         );
         this.#background = this.#factory.createBackground();
-        this.#originalAirObstacle = this.#factory.createAirObstacle(this.#gameDataInstance.airObstacleSizeMultiplier);
-        this.#originalGroundObstacle = this.#factory.createGroundObstacle();
+        this.#originalAirObstacle = this.#factory.createAirObstacle(new Point(this.#canvas.width, 0), this.#gameDataInstance.airObstacleSizeMultiplier);
+        this.#originalGroundObstacle = this.#factory.createGroundObstacle(new Point(this.#canvas.width, this.#gameDataInstance.groundLevel), 1);
         this.#airObstacleList = [];
         this.#groundObstacleList = [];
         this.#isGameOver = false;
@@ -241,11 +242,15 @@ export class Game {
 
     private createRandomObstacle(): void {
         if (Math.random() < this.#gameDataInstance.airObstacleGenerationProbability) {
-            this.#airObstacleList.push(this.createAirObstacle());
+            const obstacle = this.createAirObstacle();
+            this.randomPositionForAirObstacle(obstacle);
+            this.#airObstacleList.push(obstacle);
             return;
         }
 
-        this.#groundObstacleList.push(this.createGroundObstacle());
+        const obstacle = this.createGroundObstacle();
+        this.randomSizeForGroundObstacle(obstacle);
+        this.#groundObstacleList.push(obstacle);
     }
 
     private nextFrameObstacles(): void {
@@ -350,5 +355,24 @@ export class Game {
 
         this.#originalAirObstacle.setBehaviour(this.#obstaclesBehaviour);
         this.#originalGroundObstacle.setBehaviour(this.#obstaclesBehaviour);
+    }
+
+    private randomPositionForAirObstacle(obstacle: AirObstacle): void {
+        const maxY =
+            GameData.instance.groundLevel -
+            this.#dinosaur.bendDownSprite.currentImage.height * GameData.instance.dinosaurSizeMultiplier -
+            obstacle.size.height;
+        const minY = GameData.instance.maxHeightAirObstacles;
+        obstacle.position.y = Math.random() * (maxY - minY) + minY;
+    }
+
+    private randomSizeForGroundObstacle(obstacle: GroundObstacle): void {
+        const size =
+            Math.random() *
+            (GameData.instance.groundObstacleMaxSizeMultiplier -
+                GameData.instance.groundObstacleMinSizeMultiplier) +
+            GameData.instance.groundObstacleMinSizeMultiplier;
+        obstacle.size.width *= size;
+        obstacle.size.height *= size;
     }
 }

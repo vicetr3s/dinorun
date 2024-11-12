@@ -3,7 +3,6 @@ import { Point } from '../../utils/Point.ts';
 import { Sprite } from '../../utils/Sprite.ts';
 import { GameData } from '../../main/GameData.ts';
 import { HitBox } from '../../utils/HitBox.ts';
-import { DesertComponentFactory, ForestComponentFactory, HellComponentFactory } from '../../components/Factories.ts';
 import { ImageLoader } from '../../utils/ImageLoader.ts';
 import { BehaviourStrategy } from '../../main/Behaviours.ts';
 
@@ -38,7 +37,7 @@ export class DesertGroundObstacle extends GroundObstacle {
     }
 
     public clone(): Obstacle {
-        return new DesertComponentFactory().createGroundObstacle(this._behaviour);
+        return new DesertGroundObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier, this._behaviour);
     }
 }
 
@@ -50,7 +49,7 @@ export class ForestGroundObstacle extends GroundObstacle {
     }
 
     public clone(): Obstacle {
-        return new ForestComponentFactory().createGroundObstacle(this._behaviour);
+        return new ForestGroundObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier, this._behaviour);
     }
 }
 
@@ -62,6 +61,6 @@ export class HellGroundObstacle extends GroundObstacle {
     }
 
     public clone(): Obstacle {
-        return new HellComponentFactory().createGroundObstacle(this._behaviour);
+        return new HellGroundObstacle(new Point(this._position.x, this._position.y), this._sizeMultiplier, this._behaviour);
     }
 }
