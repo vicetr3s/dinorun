@@ -42,20 +42,23 @@ Here's the updated **How to Run** section to include the Vite setup:
 
 ## 🏃 How to run
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/vicetr3s/dinorun.git
-   ```
-2. Navigate into the project directory:
-   ```bash
-   cd dinorun
-   ```
-3. Install dependencies using npm:
-   ```bash
-   npm install
-   ```
-4. Start the development server with Vite:
-   ```bash
-   npm run dev
-   ```
-5. Open the provided localhost URL in your browser, and you're ready to run! 🎉
+1. **Try it Online**: You can check out the game directly [here on Vercel](https://dinorun-beta.vercel.app/)!
+
+2. **Run Locally**:
+   - Clone the repository:
+     ```bash
+     git clone https://github.com/vicetr3s/dinorun.git
+     ```
+   - Navigate into the project directory:
+     ```bash
+     cd dinorun
+     ```
+   - Install dependencies using npm:
+     ```bash
+     npm install
+     ```
+   - Start the development server with Vite:
+     ```bash
+     npm run dev
+     ```
+   - Open the provided localhost URL in your browser, and you're ready to run! 🎉
