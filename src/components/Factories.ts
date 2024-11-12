@@ -32,13 +32,6 @@ export interface ComponentFactory {
 }
 
 export class DesertComponentFactory implements ComponentFactory {
-    protected dinosaurBentDown: HTMLImageElement;
-
-    public constructor() {
-        this.dinosaurBentDown = new Image();
-        this.dinosaurBentDown.src = '/sprites/dinosaurs/desert/bend/bend_1.png';
-    }
-
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur {
         return new DesertDinosaur(new Point(point.x, point.y), sizeMultiplier);
     }
@@ -61,13 +54,6 @@ export class DesertComponentFactory implements ComponentFactory {
 }
 
 export class ForestComponentFactory implements ComponentFactory {
-    protected dinosaurBentDown: HTMLImageElement;
-
-    public constructor() {
-        this.dinosaurBentDown = new Image();
-        this.dinosaurBentDown.src = '/sprites/dinosaurs/forest/bend/bend_1.png';
-    }
-
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur {
         return new ForestDinosaur(point, sizeMultiplier);
     }
@@ -90,13 +76,6 @@ export class ForestComponentFactory implements ComponentFactory {
 }
 
 export class HellComponentFactory implements ComponentFactory {
-    protected dinosaurBentDown: HTMLImageElement;
-
-    public constructor() {
-        this.dinosaurBentDown = new Image();
-        this.dinosaurBentDown.src = '/sprites/dinosaurs/hell/bend/bend_1.png';
-    }
-
     createDinosaur(point: Point, sizeMultiplier: number): Dinosaur {
         return new HellDinosaur(point, sizeMultiplier);
     }

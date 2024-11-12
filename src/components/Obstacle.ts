@@ -27,12 +27,9 @@ export abstract class Obstacle implements ObstaclePrototype, Drawable {
 
         this.setSpriteFromImageLoader();
         this._velocityY = 0;
-    }
-
-    protected constructorPart2() {
         this._size = new Dimension(
-            this._sprite.currentImage.width * this._sizeMultiplier,
-            this._sprite.currentImage.height * this._sizeMultiplier,
+            this.sprite.currentImage.width * this._sizeMultiplier,
+            this.sprite.currentImage.height * this._sizeMultiplier
         );
         if (this._position.y >= GameData.instance.groundLevel) this._position.y -= this._size.height;
         this._hitBox = new HitBox(this._position, this._size);

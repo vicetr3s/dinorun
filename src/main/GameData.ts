@@ -25,6 +25,11 @@ export class GameData {
     #groundObstacleMaxSizeMultiplier: number;
     #airObstacleSizeMultiplier: number;
     #maxHeightAirObstacles: number;
+    #airObstaclesYAxisDeceleration: number;
+    #probabilityForAnObstacleToMove: number;
+    #probabilityForAGroundObstacleToMove: number;
+    #obstacleMinSpeedY: number;
+    #obstacleMaxSpeedY: number;
     #airObstacleGenerationStartProbability: number;
     #airObstacleGenerationEndProbability: number;
     #airObstacleGenerationProbabilityMultiplier: number;
@@ -50,7 +55,12 @@ export class GameData {
         this.#airObstacleSizeMultiplier = 2;
         this.#maxHeightAirObstacles = 100;
         this.#initialVelocityJump = -0.5;
+        this.#airObstaclesYAxisDeceleration = 0.00001;
+        this.#obstacleMinSpeedY = 0.5;
+        this.#obstacleMaxSpeedY = 1;
         this.#hitBoxShrink = 6;
+        this.#probabilityForAnObstacleToMove = 0.1;
+        this.#probabilityForAGroundObstacleToMove = 0.2;
 
         this.configureCanvas();
         this.initializeNewGameVariables();
@@ -62,9 +72,9 @@ export class GameData {
         this.#groundObstacleXSpeed = 0.25;
         this.#highestScore = this.getLocalStorageScore();
         this.#lastObstacleTimestamp = 0;
-        this.#airObstacleGenerationStartProbability = 0.7;
+        this.#airObstacleGenerationStartProbability = 0.1;
         this.#airObstacleGenerationEndProbability = 0.7;
-        this.#airObstacleGenerationProbability = 0.7;
+        this.#airObstacleGenerationProbability = 0.1;
         this.#airObstacleGenerationProbabilityMultiplier = 0.00001;
         this.#currentScore = 0;
         this.#timePassed = 0;
@@ -236,8 +246,28 @@ export class GameData {
         return this.#initialVelocityJump;
     }
 
+    get airObstaclesYAxisDeceleration(): number {
+        return this.#airObstaclesYAxisDeceleration;
+    }
+
+    get obstacleMinSpeedY(): number {
+        return this.#obstacleMinSpeedY;
+    }
+
+    get obstacleMaxSpeedY(): number {
+        return this.#obstacleMaxSpeedY;
+    }
+
     get hitBoxShrink(): number {
         return this.#hitBoxShrink;
+    }
+
+    get probabilityForAnObstacleToMove(): number {
+        return this.#probabilityForAnObstacleToMove;
+    }
+
+    get probabilityForAGroundObstacleToMove(): number {
+        return this.#probabilityForAGroundObstacleToMove;
     }
 
     set timeBetweenObstacles(value: number) {

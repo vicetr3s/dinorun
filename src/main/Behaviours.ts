@@ -1,3 +1,5 @@
+import { GameData } from './GameData.ts';
+
 export interface BehaviourStrategy {
     move(): number;
 }
@@ -10,8 +12,8 @@ export class TraditionalStrategy implements BehaviourStrategy {
 
 export class DynamicStrategy implements BehaviourStrategy {
     move(): number {
-        if (Math.random() < 0.99) return 0; // 1% chance for the obstacle to move
+        if (Math.random() < 1 - GameData.instance.probabilityForAnObstacleToMove) return 0; // 1% chance for the obstacle to move
         // Max speed 1, and min speed 0.5
-        return Math.random() * (1 - 0.5) + 0.5;
+        return Math.random() * (GameData.instance.obstacleMaxSpeedY - GameData.instance.obstacleMinSpeedY) + GameData.instance.obstacleMinSpeedY;
     }
 }
