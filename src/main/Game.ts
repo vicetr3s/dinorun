@@ -212,9 +212,10 @@ export class Game {
         this.#airObstacleList.forEach((obstacle) => {
             obstacle.update();
 
-            if (this.isObstacleOutOfBounds(obstacle)) return;
+            if (!this.isObstacleOutOfBounds(obstacle)) {
+                temp.push(obstacle);
+            }
 
-            temp.push(obstacle);
         });
 
         this.#airObstacleList = temp;
@@ -224,9 +225,10 @@ export class Game {
         this.#groundObstacleList.forEach((obstacle) => {
             obstacle.update();
 
-            if (this.isObstacleOutOfBounds(obstacle)) return;
+            if (!this.isObstacleOutOfBounds(obstacle)) {
+                temp.push(obstacle);
+            }
 
-            temp.push(obstacle);
         });
 
         this.#groundObstacleList = temp;
@@ -289,15 +291,18 @@ export class Game {
     private checkObstaclesCollision(): void {
         let isHit = false;
 
-        this.#airObstacleList.forEach((obstacle) => {
-            isHit = this.isDinosaurHitObstacle(this.#dinosaur, obstacle);
-        });
-
         this.#groundObstacleList.forEach((obstacle) => {
             isHit = this.isDinosaurHitObstacle(this.#dinosaur, obstacle);
+
+            if (isHit) this.gameOver();
         });
 
-        if (isHit) this.gameOver();
+        this.#airObstacleList.forEach((obstacle) => {
+            isHit = this.isDinosaurHitObstacle(this.#dinosaur, obstacle);
+
+            if (isHit) this.gameOver();
+        });
+
     }
 
     private initializeMenuButton(): void {
