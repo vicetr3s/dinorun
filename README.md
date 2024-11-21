@@ -62,3 +62,17 @@ Here's the updated **How to Run** section to include the Vite setup:
      npm run dev
      ```
    - Open the provided localhost URL in your browser, and you're ready to run! 🎉
+
+## 📸 Screenshots
+
+### Menu
+![image](https://github.com/user-attachments/assets/99803222-75ea-497e-b641-c48853bb292e)
+
+### Idle game
+![image](https://github.com/user-attachments/assets/c646fa0c-5b72-4ab7-aa2d-9a1036f15b3a)
+
+### Running
+![image](https://github.com/user-attachments/assets/82161a68-be21-4cf2-884e-6032cfc2e845)
+
+
+
